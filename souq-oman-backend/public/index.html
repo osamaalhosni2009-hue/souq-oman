@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>سوق عُمان | Souq Oman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#f26a1b;--brand2:#ff9d3d;--bg:#fff7f0;--card:#fff;--ink:#1f2430;--mute:#6b7280;--line:#f0e2d6;--chip:#fff;--ok:#0f9a4a;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17120f;--card:#221b16;--ink:#f5eee8;--mute:#a89b90;--line:#3a2d24;--chip:#2a211b;--ok:#3ddc84}}
+:root[data-theme="dark"]{--bg:#17120f;--card:#221b16;--ink:#f5eee8;--mute:#a89b90;--line:#3a2d24;--chip:#2a211b;--ok:#3ddc84}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+body{font-family:"Tajawal",system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;min-height:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--brand);z-index:30}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--brand2);outline-offset:2px}
+.wrap{max-width:1120px;margin:auto;padding:0 14px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff}
+.hd{display:flex;align-items:center;justify-content:space-between;height:58px}
+.logo{display:flex;align-items:center;gap:8px;font-size:21px;font-weight:800}
+.mk{width:36px;height:36px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:20px}
+.act{display:flex;gap:8px}
+.pill{padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.22);font-weight:700;font-size:14px}
+.pill.solid{background:#fff;color:#d9540c}
+.hero{background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;padding:8px 0 26px;border-radius:0 0 28px 28px}
+.hero h1{font-size:clamp(22px,4.6vw,34px);font-weight:800;line-height:1.3}
+.hero p{opacity:.92;margin:4px 0 14px;font-size:14px}
+.sb{display:flex;align-items:center;gap:6px;background:var(--card);color:var(--ink);border-radius:18px;padding:6px 12px;box-shadow:0 8px 24px rgba(120,50,0,.22)}
+.sb input{flex:1;min-width:0;border:0;outline:0;background:transparent;padding:10px 4px;font-size:16px}
+.cam{display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:12px;border:1.5px solid var(--brand);color:var(--brand);font-weight:700;font-size:14px;white-space:nowrap}
+.go{padding:10px 18px;border-radius:12px;background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;font-weight:700}
+.hs{display:none}
+@media(min-width:640px){.hs{display:inline}}
+.lbl{margin:18px 0 8px;font-weight:800;font-size:16px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
+.chip{white-space:nowrap;padding:7px 14px;border-radius:99px;background:var(--chip);border:1px solid var(--line);font-size:14px}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:760px){.cats{grid-template-columns:repeat(9,1fr)}}
+.cat{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;background:var(--card);border:1.5px solid var(--line);border-radius:16px;font-size:13px;font-weight:700;text-align:center}
+.cat .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:24px;background:rgba(242,106,27,.14)}
+.cat.on{border-color:var(--brand);color:var(--brand)}
+.top{display:flex;justify-content:space-between;align-items:baseline}
+.mute{color:var(--mute);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:96px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:960px){.grid{grid-template-columns:repeat(4,1fr)}}
+.ad{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.ph{aspect-ratio:4/3;display:grid;place-items:center;font-size:54px;position:relative;background:linear-gradient(135deg,hsl(var(--h) 90% 91%),hsl(var(--h) 80% 78%))}
+.fv{position:absolute;top:8px;inset-inline-end:8px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.9);font-size:16px}
+.tag{position:absolute;top:8px;inset-inline-start:8px;background:var(--brand);color:#fff;font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px}
+.ad .b{padding:10px 12px 12px}
+.pr{color:var(--brand);font-weight:800;font-size:17px}
+.tt{font-weight:700;font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.9em}
+.mt{color:var(--mute);font-size:12px;display:flex;justify-content:space-between;gap:6px;margin-top:4px}
+.empty{grid-column:1/-1;text-align:center;padding:40px 0;color:var(--mute)}
+footer{text-align:center;color:var(--mute);font-size:12px;padding:10px 0 24px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.ov.on{display:flex}
+.sheet{background:var(--card);width:100%;max-width:640px;max-height:92%;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+@media(min-width:700px){.ov{align-items:center}.sheet{border-radius:22px}}
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:18px}
+.dz{display:block;border:2px dashed var(--brand);border-radius:18px;padding:24px 12px;text-align:center;background:rgba(242,106,27,.07);cursor:pointer}
+.dz .big{font-size:38px}
+.ld{display:flex;gap:12px;align-items:center;margin-top:14px}
+.pv{width:84px;height:84px;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;width:6%;background:linear-gradient(90deg,var(--brand),var(--brand2));transition:width .5s}
+.ok{color:var(--ok);font-weight:700;font-size:13px}
+.st{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:14px;margin-top:8px}
+.st.best{border-color:var(--ok);background:rgba(15,154,74,.09)}
+.lg{width:38px;height:38px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:800}
+.pt{text-align:end}
+.btn{width:100%;margin-top:14px;padding:12px;border-radius:14px;background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;font-weight:700}
+.demo{margin-top:10px;font-size:12px}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));inset-inline:0;margin:auto;width:max-content;max-width:90%;background:#222;color:#fff;padding:10px 16px;border-radius:12px;opacity:0;transition:opacity .3s;z-index:60;pointer-events:none}
+.toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
+[hidden]{display:none!important}
+.shot{display:flex;align-items:center;gap:12px;width:100%;background:#fff;color:#d9540c;border-radius:20px;padding:14px 16px;margin-bottom:10px;text-align:start;box-shadow:0 8px 24px rgba(120,50,0,.22)}
+.shot>span{font-size:34px}.shot b{display:block;font-size:18px}.shot small{display:block;color:#6b7280;font-size:13px}
+.fab{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:64px;height:64px;border-radius:50%;background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;font-size:30px;box-shadow:0 8px 22px rgba(242,106,27,.5);z-index:15}
+#cv{position:relative;border-radius:18px;overflow:hidden;background:#000}
+#vd{width:100%;max-height:60vh;display:block;object-fit:cover}
+.snap{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:66px;height:66px;border-radius:50%;background:#fff;border:5px solid var(--brand)}
+.row{display:flex;gap:8px;margin:12px 0 6px}
+.row .btn{margin-top:0;flex:1;width:auto;display:block;text-align:center;cursor:pointer}
+.btn.alt{background:var(--card);color:var(--brand);border:1.5px solid var(--brand)}
+a.chip{text-decoration:none;color:inherit}
+.im{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lk{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.lk a{font-size:12px;font-weight:700;padding:4px 9px;border-radius:99px;background:rgba(242,106,27,.12);color:var(--brand);text-decoration:none}
+.fm{display:grid;gap:10px}
+.fm input,.fm select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-size:16px}
+.dz.sm{padding:14px}
+.shops{display:grid;grid-template-columns:1fr;gap:10px;margin-top:8px}
+@media(min-width:640px){.shops{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:960px){.shops{grid-template-columns:repeat(3,1fr)}}
+.shop{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}
+.av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#f26a1b,#ff9d3d);display:grid;place-items:center;font-size:26px;flex:none}
+.si{min-width:0}.tg{flex-wrap:wrap;overflow:visible;margin-top:6px}.tg .chip{padding:2px 10px;font-size:12px}
+a.btn{display:block;text-align:center;text-decoration:none}
+@media(max-width:420px){.pill{padding:6px 10px;font-size:13px}.logo{font-size:18px}.act{gap:6px}}
+.st.rq{display:block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.sc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+.sc b{font-size:18px;display:block}
+@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header id="sitehd"><div class="wrap hd">
+ <div class="logo"><span class="mk">🛍️</span><span data-i="brand"></span></div>
+ <div class="act"><button class="pill" id="lb" data-i="lang"></button><button class="pill solid" id="post" data-i="post"></button></div>
+</div></header>
+
+<section class="hero"><div class="wrap">
+ <h1 data-i="h1"></h1><p data-i="sub"></p>
+ <button class="shot" id="shot"><span aria-hidden="true">📷</span><div><b data-i="shot"></b><small data-i="shot2"></small></div></button>
+ <div class="sb"><span aria-hidden="true">🔍</span>
+  <input id="q" type="search" enterkeyhint="search" autocomplete="off">
+  <button class="cam" id="cam"><span>📷</span><b class="hs" data-i="cam"></b></button>
+  <button class="go" id="go" data-i="go"></button>
+ </div>
+</div></section>
+
+<main class="wrap">
+ <p class="lbl">📍 <span data-i="city"></span></p>
+ <div class="chips" id="cities"></div>
+ <p class="lbl" data-i="cats"></p>
+ <div class="cats" id="cats"></div>
+ <section id="shopsec" hidden><p class="lbl">📸 <span data-i="shops"></span></p><div class="chips" id="stags"></div><div class="shops" id="shops"></div><button class="btn alt" id="rbtn" data-i="rbtn"></button><a class="btn" id="igs" target="_blank" rel="noopener noreferrer"></a><p class="mute demo" data-i="shops_n"></p></section>
+ <div class="top lbl" id="latest"><span data-i="latest"></span><span class="mute" id="count"></span></div>
+ <div class="grid" id="grid"></div>
+</main>
+<footer data-i="foot"></footer>
+
+<div class="ov" id="ov"><div class="sheet" role="dialog" aria-modal="true">
+ <div class="sh"><b data-i="m_title"></b><button id="x" aria-label="Close">✕</button></div>
+ <div id="cv" hidden><video id="vd" autoplay playsinline muted></video><button class="snap" id="snap" aria-label="Capture"></button></div>
+ <div class="dz" id="dz"><div class="big">📷</div>
+  <div class="row"><label class="btn"><input type="file" id="f2" accept="image/*" capture="environment" hidden><span data-i="m_cam2"></span></label><label class="btn alt"><input type="file" id="f" accept="image/*" hidden><span data-i="m_gal"></span></label></div>
+  <small class="mute" data-i="m_hint"></small><br><button class="chip" id="live" data-i="m_live2"></button></div>
+ <div id="res"></div>
+</div></div>
+<button class="fab" id="fab" aria-label="Camera">📷</button>
+<div class="ov" id="ov2"><div class="sheet" role="dialog" aria-modal="true">
+ <div class="sh"><b data-i="pt"></b><button id="x2" aria-label="Close">✕</button></div>
+ <div class="chips" id="kind"></div>
+ <div class="fm">
+  <label class="dz sm"><input type="file" id="pf" accept="image/*" hidden><span id="pfl" data-i="pimg"></span></label>
+  <input id="pti" data-ph="ptitle" maxlength="80">
+  <select id="pc"></select><select id="pct"></select>
+  <input id="pp" type="number" inputmode="decimal" min="0" step="0.001" data-ph="pprice">
+  <input id="pig" data-ph="pig" maxlength="80"><input id="pw" data-ph="pweb" inputmode="url" maxlength="200"><input id="pwa" data-ph="pwa" inputmode="tel" maxlength="16">
+  <button class="btn" id="pub" data-i="pub"></button>
+  <p class="mute demo" id="pnote"></p>
+ </div></div></div>
+<div class="ov" id="ov3"><div class="sheet" role="dialog" aria-modal="true">
+ <div class="sh"><b data-i="rt_t"></b><button id="x3" aria-label="Close">✕</button></div>
+ <div class="fm">
+  <input id="rn" data-ph="rn" maxlength="60"><input id="rig" data-ph="pig" maxlength="80">
+  <select id="rc"></select><input id="rt" data-ph="rt" maxlength="150">
+  <input id="rw" data-ph="pweb" inputmode="url" maxlength="200"><input id="rwa" data-ph="pwa" inputmode="tel" maxlength="16">
+  <button class="btn" id="rsub" data-i="rsub"></button><p class="mute demo" data-i="rnote"></p>
+ </div></div></div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const T={
+ar:{brand:"سوق عُمان",post:"أضف إعلان",h1:"اكتشف أفضل العروض في سلطنة عُمان",sub:"بيع واشترِ بسهولة، وقارن أسعار المتاجر بصورة واحدة",ph:"ابحث عن سيارة، هاتف، شقة…",go:"بحث",cam:"بحث بالصورة",city:"المدينة",cats:"التصنيفات",latest:"إعلانات نشرها المستخدمون",ads:"إعلان",empty:"لا توجد إعلانات منشورة هنا بعد. كن أول من ينشر بزر «أضف إعلان».",all:"كل المدن",feat:"مميز",lang:"English",soon:"قريباً: نشر الإعلانات",m_title:"صوّر المنتج وقارن الأسعار",m_drop:"اضغط لرفع صورة المنتج أو اسحبها هنا",m_hint:"PNG أو JPG – نقارن الأسعار في المتاجر العمانية",s1:"تحليل الصورة…",s2:"التعرف على المنتج…",s3:"مقارنة الأسعار في المتاجر…",found:"تم التعرف على",conf:"دقة المطابقة",notit:"ليس هذا المنتج؟ اختر المنتج الصحيح:",cmp:"مقارنة الأسعار",best:"الأرخص",stock:"متوفر",low:"كمية محدودة",save:"وفّر حتى",demo:"* محاكاة تجريبية فقط، والأسعار توضيحية وليست حقيقية.",more:"عرض إعلانات مشابهة",bad:"الرجاء اختيار ملف صورة",foot:"نموذج تجريبي © 2026",shot:"صوّر المنتج الآن",shot2:"الكاميرا تتعرف عليه وتقارن أسعاره في المتاجر",m_live:"📷 فتح الكاميرا",m_gal:"🖼️ من المعرض",cam_err:"تعذّر فتح الكاميرا. اسمح بالوصول أو اختر صورة من الجهاز.",rl_t:"ابحث عن عروض حقيقية",rl_g:"تسوق جوجل",rl_m:"خرائط جوجل",rl_i:"إنستغرام",rl_n:"تفتح هذه الروابط نتائج حقيقية في جوجل وإنستغرام بنافذة جديدة؛ لا تستطيع الصفحة جلب إعلاناتهما وعرضها داخلها.",pt:"أضف إعلاناً جديداً",kind1:"فرد",kind2:"متجر",pimg:"📷 أضف صورة للمنتج",pimg_ok:"✓ تم اختيار الصورة",ptitle:"عنوان الإعلان",pprice:"السعر بالريال العماني",pig:"حساب إنستغرام (مثال: @mystore)",pweb:"رابط الموقع (اختياري)",pwa:"واتساب (مثال: 9XXXXXXX)",pub:"انشر الإعلان",pn1:"سيظهر إعلانك بعد موافقة المراجع.",pn2:"سيُحفظ إعلانك على هذا الجهاز فقط، لأن قاعدة البيانات المشتركة تتطلب تسجيل الدخول.",perr1:"أدخل عنواناً (3 أحرف على الأقل) وسعراً صحيحاً",perr2:"أضف وسيلة تواصل واحدة على الأقل: إنستغرام أو موقع أو واتساب",pdone1:"تم إرسال إعلانك للمراجعة",pdone2:"تم حفظ إعلانك على جهازك",web:"الموقع",dm:"نموذج",shops:"متاجر وصفحات إنستغرام حسب المنتج",shops_n:"كل بطاقة هنا رابط حقيقي يفتح صفحة إنستغرام مباشرة. تحقق من الصفحة قبل الشراء؛ الموقع لا يتحقق من هوية المتاجر.",igs:"🔎 ابحث في إنستغرام عن صفحات هذا التصنيف",ap:"موقع المطوّر – لوحة التحكم",st_pending:"قيد المراجعة",st_approved:"مقبولة",st_rejected:"مرفوضة",aempty:"لا توجد طلبات في هذه القائمة.",aupd:"تم تحديث حالة الطلب",afail:"تعذّر تنفيذ العملية",b_ok:"✅ قبول ونشر",b_no:"❌ رفض",b_del:"🗑️ إلغاء النشر",aexp:"نسخ قائمة المقبولة (JSON)",acopy:"تم النسخ",rbtn:"➕ اقترح صفحة أو متجراً للنشر",rt_t:"طلب إضافة صفحة أو متجر",rn:"اسم الصفحة أو المتجر",rt:"تصنيفات المنتجات بفاصلة (مثال: كراسي, طاولات)",rsub:"أرسل للمراجعة",rnote:"لن تظهر الصفحة للجميع إلا بعد موافقة المراجع.",rneed:"سجّل الدخول إلى Claude أولاً لإرسال الطلب",rerr:"أدخل اسماً وحساب إنستغرام صحيحاً",rok:"تم إرسال طلبك للمراجعة",rfail:"تعذّر إرسال الطلب",back:"🌐 موقع المستخدم",st_ads:"الإعلانات",sx_shops:"صفحات منشورة",sx_ads:"إعلانات المستخدمين",b_dad:"🗑️ حذف الإعلان",dadd:"➕ إضافة صفحة مباشرة (دون مراجعة)",achk:"جارٍ التحقق من صلاحياتك…",anoadm:"هذه الصفحة للمراجعين فقط. سجّل الدخول بحساب لديه صلاحية «محرر» على الصفحة.",m_cam2:"📷 التقاط بالكاميرا",m_live2:"معاينة مباشرة داخل الصفحة (يطلب إذن الكاميرا)",noshop:"لا توجد صفحات مضافة لهذا التصنيف بعد، استخدم زر البحث أدناه."},
+en:{brand:"Souq Oman",post:"Post ad",h1:"Discover the best deals in Oman",sub:"Buy and sell with ease, and compare store prices from a single photo",ph:"Search cars, phones, apartments…",go:"Search",cam:"Search by photo",city:"City",cats:"Categories",latest:"Ads posted by users",ads:"listings",empty:"No ads posted here yet. Be the first with the “Post ad” button.",all:"All cities",feat:"Featured",lang:"العربية",soon:"Coming soon: posting ads",m_title:"Snap a product, compare prices",m_drop:"Tap to upload a product photo, or drop it here",m_hint:"PNG or JPG – we compare prices across Omani stores",s1:"Analyzing the image…",s2:"Identifying the product…",s3:"Comparing store prices…",found:"Identified as",conf:"Match",notit:"Not the right product? Pick the correct one:",cmp:"Price comparison",best:"Cheapest",stock:"In stock",low:"Limited stock",save:"Save up to",demo:"* Demo simulation only; prices are illustrative, not live.",more:"View similar listings",bad:"Please choose an image file",foot:"Demo prototype © 2026",shot:"Snap a product now",shot2:"The camera identifies it and compares store prices",m_live:"📷 Open camera",m_gal:"🖼️ From gallery",cam_err:"Couldn’t open the camera. Allow access or pick a photo.",rl_t:"Find real deals",rl_g:"Google Shopping",rl_m:"Google Maps",rl_i:"Instagram",rl_n:"These links open real Google and Instagram results in a new tab; this page can’t fetch or embed their ads.",pt:"Post a new ad",kind1:"Individual",kind2:"Store",pimg:"📷 Add a product photo",pimg_ok:"✓ Photo selected",ptitle:"Ad title",pprice:"Price in OMR",pig:"Instagram account (e.g. @mystore)",pweb:"Website link (optional)",pwa:"WhatsApp (e.g. 9XXXXXXX)",pub:"Publish ad",pn1:"Your ad will appear after the reviewer approves it.",pn2:"Your ad is saved on this device only, since the shared database needs sign-in.",perr1:"Enter a title (3+ characters) and a valid price",perr2:"Add at least one contact: Instagram, website or WhatsApp",pdone1:"Your ad was sent for review",pdone2:"Your ad is saved on this device",web:"Website",dm:"Sample",shops:"Stores and Instagram pages by product",shops_n:"Every card here is a real link that opens an Instagram page directly. Check the page before buying; this site doesn’t verify store identity.",igs:"🔎 Find Instagram pages for this category",ap:"Developer site – control panel",st_pending:"Pending",st_approved:"Approved",st_rejected:"Rejected",aempty:"No requests in this list.",aupd:"Request status updated",afail:"Couldn’t complete the action",b_ok:"✅ Approve and publish",b_no:"❌ Reject",b_del:"🗑️ Unpublish",aexp:"Copy approved list (JSON)",acopy:"Copied",rbtn:"➕ Suggest a page or store to publish",rt_t:"Request to add a page or store",rn:"Page or store name",rt:"Product categories, comma-separated (e.g. chairs, desks)",rsub:"Send for review",rnote:"The page appears for everyone only after the reviewer approves it.",rneed:"Sign in to Claude first to send a request",rerr:"Enter a name and a valid Instagram account",rok:"Your request was sent for review",rfail:"Couldn’t send the request",back:"🌐 User site",st_ads:"Ads",sx_shops:"Published pages",sx_ads:"User ads",b_dad:"🗑️ Delete ad",dadd:"➕ Add a page directly (no review)",achk:"Checking your permissions…",anoadm:"This page is for reviewers only. Sign in with an account that has Editor access to the page.",m_cam2:"📷 Take a photo",m_live2:"Live preview in page (asks for camera permission)",noshop:"No pages added for this category yet; use the search button below."}};
+const CITIES=[["muscat","مسقط","Muscat"],["salalah","صلالة","Salalah"],["sohar","صحار","Sohar"],["nizwa","نزوى","Nizwa"],["sur","صور","Sur"],["rustaq","الرستاق","Rustaq"],["buraimi","البريمي","Al Buraimi"]];
+const CATS=[["electronics","📱","إلكترونيات","Electronics"],["gaming","🎮","ألعاب وجيمنج","Gaming"],["cars","🚗","سيارات","Cars"],["property","🏠","عقارات","Property"],["fashion","👗","أزياء","Fashion"],["home","🛋️","أثاث ومنزل","Home"],["jobs","💼","وظائف","Jobs"],["services","🛠️","خدمات","Services"],["pets","🐾","حيوانات","Pets"]];
+const ADS=[];
+const STORES=[["لولو هايبرماركت","Lulu Hypermarket",1],["شرف دي جي","Sharaf DG",1.04],["إيماكس","Emax",.98],["كارفور","Carrefour",1.02],["سنتربوينت","Centrepoint",1],["نستو","Nesto",.99]];
+// [emoji,ar,en,baseOMR,storeIdx,cat]
+const PROD=[["📱","آيفون 15 (128 جيجا)","iPhone 15 (128GB)",329,[0,1,2],"electronics"],["📺","تلفزيون 55 بوصة 4K","55-inch 4K TV",215,[0,1,2,3],"electronics"],["💻","لابتوب 16 جيجا / 512 SSD","Laptop 16GB / 512GB SSD",275,[0,1,2],"electronics"],["🎮","بلايستيشن 5","PlayStation 5",189,[0,1,2],"gaming"],["👟","حذاء رياضي","Running shoes",29.9,[0,3,4],"fashion"],["🍟","قلاية هوائية","Air fryer",34.5,[0,1,3,5],"home"],["🎧","سماعات لاسلكية","Wireless headphones",79,[0,1,2],"electronics"],["⌚","ساعة ذكية","Smart watch",119,[0,1,2],"electronics"]];
+
+const $=id=>document.getElementById(id);
+let L="ar";try{L=localStorage.getItem("lang")||"ar"}catch(e){}
+if(L!=="en")L="ar";
+const S={city:"all",cat:"",tag:"",fav:new Set(),k:null,img:"",conf:0,h:0};
+const t=k=>T[L][k];
+const nm=(a,i)=>a[L=="ar"?i:i+1];
+const fmt=p=>{const s=p.toLocaleString("en-US",{minimumFractionDigits:3,maximumFractionDigits:3});return L=="ar"?s+" ر.ع.":"OMR "+s};
+const ago=h=>{if(h<1)return L=="ar"?"الآن":"Just now";const d=h>=24,v=Math.floor(d?h/24:h);return L=="ar"?`منذ ${v} ${d?"يوم":"ساعة"}`:`${v}${d?"d":"h"} ago`};
+let tm;function toast(m){const e=$("toast");e.textContent=m;e.classList.add("on");clearTimeout(tm);tm=setTimeout(()=>e.classList.remove("on"),2200)}
+
+function lang(){
+ const d=document.documentElement;d.lang=L;d.dir=L=="ar"?"rtl":"ltr";
+ document.title=L=="ar"?"سوق عُمان | Souq Oman":"Souq Oman | سوق عُمان";
+ document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+ $("q").placeholder=t("ph");
+ document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=t(e.dataset.ph));
+ const v1=$("pc").value,v2=$("pct").value;
+ $("pc").innerHTML=CATS.map(c=>`<option value="${c[0]}">${c[1]} ${nm(c,2)}</option>`).join("");
+ $("pct").innerHTML=CITIES.map(c=>`<option value="${c[0]}">${nm(c,1)}</option>`).join("");
+ if(v1)$("pc").value=v1;if(v2)$("pct").value=v2;
+ $("rc").innerHTML=$("pc").innerHTML;
+ drawKind();$("pnote").textContent=t(DB?"pn1":"pn2");
+ drawCities();drawCats();drawAds();
+ if(S.k!=null)showRes(S.k);
+}
+function drawCities(){
+ $("cities").innerHTML=[["all",t("all")],...CITIES.map(c=>[c[0],nm(c,1)])].map(([id,n])=>`<button class="chip${S.city==id?" on":""}" data-c="${id}">${n}</button>`).join("");
+}
+function drawCats(){
+ $("cats").innerHTML=CATS.map(c=>`<button class="cat${S.cat==c[0]?" on":""}" data-k="${c[0]}"><span class="ic">${c[1]}</span>${nm(c,2)}</button>`).join("");
+}
+function drawAds(){
+ const q=$("q").value.trim().toLowerCase();
+ const mine=[...REMOTE,...LOCAL.filter(l=>!REMOTE.some(r=>r.id==l.id))].sort((a,b)=>b.ts-a.ts);
+ const list=[...mine,...SEED].filter(a=>(!S.cat||a.cat==S.cat)&&(S.city=="all"||a.city==S.city)&&(!q||((a.t||"")+" "+(a.ar||"")+" "+(a.en||"")).toLowerCase().includes(q)));
+ $("count").textContent=list.length+" "+t("ads");drawShops();
+ $("grid").innerHTML=list.length?list.map(card).join(""):`<p class="empty">${t("empty")}</p>`;
+}
+$("cities").onclick=e=>{const b=e.target.closest("[data-c]");if(b){S.city=b.dataset.c;drawCities();drawAds()}};
+$("cats").onclick=e=>{const b=e.target.closest("[data-k]");if(b){S.cat=S.cat==b.dataset.k?"":b.dataset.k;drawCats();drawAds()}};
+$("grid").onclick=e=>{const b=e.target.closest("[data-f]");if(b){const i=b.dataset.f;S.fav.has(i)?S.fav.delete(i):S.fav.add(i);drawAds()}};
+$("q").oninput=drawAds;
+$("q").onkeydown=e=>{if(e.key=="Enter")$("go").click()};
+$("go").onclick=()=>{drawAds();$("latest").scrollIntoView()};
+$("lb").onclick=()=>{L=L=="ar"?"en":"ar";try{localStorage.setItem("lang",L)}catch(e){}lang()};
+$("post").onclick=()=>{$("pnote").textContent=t(DB?"pn1":"pn2");$("ov2").classList.add("on")};
+
+// ---- Image search (simulated) ----
+const close=()=>{stopCam();$("ov").classList.remove("on")};
+$("x").onclick=close;
+$("ov").onclick=e=>{if(e.target==$("ov"))close()};
+document.addEventListener("keydown",e=>{if(e.key=="Escape"){close();["ov2","ov3"].forEach(i=>$(i).classList.remove("on"))}});
+$("f").onchange=e=>pick(e.target.files[0]);
+$("f2").onchange=e=>pick(e.target.files[0]);
+$("dz").ondragover=e=>e.preventDefault();
+$("dz").ondrop=e=>{e.preventDefault();pick(e.dataTransfer.files[0])};
+
+function pick(f){
+ if(!f)return;
+ if(!/^image\//.test(f.type)){toast(t("bad"));return}
+ const r=new FileReader();
+ r.onload=()=>analyze(r.result,f.name+f.size);
+ r.readAsDataURL(f);$("f").value="";
+}
+function loading(cb){
+ $("res").innerHTML=`<div class="ld"><img class="pv" src="${S.img}" alt=""><div style="flex:1"><div class="bar"><i id="bar"></i></div><p id="st" class="mute">${t("s1")}</p></div></div>`;
+ [1,2,3].forEach((n,i)=>setTimeout(()=>{const s=$("st"),b=$("bar");if(s&&b){s.textContent=t("s"+n);b.style.width=n*33+"%"}},i*600));
+ setTimeout(cb,2000);
+}
+function showRes(k){
+ S.k=k;const p=PROD[k];
+ const rows=p[4].map(si=>{const s=STORES[si];const v=Math.round(p[3]*s[2]*(1+((k*7+si*13)%9-4)/100)*10)/10;return{s,v,low:(k+si)%4==0}}).sort((a,b)=>a.v-b.v);
+ const sv=rows[rows.length-1].v-rows[0].v;
+ const auto=k==S.h%PROD.length;
+ $("res").innerHTML=`<div class="ld"><img class="pv" src="${S.img}" alt=""><div><small class="mute">${t("found")}</small><h3>${p[0]} ${nm(p,1)}</h3>${auto?`<span class="ok">✓ ${t("conf")} ${S.conf}%</span>`:""}</div></div>
+<p class="mute lbl">${t("notit")}</p>
+<div class="chips">${PROD.map((q,i)=>`<button class="chip${i==k?" on":""}" data-p="${i}">${q[0]} ${nm(q,1)}</button>`).join("")}</div>
+<h4 class="lbl">${t("cmp")}</h4>
+${rows.map((r,i)=>`<div class="st${i?"":" best"}"><span class="lg">${nm(r.s,0)[0]}</span><div style="flex:1"><b>${nm(r.s,0)}</b><br><small class="mute">${r.low?t("low"):t("stock")}</small></div><div class="pt"><b>${fmt(r.v)}</b>${i?"":`<br><small class="ok">${t("best")}</small>`}</div></div>`).join("")}
+<p class="mute" style="margin-top:10px">💡 ${t("save")} ${fmt(sv)}</p>
+${links(k)}<button class="btn" id="sim">${t("more")}</button><p class="mute demo">${t("demo")}</p>`;
+}
+$("res").onclick=e=>{
+ const b=e.target.closest("[data-p]");
+ if(b){showRes(+b.dataset.p);return}
+ if(e.target.closest("#sim")){
+  S.cat=PROD[S.k][5];$("q").value="";close();drawCats();drawAds();$("latest").scrollIntoView();
+ }
+};
+
+// ---- Camera ----
+let stm;
+const TAGS=["iphone15","smarttv","laptop","ps5","runningshoes","airfryer","wirelessheadphones","smartwatch"];
+const openCam=()=>{$("ov").classList.add("on");$("res").innerHTML="";$("f2").click()};
+async function startCam(){
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return false;
+ try{stm=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});$("vd").srcObject=stm;$("cv").hidden=false;$("dz").hidden=true;return true}
+ catch(e){toast(t("cam_err"));return false}
+}
+function stopCam(){if(stm)stm.getTracks().forEach(x=>x.stop());stm=null;$("cv").hidden=true}
+["shot","fab","cam"].forEach(i=>$(i).onclick=openCam);
+$("live").onclick=()=>startCam().then(ok=>{if(!ok)$("f2").click()});
+$("snap").onclick=()=>{
+ const v=$("vd");if(!v.videoWidth)return;
+ const k=Math.min(1,800/Math.max(v.videoWidth,v.videoHeight)),c=document.createElement("canvas");
+ c.width=v.videoWidth*k;c.height=v.videoHeight*k;c.getContext("2d").drawImage(v,0,0,c.width,c.height);
+ const u=c.toDataURL("image/jpeg",.8);analyze(u,u.length+u.slice(-200));
+};
+function analyze(img,seed){
+ stopCam();$("dz").hidden=false;S.img=img;S.k=null;
+ let h=0;for(const c of seed)h=(h*31+c.charCodeAt(0))>>>0;
+ S.h=h;S.conf=88+h%9;loading(()=>showRes(h%PROD.length));
+}
+function links(k){
+ const p=PROD[k],q=encodeURIComponent(nm(p,1)+(L=="ar"?" سلطنة عمان":" Oman")),a=(u,l)=>`<a class="chip" href="${u}" target="_blank" rel="noopener noreferrer">${l}</a>`;
+ return `<h4 class="lbl">${t("rl_t")}</h4><div class="chips">${a("https://www.google.com/search?tbm=shop&q="+q,"🛒 "+t("rl_g"))}${a("https://www.google.com/maps/search/"+q,"🗺️ "+t("rl_m"))}${a("https://www.instagram.com/explore/tags/"+TAGS[k]+"/","📸 "+t("rl_i"))}</div><p class="mute demo">${t("rl_n")}</p>`;
+}
+
+// ---- Ads data, sharing and posting ----
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const igOk=s=>/^[A-Za-z0-9._]{1,30}$/.test(s||"")?s:"";
+const webOk=s=>{try{const u=new URL(s);return /^https?:$/.test(u.protocol)?u.href:""}catch(e){return ""}};
+const waOk=s=>/^\d{8,15}$/.test(s||"")?s:"";
+const SEED=ADS.map(a=>({id:"s"+a[0],cat:a[1],city:a[2],e:a[3],ar:a[4],en:a[5],p:a[6],h:a[7],hrs:a[8],f:a[9],demo:1}));
+let REMOTE=[],LOCAL=[],DB=true,UID="";
+try{LOCAL=JSON.parse(localStorage.getItem("ads")||"[]")}catch(e){}
+
+function card(a){
+ const c=CITIES.find(c=>c[0]==a.city)||CITIES[0],ig=igOk(a.ig),wb=webOk(a.web),wa=waOk(a.wa);
+ const iu=a.img||"",im=/^(data:image\/|\/uploads\/)/.test(iu)?`<img class="im" src="${esc(iu[0]=="/"?API+iu:iu)}" alt="">`:"";
+ const o=' target="_blank" rel="noopener noreferrer"';
+ const lk=(ig||wb||wa)?`<div class="lk">${ig?`<a href="https://www.instagram.com/${ig}/"${o}>📸 Instagram</a>`:""}${wb?`<a href="${esc(wb)}"${o}>🌐 ${t("web")}</a>`:""}${wa?`<a href="https://wa.me/${wa}"${o}>💬 WhatsApp</a>`:""}</div>`:"";
+ const hrs=a.ts?(Date.now()-a.ts)/36e5:a.hrs;
+ return `<article class="ad"><div class="ph" style="--h:${+a.h||25}">${im||esc(a.e||"🛍️")}${a.f?`<span class="tag">${t("feat")}</span>`:a.store?`<span class="tag">🏪 ${t("kind2")}</span>`:""}<button class="fv" data-f="${esc(a.id)}" aria-label="Favorite">${S.fav.has(a.id)?"❤️":"🤍"}</button></div><div class="b"><div class="pr">${fmt(+a.p||0)}</div><div class="tt">${esc(a.t||(L=="ar"?a.ar:a.en))}</div><div class="mt"><span>📍 ${nm(c,1)}</span><span>${ago(hrs)}${a.demo?" – "+t("dm"):""}</span></div>${lk}</div></article>`;
+}
+const PS={store:0,img:""};
+function drawKind(){$("kind").innerHTML=[0,1].map(i=>`<button class="chip${PS.store==i?" on":""}" data-s="${i}">${i?"🏪 "+t("kind2"):"👤 "+t("kind1")}</button>`).join("")}
+$("kind").onclick=e=>{const b=e.target.closest("[data-s]");if(b){PS.store=+b.dataset.s;drawKind()}};
+$("x2").onclick=()=>$("ov2").classList.remove("on");
+$("ov2").onclick=e=>{if(e.target==$("ov2"))$("ov2").classList.remove("on")};
+$("pf").onchange=e=>{
+ const f=e.target.files[0];if(!f||!/^image\//.test(f.type))return;
+ const r=new FileReader();
+ r.onload=()=>{const i=new Image();i.onload=()=>{const k=Math.min(1,480/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=i.width*k;c.height=i.height*k;c.getContext("2d").drawImage(i,0,0,c.width,c.height);PS.img=c.toDataURL("image/jpeg",.6);$("pfl").textContent=t("pimg_ok")};i.src=r.result};
+ r.readAsDataURL(f);
+};
+$("pub").onclick=async()=>{
+ const ti=$("pti").value.trim(),p=parseFloat($("pp").value);
+ const ig=$("pig").value.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i,"").replace(/^@/,"").replace(/[\/?].*$/,"");
+ let wb=$("pw").value.trim();if(wb&&!/^https?:\/\//i.test(wb))wb="https://"+wb;
+ let wa=$("pwa").value.replace(/\D/g,"");if(wa.length==8)wa="968"+wa;
+ const a={type:"ad",cat:$("pc").value,city:$("pct").value,t:ti,p,img:PS.img,ig:igOk(ig),web:webOk(wb),wa:waOk(wa),store:PS.store};
+ if(ti.length<3||!(p>=0)){toast(t("perr1"));return}
+ if(!a.ig&&!a.web&&!a.wa){toast(t("perr2"));return}
+ try{await api("/api/requests",{method:"POST",body:JSON.stringify(a)})}catch(e){toast(t("rfail"));return}
+ ["pti","pp","pig","pw","pwa"].forEach(i=>$(i).value="");PS.img="";$("pfl").textContent=t("pimg");
+ $("ov2").classList.remove("on");toast(t("pdone1"));
+};
+
+// ---- Store directory (Instagram pages, tagged by product) ----
+// [ar,en] tags; add more real pages here
+const SHOPS=[
+{n:"NS Gamer",ig:"ns.gamer.om",web:"https://www.nsonline.shop",cat:"gaming",e:"🎮",tags:[["كراسي جيمنج","Gaming chairs"],["طاولات","Desks"],["ستاندات","Stands"],["مستعمل","Used"]]},
+{n:"Nexus Team",ig:"nxs_om",wa:"96876077066",cat:"gaming",e:"🖱️",tags:[["ماوس باد","Mouse pads"]]},
+{n:"مستعمل عمان",ig:"mstamloman",cat:"",e:"🇴🇲",tags:[["إعلانات مستعمل","Used-item ads"]]}
+];
+function drawShops(){
+ const q=$("q").value.trim().toLowerCase(),base=[...SHOPS,...SHOPS_DB].filter(s=>!S.cat||!s.cat||s.cat==S.cat);
+ const tags=[...new Map(base.flatMap(s=>s.tags).map(x=>[x[1],x])).values()];
+ if(S.tag&&!tags.some(x=>x[1]==S.tag))S.tag="";
+ const l=base.filter(s=>(!S.tag||s.tags.some(x=>x[1]==S.tag))&&(!q||(s.n+" "+s.tags.join(" ")).toLowerCase().includes(q)));
+ const tg=x=>`<button class="chip${S.tag==x[1]?" on":""}" data-tg="${esc(x[1])}">${esc(nm(x,0))}</button>`,o=' target="_blank" rel="noopener noreferrer"';
+ $("shopsec").hidden=false;
+ const ct=CATS.find(c=>c[0]==S.cat),cy=CITIES.find(c=>c[0]==S.city),g=$("igs");
+ g.textContent=t("igs");g.href="https://www.google.com/search?q="+encodeURIComponent("site:instagram.com "+(ct?nm(ct,2):(L=="ar"?"متجر":"store"))+" "+(cy?nm(cy,1):(L=="ar"?"عمان":"Oman")));
+ $("stags").innerHTML=tags.map(tg).join("");
+ $("shops").innerHTML=!l.length?`<p class="mute">${t("noshop")}</p>`:l.map(s=>{const ig=igOk(s.ig),wb=webOk(s.web),wa=waOk(s.wa);
+  return `<div class="shop"><div class="av">${esc(s.e)}</div><div class="si"><b>${esc(s.n)}</b> <small class="mute">@${esc(ig)}</small><div class="chips tg">${s.tags.map(tg).join("")}</div><div class="lk">${ig?`<a href="https://www.instagram.com/${ig}/"${o}>📸 Instagram</a>`:""}${wb?`<a href="${esc(wb)}"${o}>🌐 ${t("web")}</a>`:""}${wa?`<a href="https://wa.me/${wa}"${o}>💬 WhatsApp</a>`:""}</div></div></div>`}).join("");
+}
+$("shopsec").onclick=e=>{const b=e.target.closest("[data-tg]");if(b){S.tag=S.tag==b.dataset.tg?"":b.dataset.tg;drawShops()}};
+
+// ---- Backend API (same origin by default; set window.SOUQ_API before this script to use another host) ----
+const API=(window.SOUQ_API||"").replace(/\/$/,"");
+let SHOPS_DB=[];
+async function api(p,o){const r=await fetch(API+p,{headers:{"Content-Type":"application/json"},...o});let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||String(r.status));return j}
+const normShop=x=>x&&x.id?{id:String(x.id),n:String(x.n||"").slice(0,60),ig:x.ig,web:x.web,wa:x.wa,cat:x.cat,e:String(x.e||"🛍️").slice(0,4),tags:(Array.isArray(x.tags)?x.tags:[]).filter(q=>typeof q=="string").slice(0,6).map(q=>[q.slice(0,30),q.slice(0,30)])}:null;
+async function loadData(){try{const[a,s]=await Promise.all([api("/api/ads"),api("/api/shops")]);REMOTE=a.items||[];SHOPS_DB=(s.items||[]).map(normShop).filter(Boolean);drawAds()}catch(e){}}
+$("rbtn").onclick=()=>$("ov3").classList.add("on");
+$("ov3").onclick=e=>{if(e.target==$("ov3"))$("ov3").classList.remove("on")};
+$("x3").onclick=()=>$("ov3").classList.remove("on");
+$("rsub").onclick=async()=>{
+ const n=$("rn").value.trim(),ig=$("rig").value.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i,"").replace(/^@/,"").replace(/[\/?].*$/,"");
+ let wb=$("rw").value.trim();if(wb&&!/^https?:\/\//i.test(wb))wb="https://"+wb;
+ let wa=$("rwa").value.replace(/\D/g,"");if(wa.length==8)wa="968"+wa;
+ const tags=$("rt").value.split(/[,،]/).map(x=>x.trim()).filter(Boolean).slice(0,6);
+ if(n.length<2||!igOk(ig)){toast(t("rerr"));return}
+ try{await api("/api/requests",{method:"POST",body:JSON.stringify({type:"shop",n,ig,web:webOk(wb),wa:waOk(wa),cat:$("rc").value,tags})});
+  ["rn","rig","rt","rw","rwa"].forEach(i=>$(i).value="");$("ov3").classList.remove("on");toast(t("rok"))}catch(e){toast(t("rfail"))}
+};
+setInterval(loadData,30000);
+lang();loadData();
+</script>
+</body>
+</html>

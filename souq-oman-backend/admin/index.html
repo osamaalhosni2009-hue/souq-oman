@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex,nofollow"><title>لوحة تحكم المطوّر</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--b:#f26a1b;--bg:#f3f4f7;--c:#fff;--ink:#1f2430;--m:#6b7280;--l:#e3e6ec;--ok:#0f9a4a;--no:#d92d20}
+@media(prefers-color-scheme:dark){:root{--bg:#10131a;--c:#1b1f27;--ink:#eef0f4;--m:#9aa3b2;--l:#2a2f3a;--ok:#3ddc84;--no:#ff6b60}}
+*{box-sizing:border-box;margin:0}
+body{font:16px/1.5 Tajawal,Tahoma,system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:env(safe-area-inset-bottom) 0}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}[hidden]{display:none!important}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#202634;color:#fff;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;position:sticky;top:0;z-index:5}
+.top b{font-size:18px}.top b span{color:var(--b)}
+.w{max-width:860px;margin:auto;padding:12px 14px 40px}
+.tb{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}
+.tb button{white-space:nowrap;padding:7px 14px;border-radius:99px;border:1px solid var(--l);background:var(--c)}
+.tb .on{background:var(--b);color:#fff;border-color:var(--b)}
+.cd{display:flex;gap:12px;background:var(--c);border:1px solid var(--l);border-radius:14px;padding:12px;margin-top:10px}
+.cd img{width:84px;height:84px;object-fit:cover;border-radius:10px}.cd>div{flex:1;min-width:0}
+.m{color:var(--m);font-size:13px}.m a{color:var(--b)}
+.rw{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.bt{padding:8px 14px;border-radius:10px;border:0;background:var(--b);color:#fff;font-weight:700}
+.bt.ok{background:var(--ok)}.bt.no{background:var(--no)}.bt.g{background:#3a4255}
+.fm{display:grid;gap:10px;margin-top:10px}
+input,select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--l);background:var(--c)}
+.lr{display:flex;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--l);font-size:13px}
+#lg{max-width:360px;margin:18vh auto 0;padding:20px;background:var(--c);border-radius:16px;border:1px solid var(--l);display:grid;gap:10px;text-align:center}
+.ts{position:fixed;bottom:20px;inset-inline:0;margin:auto;width:max-content;max-width:90%;background:#222;color:#fff;padding:10px 16px;border-radius:12px;opacity:0;transition:opacity .3s;pointer-events:none}.ts.on{opacity:1}
+</style></head><body>
+<div id="lg" hidden><h2>🛡️ لوحة تحكم المطوّر</h2><input id="pw" type="password" placeholder="كلمة المرور" autocomplete="current-password"><button class="bt" id="go">دخول</button></div>
+<div id="ap" hidden>
+ <div class="top"><b>🛡️ لوحة تحكم <span>سوق عُمان</span></b><button class="bt g" id="lo">خروج</button></div>
+ <div class="w"><p class="m" id="st"></p><div class="tb" id="tb"></div><div id="bd"></div></div>
+</div>
+<div class="ts" id="ts" role="status"></div>
+<script>
+const API=(window.SOUQ_API||"").replace(/\/$/,"");let T=sessionStorage.getItem("tk")||"",tab="ad";
+const $=i=>document.getElementById(i),esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=p=>Number(p).toLocaleString("en-US",{minimumFractionDigits:3,maximumFractionDigits:3})+" ر.ع.";
+const CAT={electronics:"إلكترونيات",gaming:"ألعاب وجيمنج",cars:"سيارات",property:"عقارات",fashion:"أزياء",home:"أثاث ومنزل",jobs:"وظائف",services:"خدمات",pets:"حيوانات"};
+const CITY={muscat:"مسقط",salalah:"صلالة",sohar:"صحار",nizwa:"نزوى",sur:"صور",rustaq:"الرستاق",buraimi:"البريمي"};
+function toast(m){const e=$("ts");e.textContent=m;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2200)}
+async function api(p,o={}){const r=await fetch(API+p,{...o,headers:{"Content-Type":"application/json",Authorization:"Bearer "+T}});let j={};try{j=await r.json()}catch(e){}if(r.status==401&&T)out();if(!r.ok)throw new Error(j.error||r.status);return j}
+function out(){T="";sessionStorage.removeItem("tk");show()}
+function show(){$("lg").hidden=!!T;$("ap").hidden=!T;if(T)load(true)}
+$("go").onclick=async()=>{try{const j=await api("/api/admin/login",{method:"POST",body:JSON.stringify({password:$("pw").value})});T=j.token;sessionStorage.setItem("tk",T);$("pw").value="";show()}catch(e){toast("كلمة المرور غير صحيحة أو محاولات كثيرة")}};
+$("pw").onkeydown=e=>{if(e.key=="Enter")$("go").click()};$("lo").onclick=out;
+const links=i=>[i.ig&&`<a href="https://www.instagram.com/${esc(i.ig)}/" target="_blank" rel="noopener noreferrer">📸 @${esc(i.ig)}</a>`,i.web&&`<a href="${esc(i.web)}" target="_blank" rel="noopener noreferrer">🌐 الموقع</a>`,i.wa&&`<a href="https://wa.me/${esc(i.wa)}" target="_blank" rel="noopener noreferrer">💬 واتساب</a>`].filter(Boolean).join(" · ");
+const btn=(a,id,n,c)=>`<button class="bt ${c}" data-a="${a}" data-i="${esc(id)}">${n}</button>`;
+const card=(i,acts)=>`<div class="cd">${i.img?`<img src="${API}${esc(i.img)}" alt="">`:""}<div><b>${i.type=="ad"?"📢 "+esc(i.t):"🏪 "+esc(i.n)}</b><p class="m">${i.type=="ad"?fmt(i.p)+" · "+esc(CITY[i.city]||i.city)+(i.store?" · متجر":""):esc((i.tags||[]).join("، "))} · ${esc(CAT[i.cat]||"")}</p><p class="m">${links(i)}</p><p class="m">${new Date(i.ts).toLocaleString("ar-OM")}${i.reason?" · سبب الرفض: "+esc(i.reason):""}</p><div class="rw">${acts}</div></div></div>`;
+async function load(full){
+ if(!T)return;
+ try{
+  const s=await api("/api/admin/stats");
+  $("st").textContent=`قيد المراجعة: ${s.pending} · منشور: ${s.approved} · مرفوض: ${s.rejected}`;
+  document.title=(s.pending?`(${s.pending}) `:"")+"لوحة تحكم المطوّر";
+  $("tb").innerHTML=[["ad",`طلبات الإعلانات (${s.pendingAds})`],["shop",`طلبات المتاجر (${s.pendingShops})`],["pub","المنشور"],["rej","المرفوض"],["add","إضافة متجر"],["log","السجل"]].map(([k,n])=>`<button class="${tab==k?"on":""}" data-t="${k}">${n}</button>`).join("");
+  if(!full&&(tab=="add"||tab=="log"))return;
+  const bd=$("bd");
+  if(tab=="ad"||tab=="shop"){const r=await api("/api/admin/requests?status=pending"),l=r.items.filter(i=>i.type==tab);bd.innerHTML=l.length?l.map(i=>card(i,btn("approve",i.id,"✅ قبول ونشر","ok")+btn("reject",i.id,"❌ رفض","no"))).join(""):'<p class="m" style="margin-top:12px">لا توجد طلبات.</p>'}
+  else if(tab=="pub"){const r=await api("/api/admin/requests?status=approved");bd.innerHTML=r.items.map(i=>card(i,btn("del",i.id,"🗑️ حذف","g"))).join("")||'<p class="m">لا شيء منشور بعد.</p>'}
+  else if(tab=="rej"){const r=await api("/api/admin/requests?status=rejected");bd.innerHTML=r.items.map(i=>card(i,btn("approve",i.id,"✅ قبول","ok")+btn("del",i.id,"🗑️ حذف","g"))).join("")||'<p class="m">لا شيء مرفوض.</p>'}
+  else if(tab=="log"){const r=await api("/api/admin/logs");bd.innerHTML=r.items.map(l=>`<div class="lr"><span>${new Date(l.ts).toLocaleString("ar-OM")}</span><b>${esc(l.action)}</b><span class="m">${esc(l.ip)} ${esc(l.id||"")}</span></div>`).join("")||'<p class="m">السجل فارغ.</p>'}
+  else{bd.innerHTML=`<div class="fm"><input id="an" placeholder="اسم المتجر أو الصفحة" maxlength="60"><input id="ai" placeholder="حساب إنستغرام (@name)" maxlength="80"><select id="ac">${Object.entries(CAT).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select><input id="at" placeholder="تصنيفات المنتجات بفاصلة"><input id="aw" placeholder="رابط الموقع (اختياري)" inputmode="url"><input id="aq" placeholder="واتساب (اختياري)" inputmode="tel"><button class="bt" id="as">نشر مباشرة</button></div>`;
+   $("as").onclick=async()=>{let w=$("aw").value.trim();if(w&&!/^https?:\/\//i.test(w))w="https://"+w;let q=$("aq").value.replace(/\D/g,"");if(q.length==8)q="968"+q;
+    try{await api("/api/admin/shops",{method:"POST",body:JSON.stringify({n:$("an").value,ig:$("ai").value.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i,"").replace(/^@/,"").replace(/[\/?].*$/,""),cat:$("ac").value,tags:$("at").value.split(/[,،]/),web:w,wa:q})});toast("تم النشر");tab="pub";load(true)}catch(e){toast("تحقق من الاسم وحساب إنستغرام")}}}
+ }catch(e){}
+}
+$("tb").onclick=e=>{const b=e.target.closest("[data-t]");if(b){tab=b.dataset.t;load(true)}};
+$("bd").onclick=async e=>{const b=e.target.closest("[data-a]");if(!b)return;const id=b.dataset.i,a=b.dataset.a;
+ try{
+  if(a=="reject"){const r=prompt("سبب الرفض (اختياري)");if(r===null)return;await api(`/api/admin/items/${id}/reject`,{method:"POST",body:JSON.stringify({reason:r})})}
+  else if(a=="approve")await api(`/api/admin/items/${id}/approve`,{method:"POST",body:"{}"});
+  else if(a=="del"){if(!confirm("حذف نهائي؟"))return;await api(`/api/admin/items/${id}`,{method:"DELETE"})}
+  toast("تم");load(true)}catch(err){toast("تعذّر تنفيذ العملية")}};
+setInterval(()=>load(false),20000);show();
+</script></body></html>
