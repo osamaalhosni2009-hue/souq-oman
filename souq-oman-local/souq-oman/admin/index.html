@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex,nofollow"><title>لوحة تحكم تقني عُمان</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--b:#f26a1b;--bg:#f3f4f7;--c:#fff;--ink:#1f2430;--m:#6b7280;--l:#e3e6ec;--ok:#0f9a4a;--no:#d92d20}
+@media(prefers-color-scheme:dark){:root{--bg:#10131a;--c:#1b1f27;--ink:#eef0f4;--m:#9aa3b2;--l:#2a2f3a;--ok:#3ddc84;--no:#ff6b60}}
+*{box-sizing:border-box;margin:0}
+body{font:16px/1.5 Tajawal,Tahoma,system-ui,sans-serif;background:var(--bg);color:var(--ink);padding:env(safe-area-inset-bottom) 0}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}[hidden]{display:none!important}
+.top{display:flex;justify-content:space-between;align-items:center;background:#202634;color:#fff;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;position:sticky;top:0;z-index:5}
+.top b span{color:var(--b)}
+.w{max-width:820px;margin:auto;padding:10px 14px 60px}
+.tb{display:flex;gap:6px;overflow-x:auto;padding:6px 0;scrollbar-width:none}
+.tb button{white-space:nowrap;padding:9px 16px;border-radius:99px;border:1px solid var(--l);background:var(--c);font-weight:700}
+.tb .on{background:var(--b);color:#fff;border-color:var(--b)}
+.cd{display:flex;gap:12px;background:var(--c);border:1px solid var(--l);border-radius:14px;padding:12px;margin-top:10px}
+.cd img{width:84px;height:84px;object-fit:cover;border-radius:10px}.cd>div{flex:1;min-width:0}
+.m{color:var(--m);font-size:13px}.m a{color:var(--b)}
+.rw{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.bt{padding:10px 16px;border-radius:10px;border:0;background:var(--b);color:#fff;font-weight:700}
+.bt.ok{background:var(--ok)}.bt.no{background:var(--no)}.bt.g{background:#3a4255}
+.fm{display:grid;gap:10px;margin-top:10px}
+input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--l);background:var(--c)}
+h3{margin:12px 0 4px}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px;background:var(--c);border:1px solid var(--l);border-radius:12px;margin-top:8px}
+.tgl{appearance:none;-webkit-appearance:none;width:46px!important;height:26px;padding:0!important;border-radius:99px;background:var(--l);position:relative;cursor:pointer;flex:none;border:0!important}
+.tgl:checked{background:var(--ok)}
+.tgl::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}
+.tgl:checked::after{inset-inline-start:23px}
+details{background:var(--c);border:1px solid var(--l);border-radius:12px;padding:12px;margin-top:12px}summary{cursor:pointer;font-weight:700}
+.lr{display:flex;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--l);font-size:13px}
+#lg{max-width:360px;margin:18vh auto 0;padding:20px;background:var(--c);border-radius:16px;border:1px solid var(--l);display:grid;gap:10px;text-align:center}
+.ts{position:fixed;bottom:20px;inset-inline:0;margin:auto;width:max-content;max-width:90%;background:#222;color:#fff;padding:10px 16px;border-radius:12px;opacity:0;transition:opacity .3s;pointer-events:none}.ts.on{opacity:1}
+</style></head><body>
+<div id="lg" hidden><h2>🛡️ لوحة التحكم</h2><input id="pw" type="password" placeholder="الرمز" autocomplete="current-password"><button class="bt" id="go">دخول</button></div>
+<div id="ap" hidden>
+ <div class="top"><b>🛡️ لوحة تحكم <span>تقني عُمان</span></b><button class="bt g" id="lo">خروج</button></div>
+ <div class="w"><div class="tb" id="tb"></div><div id="bd"></div></div>
+</div>
+<div class="ts" id="ts" role="status"></div>
+<script>
+const API=(window.SOUQ_API||"").replace(/\/$/,"");let T=sessionStorage.getItem("tk")||"",tab="req",flt="pending",pf="all",ps="approved",rsort="new",EDIT=null;
+let BULK=false;
+const $=i=>document.getElementById(i),esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=p=>Number(p).toLocaleString("en-US",{minimumFractionDigits:3,maximumFractionDigits:3})+" ر.ع.";
+const CAT={web:"تصميم وتطوير المواقع",apps:"تطوير التطبيقات",software:"البرمجة والأنظمة",support:"الدعم الفني والصيانة",network:"الشبكات والبنية التقنية",security:"الأمن السيبراني",ai:"الذكاء الاصطناعي",design:"التصميم الرقمي",cloud:"الاستضافة والسحابة"};
+const CITY={muscat:"مسقط",salalah:"صلالة",sohar:"صحار",nizwa:"نزوى",sur:"صور",rustaq:"الرستاق",buraimi:"البريمي"};
+const CTL=[["post","زر «أضف خدمة» أعلى الصفحة"],["lang","زر تغيير اللغة"],["hero","الترويسة الكبيرة (العنوان وزر التصوير والبحث)"],["shot","زر «أرفق صورة لعملك التقني»"],["search","شريط البحث"],["camsb","زر الكاميرا داخل شريط البحث"],["dock","الشريط السفلي كاملاً"],["dkcam","زر الكاميرا السفلي"],["sugg","زر «اقترح مقدم خدمة تقنية»"],["cities","قائمة المدن"],["cats","التصنيفات"],["shops","قسم مقدمي الخدمات التقنية"],["latest","قسم أحدث الخدمات التقنية"],["footer","التذييل"],["rating","تقييم المتاجر (النجوم)"],["userdel","زر «حذف إعلاني» لصاحب الإعلان"],["login","زر تسجيل الدخول بجوجل"]];
+const TXT=[["brand","اسم الموقع"],["post","نص زر أضف إعلان"],["rbtn","نص زر اقتراح مقدم خدمة"],["h1","العنوان الرئيسي"],["sub","الوصف تحت العنوان"],["shot","عنوان زر التصوير"],["shot2","وصف زر التصوير"],["go","نص زر البحث"],["ph","نص خانة البحث"],["latest","عنوان قسم الخدمات التقنية"],["shops","عنوان قسم مقدمي الخدمات"],["foot","نص التذييل"]];
+function toast(m){const e=$("ts");e.textContent=m;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2400)}
+async function api(p,o={}){const r=await fetch(API+p,{...o,headers:{"Content-Type":"application/json",Authorization:"Bearer "+T}});let j={};try{j=await r.json()}catch(e){}if(r.status==401&&T&&p!="/api/admin/login")out();if(!r.ok)throw new Error(j.error||r.status);return j}
+function out(){T="";sessionStorage.removeItem("tk");show()}
+function show(){$("lg").hidden=!!T;$("ap").hidden=!T;if(T)load(true)}
+$("go").onclick=async()=>{try{const j=await api("/api/admin/login",{method:"POST",body:JSON.stringify({password:$("pw").value})});T=j.token;sessionStorage.setItem("tk",T);$("pw").value="";show()}catch(e){toast("الرمز غير صحيح أو محاولات كثيرة")}};
+$("pw").onkeydown=e=>{if(e.key=="Enter")$("go").click()};$("lo").onclick=out;
+const cleanIg=v=>v.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i,"").replace(/^@/,"").replace(/[\/?].*$/,"");
+const fixUrl=w=>{w=w.trim();return w&&!/^https?:\/\//i.test(w)?"https://"+w:w};
+const fixWa=q=>{q=q.replace(/\D/g,"");return q.length==8?"968"+q:q};
+const links=i=>[i.ig&&`<a href="https://www.instagram.com/${esc(i.ig)}/" target="_blank" rel="noopener noreferrer">📸 @${esc(i.ig)}</a>`,i.web&&`<a href="${esc(i.web)}" target="_blank" rel="noopener noreferrer">🌐 الموقع</a>`,i.wa&&`<a href="https://wa.me/${esc(i.wa)}" target="_blank" rel="noopener noreferrer">💬 واتساب</a>`].filter(Boolean).join(" · ");
+const btn=(a,id,n,c)=>`<button class="bt ${c||""}" data-a="${a}" data-i="${esc(id)}">${n}</button>`;
+const card=(i,acts)=>`<div class="cd">${BULK&&i.type=="ad"?`<input type="checkbox" data-ck="${esc(i.id)}" style="width:22px!important;height:22px;padding:0;flex:none;margin-top:4px">`:""}${i.img?`<img src="${API}${esc(i.img)}" alt="">`:""}<div><b>${i.type=="ad"?"📢 "+esc(i.t):"🏪 "+esc(i.n)}</b><p class="m">${i.type=="ad"?fmt(i.p)+" · "+esc(CITY[i.city]||i.city)+(i.store?" · متجر":""):esc((i.tags||[]).map(x=>x.replace("|"," / ")).join("، "))} · ${esc(CAT[i.cat]||"")}</p><p class="m">${links(i)}</p><p class="m">${new Date(i.ts).toLocaleString("ar-OM")}${i.reason?" · سبب الرفض: "+esc(i.reason):""}</p><div class="rw">${acts}</div></div></div>`;
+const chips=(arr,cur,k)=>`<div class="tb">${arr.map(([v,n])=>`<button class="${cur==v?"on":""}" data-${k}="${v}">${n}</button>`).join("")}</div>`;
+async function load(full){
+ if(!T)return;
+ try{
+  const s=await api("/api/admin/stats");
+  document.title=(s.pending?`(${s.pending}) `:"")+"لوحة التحكم";
+  $("tb").innerHTML=[["req","📥 الطلبات"+(s.pending?` (${s.pending})`:"")],["pub","🏪 المنشور"],["rt","⭐ التقييمات"],["add",EDIT?"✏️ تعديل":"➕ إضافة"],["set","⚙️ التحكم بالموقع"],["log","📜 السجل"]].map(([k,n])=>`<button class="${tab==k?"on":""}" data-t="${k}">${n}</button>`).join("");
+  if(!full&&["add","set","log"].includes(tab))return;
+  BULK=false;await({req:rReq,pub:rPub,rt:rRt,add:rAdd,set:rSet,log:rLog})[tab]();
+ }catch(e){}
+}
+async function rReq(){
+ const r=await api("/api/admin/requests?status="+flt);
+ $("bd").innerHTML=chips([["pending","قيد المراجعة"],["rejected","المرفوضة"]],flt,"f")+(r.items.length?r.items.map(i=>card(i,btn("approve",i.id,"✅ قبول ونشر","ok")+(flt=="pending"?btn("reject",i.id,"❌ رفض","no"):btn("del",i.id,"🗑️ حذف","g")))).join(""):'<p class="m" style="margin-top:12px">لا توجد طلبات.</p>');
+}
+async function rPub(){
+ const r=await api("/api/admin/requests?status="+ps),l=r.items.filter(i=>pf=="all"||i.type==pf),hid=ps=="hidden",ty=pf=="all"?undefined:pf;BULK=pf=="ad";
+ $("bd").innerHTML=chips([["approved","👁️ ظاهر"],["hidden","🚫 مخفي"]],ps,"s")+chips([["all","الكل"],["shop","المتاجر"],["ad","الإعلانات"]],pf,"p")
+ +`<div class="rw" style="margin-top:6px">${hid?'<button class="bt ok" id="shall">👁️ إظهار الكل</button>':'<button class="bt g" id="hall2">🚫 إخفاء الكل</button>'}${BULK&&l.length?'<button class="bt g" id="bsel">تحديد الكل</button><button class="bt g" id="bhs">'+(hid?"👁️ إظهار المحدد":"🚫 إخفاء المحدد")+'</button><button class="bt no" id="bdel">🗑️ حذف المحدد</button><button class="bt no" id="ball">🗑️ حذف الكل</button>':""}</div>`
+ +(l.length?l.map(i=>card(i,(i.type=="shop"?btn("edit",i.id,"✏️ تعديل","g"):"")+(hid?btn("show",i.id,"👁️ إظهار","ok"):btn("hide",i.id,"🚫 إخفاء","g"))+btn("del",i.id,"🗑️ حذف","no"))).join(""):'<p class="m" style="margin-top:12px">لا شيء هنا.</p>');
+ const bulk=async(a,msg)=>{if(msg&&!confirm(msg))return;try{const x=await api("/api/admin/bulk",{method:"POST",body:JSON.stringify(a)});toast(`تم تغيير ${x.changed}`);load(true)}catch(e){toast("تعذّر التنفيذ")}};
+ if($("shall"))$("shall").onclick=()=>bulk({action:"show",all:true,type:ty});
+ if($("hall2"))$("hall2").onclick=()=>bulk({action:"hide",all:true,type:ty},"إخفاء كل العناصر الظاهرة في هذا القسم؟");
+ if(BULK&&l.length){
+  const sel=()=>[...document.querySelectorAll("[data-ck]:checked")].map(x=>x.dataset.ck);
+  $("bsel").onclick=()=>{const c=[...document.querySelectorAll("[data-ck]")],all=c.every(x=>x.checked);c.forEach(x=>x.checked=!all)};
+  $("bhs").onclick=()=>{const ids=sel();if(!ids.length){toast("حدد إعلاناً أولاً");return}bulk({action:hid?"show":"hide",ids})};
+  $("bdel").onclick=async()=>{const ids=sel();if(!ids.length){toast("حدد إعلاناً أولاً");return}if(!confirm(`حذف ${ids.length} إعلان نهائياً؟`))return;try{const x=await api("/api/admin/ads/delete",{method:"POST",body:JSON.stringify({ids})});toast(`تم حذف ${x.deleted}`);load(true)}catch(e){toast("تعذّر الحذف")}};
+  $("ball").onclick=async()=>{if(!confirm("حذف كل الإعلانات في هذه القائمة نهائياً؟ لا يمكن التراجع."))return;try{const x=await api("/api/admin/ads/delete",{method:"POST",body:JSON.stringify({all:true,status:ps})});toast(`تم حذف ${x.deleted}`);load(true)}catch(e){toast("تعذّر الحذف")}};
+ }
+}
+async function rRt(){
+ const r=await api("/api/admin/ratings"),l=r.items.slice().sort((a,b)=>rsort=="high"?b.stars-a.stars||b.ts-a.ts:rsort=="low"?a.stars-b.stars||b.ts-a.ts:b.ts-a.ts);
+ $("bd").innerHTML=chips([["new","الأحدث"],["high","الأعلى"],["low","الأدنى"]],rsort,"r")+(l.length?l.map(x=>`<div class="cd"><div><b>${esc(x.shopName||"—")}</b> <span style="color:#f5b301">${"★".repeat(x.stars)}${"☆".repeat(5-x.stars)}</span><p>${esc(x.text||"")}</p><p class="m">${new Date(x.ts).toLocaleString("ar-OM")}</p><div class="rw">${btn("delr",x.id,"🗑️ حذف التقييم","no")}</div></div></div>`).join(""):'<p class="m" style="margin-top:12px">لا توجد تقييمات بعد.</p>');
+}
+async function rLog(){const r=await api("/api/admin/logs");$("bd").innerHTML=r.items.map(l=>`<div class="lr"><span>${new Date(l.ts).toLocaleString("ar-OM")}</span><b>${esc(l.action)}</b><span class="m">${esc(l.ip)} ${esc(l.id||"")}</span></div>`).join("")||'<p class="m">السجل فارغ.</p>'}
+function rAdd(){
+ const e=EDIT||{n:"",ig:"",cat:"",city:"",tags:[],web:"",wa:"",logo:""},opt=(o,v)=>Object.entries(o).map(([k,n])=>`<option value="${k}"${v==k?" selected":""}>${n}</option>`).join("");
+ $("bd").innerHTML=`<div class="fm"><h3>${EDIT?"تعديل متجر":"إضافة متجر جديد"}</h3><input id="an" placeholder="اسم المتجر أو الصفحة" maxlength="60" value="${esc(e.n)}"><input id="ai" placeholder="حساب إنستغرام (@name)" value="${esc(e.ig)}"><select id="ac"><option value="">بدون تصنيف</option>${opt(CAT,e.cat)}</select><select id="ay"><option value="">كل المدن</option>${opt(CITY,e.city)}</select><input id="at" placeholder="الوسوم بفاصلة، مثال: كراسي جيمنج|Gaming chairs, طاولات" value="${esc((e.tags||[]).join(", "))}"><input id="aw" placeholder="رابط الموقع (اختياري)" value="${esc(e.web)}"><input id="aq" placeholder="واتساب (اختياري)" value="${esc(e.wa)}"><input id="al" placeholder="رابط صورة الشعار (اختياري)" value="${esc(e.logo||"")}"><button class="bt" id="as">${EDIT?"حفظ التعديل":"نشر مباشرة"}</button>${EDIT?'<button class="bt g" id="ax">إلغاء التعديل</button>':""}</div>
+<details><summary>استيراد جماعي للمتاجر</summary><div class="fm"><p class="m">سطر لكل متجر: الاسم | إنستغرام | التصنيف | المدينة | وسوم بفاصلة | الموقع | واتساب | رابط الشعار (اترك الخانة فارغة عند عدم الحاجة)</p><textarea id="it" rows="6" placeholder="ورشة النور | alnoor_garage | خدمات | صحار | سيارات, بطاريات | https://example.om | 91234567"></textarea><button class="bt" id="ib">استيراد ونشر</button></div></details>
+<details><summary>إضافة منتجات لمتجر</summary><div class="fm"><p class="m">سطر لكل منتج: المتجر (الاسم أو حساب إنستغرام) | اسم المنتج | السعر بالريال | رابط المنتج</p><textarea id="pt" rows="6" placeholder="NS Gamer | كرسي جيمنج | 49.9 | https://nsonline.shop/products/..."></textarea><button class="bt" id="pb">إضافة المنتجات</button></div></details>`;
+ $("as").onclick=async()=>{const b={n:$("an").value,ig:cleanIg($("ai").value),cat:$("ac").value,city:$("ay").value,tags:$("at").value.split(/[,،]/).map(x=>x.trim()).filter(Boolean),web:fixUrl($("aw").value),wa:fixWa($("aq").value),logo:$("al").value.trim()};
+  try{await api(EDIT?`/api/admin/items/${EDIT.id}/edit`:"/api/admin/shops",{method:"POST",body:JSON.stringify(b)});toast(EDIT?"تم حفظ التعديل":"تم النشر");EDIT=null;tab="pub";load(true)}catch(err){toast("تحقق من الاسم ووسيلة تواصل واحدة على الأقل")}};
+ if($("ax"))$("ax").onclick=()=>{EDIT=null;load(true)};
+ const rv=o=>Object.fromEntries(Object.entries(o).map(([k,v])=>[v,k]));
+ $("ib").onclick=async()=>{const C=rv(CAT),Y=rv(CITY),items=$("it").value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(a=>({n:a[0],ig:cleanIg(a[1]||""),cat:C[a[2]]||a[2],city:Y[a[3]]||a[3],tags:(a[4]||"").split(/[,،]/).map(x=>x.trim()).filter(Boolean),web:fixUrl(a[5]||""),wa:fixWa(a[6]||""),logo:a[7]||""}));
+  try{const r=await api("/api/admin/import",{method:"POST",body:JSON.stringify({items})});toast(`تم نشر ${r.added} · غير مقبول ${r.failed.length}`);if(r.failed.length)alert("لم تُقبل هذه الأسطر:\n"+r.failed.join("\n"));else{tab="pub";load(true)}}catch(err){toast("تعذّر الاستيراد")}};
+ $("pb").onclick=async()=>{const items=$("pt").value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]&&a[1]).map(a=>({shop:a[0],t:a[1],p:parseFloat(a[2])||0,u:a[3]||""}));
+  try{const r=await api("/api/admin/products",{method:"POST",body:JSON.stringify({items})});toast(`أُضيف ${r.added} · غير مقبول ${r.failed.length}`);if(r.failed.length)alert("متجر غير معروف في الأسطر:\n"+r.failed.join("\n"))}catch(err){toast("تعذّرت الإضافة")}};
+}
+async function rSet(){
+ const st=await api("/api/settings"),h=st.hidden||[],tx=st.text||{},co=st.catOrder||[],ord=[...co,...Object.keys(CAT).filter(k=>!co.includes(k))];
+ const sw=(attr,on,label)=>`<label class="sw"><span>${label}</span><input type="checkbox" class="tgl" ${attr}${on?" checked":""}></label>`;
+ $("bd").innerHTML=`<h3>الأزرار والأقسام (شغّل = ظاهر، أطفئ = مخفي)</h3><div class="rw"><button class="bt g" id="sall">👁️ إظهار الكل</button><button class="bt g" id="hall">🚫 إخفاء الكل</button></div>${CTL.map(([k,n])=>sw(`data-c="${k}"`,!h.includes(k),n)).join("")}
+<h3 style="margin-top:18px">ترتيب التصنيفات وإظهارها</h3><div id="cl">${ord.map(k=>`<div class="sw" data-cat="${k}"><span>${CAT[k]}</span><span class="rw" style="margin:0;flex-wrap:nowrap"><button class="bt g" data-mv="-1" style="padding:6px 12px">↑</button><button class="bt g" data-mv="1" style="padding:6px 12px">↓</button><input type="checkbox" class="tgl" data-cv${h.includes("cat_"+k)?"":" checked"}></span></div>`).join("")}</div>
+<h3 style="margin-top:18px">ترتيب المتاجر حسب</h3><select id="srt"><option value="rating"${!st.sort||st.sort=="rating"?" selected":""}>الأعلى تقييماً</option><option value="new"${st.sort=="new"?" selected":""}>الأحدث</option><option value="name"${st.sort=="name"?" selected":""}>الاسم</option></select>
+<h3 style="margin-top:18px">تسجيل الدخول بجوجل</h3>${sw('id="rql"',st.requireLogin,"اشتراط تسجيل الدخول لنشر الإعلانات والتقييم")}<p class="m">${st.google?"✅ ربط جوجل مفعّل.":"⚠️ ربط جوجل غير مفعّل: أضف GOOGLE_CLIENT_ID في config.env (أو في متغيرات Render) ثم أعد التشغيل."}</p>
+<h3 style="margin-top:18px">النصوص (اتركها فارغة لتبقى الأصلية)</h3>${TXT.map(([k,n])=>`<div class="fm"><b class="m">${n}</b><input data-x="ar.${k}" placeholder="العربية" value="${esc((tx.ar||{})[k]||"")}"><input data-x="en.${k}" placeholder="English" dir="ltr" value="${esc((tx.en||{})[k]||"")}"></div>`).join("")}<button class="bt" id="ss" style="margin-top:16px;width:100%">💾 حفظ التغييرات</button><a class="m" href="/" target="_blank" rel="noopener" style="display:block;margin-top:10px">فتح الموقع لمعاينة التغييرات ↗</a><h3 style="margin-top:22px">🔐 رمز الدخول</h3><div class="fm"><input id="nc" type="password" placeholder="الرمز الجديد (8 أحرف أو أكثر)" autocomplete="new-password"><button class="bt g" id="cc">تغيير الرمز</button></div>`;
+ $("sall").onclick=()=>document.querySelectorAll("[data-c],[data-cv]").forEach(x=>x.checked=true);
+ $("hall").onclick=()=>document.querySelectorAll("[data-c],[data-cv]").forEach(x=>x.checked=false);
+ $("cl").onclick=e=>{const b=e.target.closest("[data-mv]");if(!b)return;const row=b.closest("[data-cat]"),d=+b.dataset.mv;if(d<0&&row.previousElementSibling)row.parentNode.insertBefore(row,row.previousElementSibling);if(d>0&&row.nextElementSibling)row.parentNode.insertBefore(row.nextElementSibling,row)};
+ $("cc").onclick=async()=>{const c=$("nc").value;if(c.length<8){toast("8 أحرف على الأقل");return}if(!confirm("سيُسجَّل خروجك ويصبح هذا هو رمز الدخول. متابعة؟"))return;
+  try{await api("/api/admin/code",{method:"POST",body:JSON.stringify({code:c})});toast("تم تغيير الرمز، سجّل الدخول به");out()}catch(err){toast("تعذّر تغيير الرمز")}};
+ $("ss").onclick=async()=>{
+  const hidden=[...document.querySelectorAll("[data-c]")].filter(x=>!x.checked).map(x=>x.dataset.c).concat([...document.querySelectorAll("[data-cat]")].filter(r=>!r.querySelector("[data-cv]").checked).map(r=>"cat_"+r.dataset.cat)),text={ar:{},en:{}};
+  document.querySelectorAll("[data-x]").forEach(x=>{const[l,k]=x.dataset.x.split(".");if(x.value.trim())text[l][k]=x.value.trim()});
+  try{await api("/api/admin/settings",{method:"POST",body:JSON.stringify({hidden,text,requireLogin:$("rql").checked,sort:$("srt").value,catOrder:[...document.querySelectorAll("[data-cat]")].map(r=>r.dataset.cat)})});toast("تم الحفظ، والتغيير يظهر في الموقع فوراً")}catch(err){toast("تعذّر الحفظ")}};
+}
+$("tb").onclick=e=>{const b=e.target.closest("[data-t]");if(b){tab=b.dataset.t;if(tab!="add")EDIT=null;load(true)}};
+$("bd").onclick=async e=>{
+ const f=e.target.closest("[data-f]");if(f){flt=f.dataset.f;load(true);return}
+ const p=e.target.closest("[data-p]");if(p){pf=p.dataset.p;load(true);return}
+ const sS=e.target.closest("[data-s]");if(sS){ps=sS.dataset.s;load(true);return}
+ const rr=e.target.closest("[data-r]");if(rr){rsort=rr.dataset.r;load(true);return}
+ const b=e.target.closest("[data-a]");if(!b)return;const id=b.dataset.i,a=b.dataset.a;
+ try{
+  if(a=="edit"){const r=await api("/api/admin/requests?status=approved");EDIT=r.items.find(x=>x.id==id)||null;tab="add";load(true);return}
+  if(a=="reject"&&flt=="pending"&&tab=="req"){const r=prompt("سبب الرفض (اختياري)");if(r===null)return;await api(`/api/admin/items/${id}/reject`,{method:"POST",body:JSON.stringify({reason:r})})}
+  else if(a=="reject")await api(`/api/admin/items/${id}/reject`,{method:"POST",body:"{}"});
+  else if(a=="hide")await api(`/api/admin/items/${id}/hide`,{method:"POST",body:"{}"});
+  else if(a=="show"||a=="approve")await api(`/api/admin/items/${id}/approve`,{method:"POST",body:"{}"});
+  else if(a=="delr"){await api(`/api/admin/ratings/${id}`,{method:"DELETE"})}
+  else if(a=="del"){if(!confirm("حذف نهائي؟"))return;await api(`/api/admin/items/${id}`,{method:"DELETE"})}
+  toast("تم");load(true)}catch(err){toast("تعذّر تنفيذ العملية")}};
+setInterval(()=>load(false),20000);show();
+</script></body></html>
