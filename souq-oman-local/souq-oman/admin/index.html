@@ -124,8 +124,8 @@ function rAdd(){
  $("pb").onclick=async()=>{const items=$("pt").value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]&&a[1]).map(a=>({shop:a[0],t:a[1],p:parseFloat(a[2])||0,u:a[3]||""}));
   try{const r=await api("/api/admin/products",{method:"POST",body:JSON.stringify({items})});toast(`أُضيف ${r.added} · غير مقبول ${r.failed.length}`);if(r.failed.length)alert("متجر غير معروف في الأسطر:\n"+r.failed.join("\n"))}catch(err){toast("تعذّرت الإضافة")}};
 }
-function rLang(){
- const st=window.__langSettings||{};
+async function rLang(){
+ const st=await api("/api/settings");window.__langSettings=st;
  const tx=st.text||{};
  const fields=[["brand","اسم المنصة"],["post","زر إضافة إعلان"],["rbtn","زر اقتراح مقدم خدمة"],["h1","العنوان الرئيسي"],["sub","الوصف"],["go","زر البحث"],["ph","نص البحث"],["latest","عنوان أحدث الخدمات"],["shops","عنوان مقدمي الخدمات"],["foot","التذييل"]];
  $("bd").innerHTML=`<h3>إعدادات اللغات</h3><p class="m">يمكن للزائر التبديل بين العربية والإنجليزية من زر اللغة أعلى الموقع. عدّل النصوص هنا وحدد اللغة الافتراضية للزوار الجدد.</p><label class="m">اللغة الافتراضية</label><select id="deflang"><option value="ar" ${(st.defaultLang||"ar")==="ar"?"selected":""}>العربية</option><option value="en" ${st.defaultLang==="en"?"selected":""}>English</option></select>${fields.map(([k,n])=>`<div class="fm"><b class="m">${n}</b><input data-lx="ar.${k}" placeholder="النص بالعربية" value="${esc((tx.ar||{})[k]||"")}"><input data-lx="en.${k}" dir="ltr" placeholder="English text" value="${esc((tx.en||{})[k]||"")}"></div>`).join("")}<button class="bt" id="langSave" style="width:100%;margin-top:14px">💾 حفظ إعدادات اللغات</button>`;
