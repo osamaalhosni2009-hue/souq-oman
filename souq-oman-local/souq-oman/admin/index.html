@@ -65,9 +65,9 @@ async function load(full){
  try{
   const s=await api("/api/admin/stats");
   document.title=(s.pending?`(${s.pending}) `:"")+"لوحة التحكم";
-  $("tb").innerHTML=[["req","📥 الطلبات"+(s.pending?` (${s.pending})`:"")],["pub","🏪 المنشور"],["rt","⭐ التقييمات"],["add",EDIT?"✏️ تعديل":"➕ إضافة"],["set","⚙️ التحكم بالموقع"],["log","📜 السجل"]].map(([k,n])=>`<button class="${tab==k?"on":""}" data-t="${k}">${n}</button>`).join("");
-  if(!full&&["add","set","log"].includes(tab))return;
-  BULK=false;await({req:rReq,pub:rPub,rt:rRt,add:rAdd,set:rSet,log:rLog})[tab]();
+  $("tb").innerHTML=[["req","📥 الطلبات"+(s.pending?` (${s.pending})`:"")],["pub","🏪 المنشور"],["rt","⭐ التقييمات"],["ad","📢 إضافة إعلان"],["add",EDIT?"✏️ تعديل":"➕ إضافة مقدم خدمة"],["lang","🌐 اللغات"],["set","⚙️ التحكم بالموقع"],["log","📜 السجل"]].map(([k,n])=>`<button class="${tab==k?"on":""}" data-t="${k}">${n}</button>`).join("");
+  if(!full&&["add","ad","lang","set","log"].includes(tab))return;
+  BULK=false;await({req:rReq,pub:rPub,rt:rRt,ad:rAd,add:rAdd,lang:rLang,set:rSet,log:rLog})[tab]();
  }catch(e){}
 }
 async function rReq(){
@@ -92,9 +92,24 @@ async function rPub(){
 }
 async function rRt(){
  const r=await api("/api/admin/ratings"),l=r.items.slice().sort((a,b)=>rsort=="high"?b.stars-a.stars||b.ts-a.ts:rsort=="low"?a.stars-b.stars||b.ts-a.ts:b.ts-a.ts);
- $("bd").innerHTML=chips([["new","الأحدث"],["high","الأعلى"],["low","الأدنى"]],rsort,"r")+(l.length?l.map(x=>`<div class="cd"><div><b>${esc(x.shopName||"—")}</b> <span style="color:#f5b301">${"★".repeat(x.stars)}${"☆".repeat(5-x.stars)}</span><p>${esc(x.text||"")}</p><p class="m">${new Date(x.ts).toLocaleString("ar-OM")}</p><div class="rw">${btn("delr",x.id,"🗑️ حذف التقييم","no")}</div></div></div>`).join(""):'<p class="m" style="margin-top:12px">لا توجد تقييمات بعد.</p>');
+ $("bd").innerHTML=chips([["new","الأحدث"],["high","الأعلى"],["low","الأدنى"]],rsort,"r")+(l.length?l.map(x=>`<div class="cd"><div><b>${esc(x.shopName||"—")}</b> <span style="color:#f5b301">${"★".repeat(x.stars)}${"☆".repeat(5-x.stars)}</span><p>${esc(x.text||"")}</p><p class="m">${x.verified?"<span style=\"color:#16834a;font-weight:700\">✓ حساب Google موثّق</span>":"<span style=\"color:#b7791f;font-weight:700\">تقييم قديم – لا توجد بيانات تحقق</span>"}</p><p class="m">${esc(x.userName||"غير معروف")} · ${esc(x.userEmail||"لا يوجد بريد مرتبط")}</p><p class="m">${new Date(x.ts).toLocaleString("ar-OM")}</p><div class="rw">${btn("delr",x.id,"🗑️ حذف التقييم","no")}</div></div></div>`).join(""):'<p class="m" style="margin-top:12px">لا توجد تقييمات بعد.</p>');
 }
 async function rLog(){const r=await api("/api/admin/logs");$("bd").innerHTML=r.items.map(l=>`<div class="lr"><span>${new Date(l.ts).toLocaleString("ar-OM")}</span><b>${esc(l.action)}</b><span class="m">${esc(l.ip)} ${esc(l.id||"")}</span></div>`).join("")||'<p class="m">السجل فارغ.</p>'}
+function rAd(){
+ const cities={muscat:"مسقط",salalah:"صلالة",sohar:"صحار",nizwa:"نزوى",sur:"صور",rustaq:"الرستاق",buraimi:"البريمي"};
+ const opt=Object.entries(CAT).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+ const city=Object.entries(cities).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+ $("bd").innerHTML=`<div class="fm"><h3>إضافة إعلان تقني جديد</h3><p class="m">يُنشر الإعلان مباشرة على الموقع بعد حفظه.</p><input id="adt" maxlength="80" placeholder="عنوان الإعلان أو الخدمة"><select id="adc"><option value="">اختر التصنيف</option>${opt}</select><select id="ady">${city}</select><input id="adp" type="number" min="0" step="0.001" placeholder="السعر بالريال العُماني"><input id="adi" maxlength="30" placeholder="حساب إنستغرام (اختياري)"><input id="adw" maxlength="200" placeholder="رابط الموقع (اختياري)"><input id="adwa" maxlength="15" placeholder="رقم واتساب (اختياري)"><label class="sw"><span>صورة الإعلان (اختياري)</span><input id="adf" type="file" accept="image/png,image/jpeg,image/webp"></label><button class="bt" id="adsave">📢 نشر الإعلان</button></div>`;
+ $("adsave").onclick=async()=>{
+  const title=$("adt").value.trim(),price=Number($("adp").value),ig=cleanIg($("adi").value),web=fixUrl($("adw").value),wa=fixWa($("adwa").value),cat=$("adc").value;
+  if(title.length<3||!Number.isFinite(price)||price<0||!cat||(!ig&&!web&&!wa)){toast("أكمل العنوان والتصنيف والسعر ووسيلة تواصل واحدة");return}
+  const file=$("adf").files[0];
+  const send=async img=>{try{await api("/api/admin/ads",{method:"POST",body:JSON.stringify({t:title,p:price,cat,city:$("ady").value,ig,web,wa,img})});toast("تم نشر الإعلان");tab="pub";pf="ad";ps="approved";load(true)}catch(e){toast("تعذّر النشر. تأكد أن الصورة أقل من 400 كيلوبايت")}};
+  if(!file){send("");return}
+  if(!/^image\/(png|jpeg|webp)$/.test(file.type)||file.size>400*1024){toast("اختر صورة PNG أو JPG أو WEBP أقل من 400 كيلوبايت");return}
+  const reader=new FileReader();reader.onload=()=>send(reader.result);reader.onerror=()=>toast("تعذرت قراءة الصورة");reader.readAsDataURL(file);
+ };
+}
 function rAdd(){
  const e=EDIT||{n:"",ig:"",cat:"",city:"",tags:[],web:"",wa:"",logo:""},opt=(o,v)=>Object.entries(o).map(([k,n])=>`<option value="${k}"${v==k?" selected":""}>${n}</option>`).join("");
  $("bd").innerHTML=`<div class="fm"><h3>${EDIT?"تعديل متجر":"إضافة متجر جديد"}</h3><input id="an" placeholder="اسم المتجر أو الصفحة" maxlength="60" value="${esc(e.n)}"><input id="ai" placeholder="حساب إنستغرام (@name)" value="${esc(e.ig)}"><select id="ac"><option value="">بدون تصنيف</option>${opt(CAT,e.cat)}</select><select id="ay"><option value="">كل المدن</option>${opt(CITY,e.city)}</select><input id="at" placeholder="الوسوم بفاصلة، مثال: كراسي جيمنج|Gaming chairs, طاولات" value="${esc((e.tags||[]).join(", "))}"><input id="aw" placeholder="رابط الموقع (اختياري)" value="${esc(e.web)}"><input id="aq" placeholder="واتساب (اختياري)" value="${esc(e.wa)}"><input id="al" placeholder="رابط صورة الشعار (اختياري)" value="${esc(e.logo||"")}"><button class="bt" id="as">${EDIT?"حفظ التعديل":"نشر مباشرة"}</button>${EDIT?'<button class="bt g" id="ax">إلغاء التعديل</button>':""}</div>
@@ -109,13 +124,20 @@ function rAdd(){
  $("pb").onclick=async()=>{const items=$("pt").value.split("\n").map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]&&a[1]).map(a=>({shop:a[0],t:a[1],p:parseFloat(a[2])||0,u:a[3]||""}));
   try{const r=await api("/api/admin/products",{method:"POST",body:JSON.stringify({items})});toast(`أُضيف ${r.added} · غير مقبول ${r.failed.length}`);if(r.failed.length)alert("متجر غير معروف في الأسطر:\n"+r.failed.join("\n"))}catch(err){toast("تعذّرت الإضافة")}};
 }
+function rLang(){
+ const st=window.__langSettings||{};
+ const tx=st.text||{};
+ const fields=[["brand","اسم المنصة"],["post","زر إضافة إعلان"],["rbtn","زر اقتراح مقدم خدمة"],["h1","العنوان الرئيسي"],["sub","الوصف"],["go","زر البحث"],["ph","نص البحث"],["latest","عنوان أحدث الخدمات"],["shops","عنوان مقدمي الخدمات"],["foot","التذييل"]];
+ $("bd").innerHTML=`<h3>إعدادات اللغات</h3><p class="m">يمكن للزائر التبديل بين العربية والإنجليزية من زر اللغة أعلى الموقع. عدّل النصوص هنا وحدد اللغة الافتراضية للزوار الجدد.</p><label class="m">اللغة الافتراضية</label><select id="deflang"><option value="ar" ${(st.defaultLang||"ar")==="ar"?"selected":""}>العربية</option><option value="en" ${st.defaultLang==="en"?"selected":""}>English</option></select>${fields.map(([k,n])=>`<div class="fm"><b class="m">${n}</b><input data-lx="ar.${k}" placeholder="النص بالعربية" value="${esc((tx.ar||{})[k]||"")}"><input data-lx="en.${k}" dir="ltr" placeholder="English text" value="${esc((tx.en||{})[k]||"")}"></div>`).join("")}<button class="bt" id="langSave" style="width:100%;margin-top:14px">💾 حفظ إعدادات اللغات</button>`;
+ $("langSave").onclick=async()=>{const text={ar:{},en:{}};document.querySelectorAll("[data-lx]").forEach(x=>{const[l,k]=x.dataset.lx.split(".");if(x.value.trim())text[l][k]=x.value.trim()});try{await api("/api/admin/settings",{method:"POST",body:JSON.stringify({hidden:st.hidden||[],text,requireLogin:st.requireLogin||false,sort:st.sort||"rating",catOrder:st.catOrder||[],defaultLang:$("deflang").value})});toast("تم حفظ اللغات");rLang()}catch(e){toast("تعذّر حفظ إعدادات اللغات")}};
+}
 async function rSet(){
- const st=await api("/api/settings"),h=st.hidden||[],tx=st.text||{},co=st.catOrder||[],ord=[...co,...Object.keys(CAT).filter(k=>!co.includes(k))];
+ const st=await api("/api/settings"),h=st.hidden||[],tx=st.text||{},co=st.catOrder||[],ord=[...co,...Object.keys(CAT).filter(k=>!co.includes(k))];window.__langSettings=st;
  const sw=(attr,on,label)=>`<label class="sw"><span>${label}</span><input type="checkbox" class="tgl" ${attr}${on?" checked":""}></label>`;
  $("bd").innerHTML=`<h3>الأزرار والأقسام (شغّل = ظاهر، أطفئ = مخفي)</h3><div class="rw"><button class="bt g" id="sall">👁️ إظهار الكل</button><button class="bt g" id="hall">🚫 إخفاء الكل</button></div>${CTL.map(([k,n])=>sw(`data-c="${k}"`,!h.includes(k),n)).join("")}
 <h3 style="margin-top:18px">ترتيب التصنيفات وإظهارها</h3><div id="cl">${ord.map(k=>`<div class="sw" data-cat="${k}"><span>${CAT[k]}</span><span class="rw" style="margin:0;flex-wrap:nowrap"><button class="bt g" data-mv="-1" style="padding:6px 12px">↑</button><button class="bt g" data-mv="1" style="padding:6px 12px">↓</button><input type="checkbox" class="tgl" data-cv${h.includes("cat_"+k)?"":" checked"}></span></div>`).join("")}</div>
 <h3 style="margin-top:18px">ترتيب المتاجر حسب</h3><select id="srt"><option value="rating"${!st.sort||st.sort=="rating"?" selected":""}>الأعلى تقييماً</option><option value="new"${st.sort=="new"?" selected":""}>الأحدث</option><option value="name"${st.sort=="name"?" selected":""}>الاسم</option></select>
-<h3 style="margin-top:18px">تسجيل الدخول بجوجل</h3>${sw('id="rql"',st.requireLogin,"اشتراط تسجيل الدخول لنشر الإعلانات والتقييم")}<p class="m">${st.google?"✅ ربط جوجل مفعّل.":"⚠️ ربط جوجل غير مفعّل: أضف GOOGLE_CLIENT_ID في config.env (أو في متغيرات Render) ثم أعد التشغيل."}</p>
+<h3 style="margin-top:18px">تسجيل الدخول بجوجل</h3>${sw('id="rql"',st.requireLogin,"اشتراط تسجيل الدخول لنشر الإعلانات")}<p class="m">التقييمات تتطلب دائماً حساب Google موثّقاً، حتى إذا أوقفت هذا الخيار. ${st.google?"✅ ربط جوجل مفعّل.":"⚠️ أضف GOOGLE_CLIENT_ID في إعدادات Render لتفعيل تسجيل الدخول."}</p>
 <h3 style="margin-top:18px">النصوص (اتركها فارغة لتبقى الأصلية)</h3>${TXT.map(([k,n])=>`<div class="fm"><b class="m">${n}</b><input data-x="ar.${k}" placeholder="العربية" value="${esc((tx.ar||{})[k]||"")}"><input data-x="en.${k}" placeholder="English" dir="ltr" value="${esc((tx.en||{})[k]||"")}"></div>`).join("")}<button class="bt" id="ss" style="margin-top:16px;width:100%">💾 حفظ التغييرات</button><a class="m" href="/" target="_blank" rel="noopener" style="display:block;margin-top:10px">فتح الموقع لمعاينة التغييرات ↗</a><h3 style="margin-top:22px">🔐 رمز الدخول</h3><div class="fm"><input id="nc" type="password" placeholder="الرمز الجديد (8 أحرف أو أكثر)" autocomplete="new-password"><button class="bt g" id="cc">تغيير الرمز</button></div>`;
  $("sall").onclick=()=>document.querySelectorAll("[data-c],[data-cv]").forEach(x=>x.checked=true);
  $("hall").onclick=()=>document.querySelectorAll("[data-c],[data-cv]").forEach(x=>x.checked=false);
@@ -125,7 +147,7 @@ async function rSet(){
  $("ss").onclick=async()=>{
   const hidden=[...document.querySelectorAll("[data-c]")].filter(x=>!x.checked).map(x=>x.dataset.c).concat([...document.querySelectorAll("[data-cat]")].filter(r=>!r.querySelector("[data-cv]").checked).map(r=>"cat_"+r.dataset.cat)),text={ar:{},en:{}};
   document.querySelectorAll("[data-x]").forEach(x=>{const[l,k]=x.dataset.x.split(".");if(x.value.trim())text[l][k]=x.value.trim()});
-  try{await api("/api/admin/settings",{method:"POST",body:JSON.stringify({hidden,text,requireLogin:$("rql").checked,sort:$("srt").value,catOrder:[...document.querySelectorAll("[data-cat]")].map(r=>r.dataset.cat)})});toast("تم الحفظ، والتغيير يظهر في الموقع فوراً")}catch(err){toast("تعذّر الحفظ")}};
+  try{await api("/api/admin/settings",{method:"POST",body:JSON.stringify({hidden,text,requireLogin:$("rql").checked,sort:$("srt").value,catOrder:[...document.querySelectorAll("[data-cat]")].map(r=>r.dataset.cat),defaultLang:st.defaultLang||"ar"})});toast("تم الحفظ، والتغيير يظهر في الموقع فوراً")}catch(err){toast("تعذّر الحفظ")}};
 }
 $("tb").onclick=e=>{const b=e.target.closest("[data-t]");if(b){tab=b.dataset.t;if(tab!="add")EDIT=null;load(true)}};
 $("bd").onclick=async e=>{
