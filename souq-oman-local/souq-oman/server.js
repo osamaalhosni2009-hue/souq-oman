@@ -17,7 +17,7 @@ const rid=()=>crypto.randomBytes(6).toString("hex");
 const ip=r=>(process.env.TRUST_PROXY&&String(r.headers["x-forwarded-for"]||"").split(",")[0].trim())||r.socket.remoteAddress;
 const audit=(r,action,d={})=>fs.appendFile(LOG,JSON.stringify({ts:new Date().toISOString(),ip:ip(r),action,...d})+"\n",()=>{});
 const E=(status,message)=>Object.assign(new Error(message),{status});
-const CATS={electronics:"📱",gaming:"🎮",cars:"🚗",property:"🏠",fashion:"👗",home:"🛋️",jobs:"💼",services:"🛠️",pets:"🐾"};
+const CATS={web:"🌐",apps:"📱",software:"💻",support:"🛠️",network:"📡",security:"🔐",ai:"🤖",design:"🎨",cloud:"☁️"};
 const CITIES=["muscat","salalah","sohar","nizwa","sur","rustaq","buraimi"];
 const V={ig:s=>/^[A-Za-z0-9._]{1,30}$/.test(s||"")?s:"",wa:s=>/^\d{8,15}$/.test(s||"")?s:"",web:s=>{try{const u=new URL(s);return/^https?:$/.test(u.protocol)?u.href.slice(0,200):""}catch(e){return""}}};
 const str=(s,n)=>String(s==null?"":s).replace(/[\u0000-\u001f<>]/g,"").trim().slice(0,n);
@@ -25,12 +25,12 @@ V.url=s=>{try{const u=new URL(s);return/^https?:$/.test(u.protocol)?u.href.slice
 const prods=a=>(Array.isArray(a)?a:[]).slice(0,300).map(x=>({t:str(x&&x.t,120),p:Math.max(0,Math.round(Number(x&&x.p)*1000)/1000)||0,u:V.url(x&&x.u)})).filter(x=>x.t.length>1);
 // Seed stores (seed/shops.json): applied once per seed version; products are merged by title.
 try{const sd=JSON.parse(fs.readFileSync(path.join(__dirname,"seed","shops.json"),"utf8"));
- if((db.seedV||0)<sd.version){for(const s of sd.items){const id=crypto.createHash("sha1").update("seed:"+(s.ig||s.web||s.n)).digest("hex").slice(0,12);
+ if((db.seedV||0)<sd.version){const validSeedIds=new Set(sd.items.map(s=>crypto.createHash("sha1").update("seed:"+(s.ig||s.web||s.n)).digest("hex").slice(0,12)));db.items=db.items.filter(i=>i.source!=="seed"||validSeedIds.has(i.id));for(const s of sd.items){const id=crypto.createHash("sha1").update("seed:"+(s.ig||s.web||s.n)).digest("hex").slice(0,12);
   const pr=prods(s.products),ex=db.items.find(i=>i.id==id),cat=CATS[s.cat]?s.cat:"",city=CITIES.includes(s.city)?s.city:"",tags=(s.tags||[]).map(x=>str(x,40));
   if(ex){const have=new Set((ex.products||[]).map(x=>x.t));ex.products=[...(ex.products||[]),...pr.filter(x=>!have.has(x.t))].slice(0,300);if(ex.source=="seed"){ex.cat=cat;ex.e=s.e||CATS[cat]||"🛍️";ex.city=city;ex.tags=tags;ex.logo=V.url(s.logo)}}
   else db.items.push({id,type:"shop",status:"approved",source:"seed",ts:Date.now(),cat,e:s.e||CATS[cat]||"🛍️",n:str(s.n,60),ig:V.ig(s.ig),web:V.web(s.web),wa:V.wa(s.wa),city,tags,logo:V.url(s.logo),products:pr})}
  db.seedV=sd.version;save()}}catch(e){console.error("seed:",e.message)}
-const PROMPT='Identify the main product or service shown in this photo for an Omani classifieds marketplace. Reply with ONLY a JSON object: {"ar":"short Arabic name","en":"short English name","cat":"one of electronics|gaming|cars|property|fashion|home|jobs|services|pets","kw":["3 to 6 short search keywords in English and Arabic"]}. If the photo shows something broken or needing repair (phone, laptop, AC, car), use cat "services" and include the keyword repair.';
+const PROMPT='Identify the technology service or digital work shown in this photo for an Omani technology-services directory. Reply with ONLY a JSON object: {"ar":"short Arabic service name","en":"short English service name","cat":"one of web|apps|software|support|network|security|ai|design|cloud","kw":["3 to 6 short search keywords in English and Arabic"]}. Choose support for computer, phone, or IT repair; do not classify non-technical trades.';
 const CTL_IDS=["post","lang","hero","shot","search","camsb","dock","dkcam","sugg","cities","cats","shops","latest","footer","rating","userdel","login"];
 const TXT_KEYS=["brand","post","rbtn","h1","sub","shot","shot2","go","ph","latest","shops","foot"];
 const cleanSettings=b=>{const st={hidden:[],text:{ar:{},en:{}},requireLogin:false,sort:"rating",catOrder:[]};b=b||{};
@@ -216,7 +216,7 @@ http.createServer(async(req,res)=>{
 }).on("error",e=>{console.error(e.code=="EADDRINUSE"?"Port "+PORT+" is already in use. Change PORT in config.env (for example 3001) and start again.":e);process.exit(1)})
 .listen(...(process.env.HOST?[PORT,process.env.HOST]:[PORT]),()=>{
  const ips=Object.values(require("os").networkInterfaces()).flat().filter(i=>i&&i.family=="IPv4"&&!i.internal).map(i=>i.address);
- console.log("\nSouq Oman is running\n  Store : http://localhost:"+PORT+"\n  Admin : http://localhost:"+PORT+"/admin   (login code: TARIQ123, change it from the admin panel)");
+ console.log("\nTech Oman is running\n  Website : http://localhost:"+PORT+"\n  Admin   : http://localhost:"+PORT+"/admin   (initial login code: TARIQ123; change it after first login)");
  if(!process.env.HOST)ips.forEach(a=>console.log("  Other devices on the same Wi-Fi: http://"+a+":"+PORT));
  console.log("");
 });
