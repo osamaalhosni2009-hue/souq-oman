@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex,nofollow"><title>لوحة التحكم</title>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><meta name="robots" content="noindex,nofollow"><title>لوحة تحكم تقني عُمان</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--b:#f26a1b;--bg:#f3f4f7;--c:#fff;--ink:#1f2430;--m:#6b7280;--l:#e3e6ec;--ok:#0f9a4a;--no:#d92d20}
@@ -34,7 +34,7 @@ details{background:var(--c);border:1px solid var(--l);border-radius:12px;padding
 </style></head><body>
 <div id="lg" hidden><h2>🛡️ لوحة التحكم</h2><input id="pw" type="password" placeholder="الرمز" autocomplete="current-password"><button class="bt" id="go">دخول</button></div>
 <div id="ap" hidden>
- <div class="top"><b>🛡️ لوحة تحكم <span>سوق عُمان</span></b><button class="bt g" id="lo">خروج</button></div>
+ <div class="top"><b>🛡️ لوحة تحكم <span>تقني عُمان</span></b><button class="bt g" id="lo">خروج</button></div>
  <div class="w"><div class="tb" id="tb"></div><div id="bd"></div></div>
 </div>
 <div class="ts" id="ts" role="status"></div>
@@ -43,10 +43,10 @@ const API=(window.SOUQ_API||"").replace(/\/$/,"");let T=sessionStorage.getItem("
 let BULK=false;
 const $=i=>document.getElementById(i),esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt=p=>Number(p).toLocaleString("en-US",{minimumFractionDigits:3,maximumFractionDigits:3})+" ر.ع.";
-const CAT={electronics:"إلكترونيات",gaming:"ألعاب وجيمنج",cars:"سيارات",property:"عقارات",fashion:"أزياء",home:"أثاث ومنزل",jobs:"وظائف",services:"خدمات",pets:"حيوانات"};
+const CAT={web:"تصميم وتطوير المواقع",apps:"تطوير التطبيقات",software:"البرمجة والأنظمة",support:"الدعم الفني والصيانة",network:"الشبكات والبنية التقنية",security:"الأمن السيبراني",ai:"الذكاء الاصطناعي",design:"التصميم الرقمي",cloud:"الاستضافة والسحابة"};
 const CITY={muscat:"مسقط",salalah:"صلالة",sohar:"صحار",nizwa:"نزوى",sur:"صور",rustaq:"الرستاق",buraimi:"البريمي"};
-const CTL=[["post","زر «أضف إعلان» أعلى الصفحة"],["lang","زر تغيير اللغة"],["hero","الترويسة الكبيرة (العنوان وزر التصوير والبحث)"],["shot","زر «صوّر المنتج الآن»"],["search","شريط البحث"],["camsb","زر الكاميرا داخل شريط البحث"],["dock","الشريط السفلي كاملاً"],["dkcam","زر الكاميرا السفلي"],["sugg","زر «اقترح متجراً للنشر»"],["cities","قائمة المدن"],["cats","التصنيفات"],["shops","قسم المتاجر وصفحات إنستغرام"],["latest","قسم أحدث الإعلانات والمنتجات"],["footer","التذييل"],["rating","تقييم المتاجر (النجوم)"],["userdel","زر «حذف إعلاني» لصاحب الإعلان"],["login","زر تسجيل الدخول بجوجل"]];
-const TXT=[["brand","اسم الموقع"],["post","نص زر أضف إعلان"],["rbtn","نص زر اقتراح متجر"],["h1","العنوان الرئيسي"],["sub","الوصف تحت العنوان"],["shot","عنوان زر التصوير"],["shot2","وصف زر التصوير"],["go","نص زر البحث"],["ph","نص خانة البحث"],["latest","عنوان قسم الإعلانات"],["shops","عنوان قسم المتاجر"],["foot","نص التذييل"]];
+const CTL=[["post","زر «أضف خدمة» أعلى الصفحة"],["lang","زر تغيير اللغة"],["hero","الترويسة الكبيرة (العنوان وزر التصوير والبحث)"],["shot","زر «أرفق صورة لعملك التقني»"],["search","شريط البحث"],["camsb","زر الكاميرا داخل شريط البحث"],["dock","الشريط السفلي كاملاً"],["dkcam","زر الكاميرا السفلي"],["sugg","زر «اقترح مقدم خدمة تقنية»"],["cities","قائمة المدن"],["cats","التصنيفات"],["shops","قسم مقدمي الخدمات التقنية"],["latest","قسم أحدث الخدمات التقنية"],["footer","التذييل"],["rating","تقييم المتاجر (النجوم)"],["userdel","زر «حذف إعلاني» لصاحب الإعلان"],["login","زر تسجيل الدخول بجوجل"]];
+const TXT=[["brand","اسم الموقع"],["post","نص زر أضف إعلان"],["rbtn","نص زر اقتراح مقدم خدمة"],["h1","العنوان الرئيسي"],["sub","الوصف تحت العنوان"],["shot","عنوان زر التصوير"],["shot2","وصف زر التصوير"],["go","نص زر البحث"],["ph","نص خانة البحث"],["latest","عنوان قسم الخدمات التقنية"],["shops","عنوان قسم مقدمي الخدمات"],["foot","نص التذييل"]];
 function toast(m){const e=$("ts");e.textContent=m;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2400)}
 async function api(p,o={}){const r=await fetch(API+p,{...o,headers:{"Content-Type":"application/json",Authorization:"Bearer "+T}});let j={};try{j=await r.json()}catch(e){}if(r.status==401&&T&&p!="/api/admin/login")out();if(!r.ok)throw new Error(j.error||r.status);return j}
 function out(){T="";sessionStorage.removeItem("tk");show()}
