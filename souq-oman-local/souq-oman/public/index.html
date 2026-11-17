@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--brand:#f26a1b;--brand2:#ff9d3d;--bg:#fff7f0;--card:#fff;--ink:#1f2430;--mute:#6b7280;--line:#f0e2d6;--chip:#fff;--ok:#0f9a4a;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--brand:var(--brand);--brand2:var(--brand2);--brandRgb:242,106,27;--bg:#fff7f0;--card:#fff;--ink:#1f2430;--mute:#6b7280;--line:#f0e2d6;--chip:#fff;--ok:#0f9a4a;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17120f;--card:#221b16;--ink:#f5eee8;--mute:#a89b90;--line:#3a2d24;--chip:#2a211b;--ok:#3ddc84}}
 :root[data-theme="dark"]{--bg:#17120f;--card:#221b16;--ink:#f5eee8;--mute:#a89b90;--line:#3a2d24;--chip:#2a211b;--ok:#3ddc84}
 *{box-sizing:border-box;margin:0}
@@ -26,11 +26,11 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:li
 .mk{width:36px;height:36px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:20px}
 .act{display:flex;gap:8px}
 .pill{padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.22);font-weight:700;font-size:14px}
-.pill.solid{background:#fff;color:#d9540c}
+.pill.solid{background:#fff;color:var(--brand)}
 .hero{background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;padding:8px 0 26px;border-radius:0 0 28px 28px}
 .hero h1{font-size:clamp(22px,4.6vw,34px);font-weight:800;line-height:1.3}
 .hero p{opacity:.92;margin:4px 0 14px;font-size:14px}
-.sb{display:flex;align-items:center;gap:6px;background:var(--card);color:var(--ink);border-radius:18px;padding:6px 12px;box-shadow:0 8px 24px rgba(120,50,0,.22)}
+.sb{display:flex;align-items:center;gap:6px;background:var(--card);color:var(--ink);border-radius:18px;padding:6px 12px;box-shadow:0 8px 24px rgba(var(--brandRgb),.18)}
 .sb input{flex:1;min-width:0;border:0;outline:0;background:transparent;padding:10px 4px;font-size:16px}
 .cam{display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:12px;border:1.5px solid var(--brand);color:var(--brand);font-weight:700;font-size:14px;white-space:nowrap}
 .go{padding:10px 18px;border-radius:12px;background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;font-weight:700}
@@ -43,7 +43,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:li
 .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 @media(min-width:760px){.cats{grid-template-columns:repeat(9,1fr)}}
 .cat{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;background:var(--card);border:1.5px solid var(--line);border-radius:16px;font-size:13px;font-weight:700;text-align:center}
-.cat .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:24px;background:rgba(242,106,27,.14)}
+.cat .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:24px;background:rgba(var(--brandRgb),.14)}
 .cat.on{border-color:var(--brand);color:var(--brand)}
 .top{display:flex;justify-content:space-between;align-items:baseline}
 .mute{color:var(--mute);font-size:13px}
@@ -65,7 +65,7 @@ footer{text-align:center;color:var(--mute);font-size:12px;padding:10px 0 24px}
 .sheet{background:var(--card);width:100%;max-width:640px;max-height:92%;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
 @media(min-width:700px){.ov{align-items:center}.sheet{border-radius:22px}}
 .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:18px}
-.dz{display:block;border:2px dashed var(--brand);border-radius:18px;padding:24px 12px;text-align:center;background:rgba(242,106,27,.07);cursor:pointer}
+.dz{display:block;border:2px dashed var(--brand);border-radius:18px;padding:24px 12px;text-align:center;background:rgba(var(--brandRgb),.07);cursor:pointer}
 .dz .big{font-size:38px}
 .ld{display:flex;gap:12px;align-items:center;margin-top:14px}
 .pv{width:84px;height:84px;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
@@ -84,7 +84,7 @@ footer{text-align:center;color:var(--mute);font-size:12px;padding:10px 0 24px}
 [hidden]{display:none!important}
 .shot{display:flex;align-items:center;gap:12px;width:100%;background:#fff;color:#d9540c;border-radius:20px;padding:14px 16px;margin-bottom:10px;text-align:start;box-shadow:0 8px 24px rgba(120,50,0,.22)}
 .shot>span{font-size:34px}.shot b{display:block;font-size:18px}.shot small{display:block;color:#6b7280;font-size:13px}
-.fab{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:64px;height:64px;border-radius:50%;background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;font-size:30px;box-shadow:0 8px 22px rgba(242,106,27,.5);z-index:15}
+.fab{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:64px;height:64px;border-radius:50%;background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;font-size:30px;box-shadow:0 8px 22px rgba(var(--brandRgb),.5);z-index:15}
 #cv{position:relative;border-radius:18px;overflow:hidden;background:#000}
 #vd{width:100%;max-height:60vh;display:block;object-fit:cover}
 .snap{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:66px;height:66px;border-radius:50%;background:#fff;border:5px solid var(--brand)}
@@ -94,7 +94,7 @@ footer{text-align:center;color:var(--mute);font-size:12px;padding:10px 0 24px}
 a.chip{text-decoration:none;color:inherit}
 .im{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .lk{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.lk a{font-size:12px;font-weight:700;padding:4px 9px;border-radius:99px;background:rgba(242,106,27,.12);color:var(--brand);text-decoration:none}
+.lk a{font-size:12px;font-weight:700;padding:4px 9px;border-radius:99px;background:rgba(var(--brandRgb),.12);color:var(--brand);text-decoration:none}
 .fm{display:grid;gap:10px}
 .fm input,.fm select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);font-size:16px}
 .dz.sm{padding:14px}
@@ -114,11 +114,13 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .pl{margin-top:8px;font-size:13px}.pl summary{cursor:pointer;color:var(--brand);font-weight:700}
 .pi{display:flex;gap:8px;justify-content:space-between;padding:4px 0;border-top:1px solid var(--line)}.pi span{flex:1;min-width:0}.pi a{color:var(--brand);text-decoration:none}
 .av{position:relative;overflow:hidden}.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
-.dock{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;border-radius:99px;background:var(--card);border:1.5px solid var(--brand);box-shadow:0 8px 24px rgba(242,106,27,.35);z-index:15;max-width:calc(100% - 24px)}
+.dock{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;border-radius:99px;background:var(--card);border:1.5px solid var(--brand);box-shadow:0 8px 24px rgba(var(--brandRgb),.35);z-index:15;max-width:calc(100% - 24px)}
 .dk-cam{width:56px;height:56px;border-radius:50%;background:linear-gradient(120deg,#f26a1b,#ff9d3d);color:#fff;font-size:28px;flex:none;box-shadow:0 4px 14px rgba(242,106,27,.5)}
 .dk-btn{padding:0 16px;height:44px;color:var(--brand);font-weight:800;font-size:15px;white-space:nowrap}
-.gear-btn{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32)}
-.gear-btn:active{transform:scale(.96)}
+.gear-btn{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.42);box-shadow:0 4px 14px rgba(0,0,0,.12);backdrop-filter:blur(8px);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+.gear-btn:hover{background:rgba(255,255,255,.3);box-shadow:0 6px 18px rgba(0,0,0,.16)}
+.gear-btn:active{transform:scale(.94)}
+.gear-btn svg{width:23px;height:23px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.14))}
 .settings-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:45}
 .settings-backdrop.on{display:block}
 .settings-panel{position:absolute;top:0;right:0;width:min(88vw,340px);height:100%;overflow:auto;background:var(--card);color:var(--ink);padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:-12px 0 36px rgba(0,0,0,.2);transform:translateX(105%);transition:transform .22s ease}
@@ -127,12 +129,22 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .menu-close{width:34px;height:34px;border-radius:10px;background:var(--bg);font-size:18px}
 .menu-item{display:flex;align-items:center;gap:12px;width:100%;padding:14px 12px;margin:8px 0;border:1px solid var(--line);border-radius:13px;background:var(--bg);text-align:start;font-weight:700;font-size:16px}
 .menu-item>span:first-child{width:28px;text-align:center;font-size:19px}
+.theme-picker{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.theme-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.theme-title b{font-size:16px}.theme-title small{font-size:11px;color:var(--mute)}
+.theme-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.theme-swatch{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:11px 5px;border:1px solid var(--line);border-radius:13px;background:var(--bg);font-size:12px;font-weight:700;transition:border-color .18s,background .18s,transform .18s}
+.theme-swatch:hover{transform:translateY(-2px)}
+.theme-swatch.selected{border:2px solid var(--brand);background:rgba(var(--brandRgb),.08);padding:10px 4px}
+.theme-dot{display:block;width:25px;height:25px;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08),0 2px 5px rgba(0,0,0,.12)}
+.theme-reset{width:100%;margin-top:11px;padding:10px 12px;border-radius:11px;border:1px dashed var(--line);color:var(--mute);font-weight:700;background:var(--card)}
+.theme-reset.selected{border-color:var(--brand);color:var(--brand);background:rgba(var(--brandRgb),.08)}
 </style>
 </head>
 <body>
 <header id="sitehd"><div class="wrap hd">
  <div class="logo"><span class="mk">🛍️</span><span data-i="brand"></span></div>
- <div class="act"><button class="gear-btn" id="gearBtn" type="button" aria-label="الإعدادات" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.8 3.12-.08-.02a1.7 1.7 0 0 0-1.75.55l-.05.07h-3.6l-.05-.07a1.7 1.7 0 0 0-1.75-.55l-.08.02-1.8-3.12.06-.06A1.7 1.7 0 0 0 7.2 15l-.08-.04v-3.6l.08-.04a1.7 1.7 0 0 0 .34-1.88l-.06-.06 1.8-3.12.08.02a1.7 1.7 0 0 0 1.75-.55l.05-.07h3.6l.05.07a1.7 1.7 0 0 0 1.75.55l.08-.02 1.8 3.12-.06.06A1.7 1.7 0 0 0 19.32 11l.08.04v3.6z"></path></svg></button></div>
+ <div class="act"><button class="gear-btn" id="gearBtn" type="button" aria-label="الإعدادات" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-1.99 1.82l-.07.76a2 2 0 0 1-1 1.7 2 2 0 0 1-1.99.03l-.66-.39a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.65.39a2 2 0 0 1 1 1.72v.06a2 2 0 0 1-1 1.72l-.65.39a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.66-.39a2 2 0 0 1 1.99.03 2 2 0 0 1 1 1.7l.07.76A2 2 0 0 0 11.78 22h.44a2 2 0 0 0 1.99-1.82l.07-.76a2 2 0 0 1 1-1.7 2 2 0 0 1 1.99-.03l.66.39a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.65-.39a2 2 0 0 1-1-1.72v-.06a2 2 0 0 1 1-1.72l.65-.39a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.66.39a2 2 0 0 1-1.99-.03 2 2 0 0 1-1-1.7l-.07-.76A2 2 0 0 0 12.22 2z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div>
 </div></header>
 <div class="settings-backdrop" id="settingsBackdrop" aria-hidden="true">
  <aside class="settings-panel" id="settingsPanel" role="dialog" aria-modal="true" aria-label="إعدادات الموقع">
@@ -141,6 +153,14 @@ a.btn{display:block;text-align:center;text-decoration:none}
   <button class="menu-item" id="lb" type="button"><span aria-hidden="true">🌐</span><span data-i="lang"></span></button>
   <button class="menu-item" id="lgn" type="button" hidden><span aria-hidden="true">🔐</span><span id="lgnLabel" data-i="signin"></span></button>
   <button class="menu-item" id="rbtn" type="button"><span aria-hidden="true">🏪</span><span data-i="rbtn"></span></button>
+  <section class="theme-picker" aria-label="Store themes"><div class="theme-title"><b id="themeTitle">ثيمات المتجر</b><small id="themeHint">اختر لونك المفضل</small></div><div class="theme-grid">
+   <button class="theme-swatch" type="button" data-theme-choice="blue" aria-pressed="false" style="--swatch:#2563eb"><i class="theme-dot"></i><span data-theme-name data-ar="أزرق محيطي" data-en="Ocean blue">أزرق محيطي</span></button>
+   <button class="theme-swatch" type="button" data-theme-choice="green" aria-pressed="false" style="--swatch:#059669"><i class="theme-dot"></i><span data-theme-name data-ar="أخضر زمردي" data-en="Emerald">أخضر زمردي</span></button>
+   <button class="theme-swatch" type="button" data-theme-choice="purple" aria-pressed="false" style="--swatch:#7c3aed"><i class="theme-dot"></i><span data-theme-name data-ar="بنفسجي ملكي" data-en="Royal purple">بنفسجي ملكي</span></button>
+   <button class="theme-swatch" type="button" data-theme-choice="rose" aria-pressed="false" style="--swatch:#e11d48"><i class="theme-dot"></i><span data-theme-name data-ar="أحمر وردي" data-en="Ruby rose">أحمر وردي</span></button>
+   <button class="theme-swatch" type="button" data-theme-choice="teal" aria-pressed="false" style="--swatch:#0f9f9a"><i class="theme-dot"></i><span data-theme-name data-ar="فيروزي" data-en="Turquoise">فيروزي</span></button>
+   <button class="theme-swatch" type="button" data-theme-choice="gold" aria-pressed="false" style="--swatch:#b7791f"><i class="theme-dot"></i><span data-theme-name data-ar="ذهبي" data-en="Golden">ذهبي</span></button>
+  </div><button class="theme-reset" id="themeReset" type="button" aria-pressed="true">↺ استعادة اللون الأساسي</button></section>
  </aside>
 </div>
 
@@ -220,11 +240,17 @@ let L="ar";try{L=localStorage.getItem("lang")||"ar"}catch(e){}
 if(L!=="en")L="ar";
 const S={city:"all",cat:"",tag:"",fav:new Set(),k:null,img:"",conf:0,h:0};
 const t=k=>T[L][k];
+const STORE_THEMES={blue:{brand:"#2563eb",accent:"#60a5fa",rgb:"37,99,235"},green:{brand:"#059669",accent:"#34d399",rgb:"5,150,105"},purple:{brand:"#7c3aed",accent:"#a78bfa",rgb:"124,58,237"},rose:{brand:"#e11d48",accent:"#fb7185",rgb:"225,29,72"},teal:{brand:"#0f9f9a",accent:"#2dd4bf",rgb:"15,159,154"},gold:{brand:"#b7791f",accent:"#fbbf24",rgb:"183,121,31"}};
+function applyStoreTheme(id,save=true){const p=STORE_THEMES[id],root=document.documentElement;if(p){root.style.setProperty("--brand",p.brand);root.style.setProperty("--brand2",p.accent);root.style.setProperty("--brandRgb",p.rgb)}else{root.style.setProperty("--brand","#f26a1b");root.style.setProperty("--brand2","#ff9d3d");root.style.setProperty("--brandRgb","242,106,27");id=""}document.querySelectorAll("[data-theme-choice]").forEach(b=>{const selected=b.dataset.themeChoice===id;b.classList.toggle("selected",selected);b.setAttribute("aria-pressed",String(selected))});const reset=$("themeReset");if(reset){reset.classList.toggle("selected",!id);reset.setAttribute("aria-pressed",String(!id))}if(save){try{if(id)localStorage.setItem("store-theme",id);else localStorage.removeItem("store-theme")}catch(e){}}}
+function setThemeLabels(){const ar=L==="ar";$("themeTitle").textContent=ar?"ثيمات المتجر":"Store themes";$("themeHint").textContent=ar?"اختر لونك المفضل":"Choose your favourite colour";$("themeReset").textContent=ar?"↺ استعادة اللون الأساسي":"↺ Restore default colour";document.querySelectorAll("[data-theme-name]").forEach(e=>e.textContent=e.dataset[ar?"ar":"en"])}
 function closeSettingsMenu(){const m=$("settingsBackdrop");m.classList.remove("on");m.setAttribute("aria-hidden","true");$("gearBtn").setAttribute("aria-expanded","false")}
 function openSettingsMenu(){const m=$("settingsBackdrop");m.classList.add("on");m.setAttribute("aria-hidden","false");$("gearBtn").setAttribute("aria-expanded","true")}
 $("gearBtn").onclick=()=>{$("settingsBackdrop").classList.contains("on")?closeSettingsMenu():openSettingsMenu()};
 $("menuClose").onclick=closeSettingsMenu;
 $("settingsBackdrop").onclick=e=>{if(e.target===$("settingsBackdrop"))closeSettingsMenu()};
+document.querySelectorAll("[data-theme-choice]").forEach(b=>b.onclick=()=>applyStoreTheme(b.dataset.themeChoice));
+$("themeReset").onclick=()=>applyStoreTheme("");
+let savedStoreTheme="";try{savedStoreTheme=localStorage.getItem("store-theme")||""}catch(e){}applyStoreTheme(savedStoreTheme,false);
 const nm=(a,i)=>a[L=="ar"?i:i+1];
 const fmt=p=>{const s=p.toLocaleString("en-US",{minimumFractionDigits:3,maximumFractionDigits:3});return L=="ar"?s+" ر.ع.":"OMR "+s};
 const ago=h=>{if(h<1)return L=="ar"?"الآن":"Just now";const d=h>=24,v=Math.floor(d?h/24:h);return L=="ar"?`منذ ${v} ${d?"يوم":"ساعة"}`:`${v}${d?"d":"h"} ago`};
@@ -233,7 +259,7 @@ let tm;function toast(m){const e=$("toast");e.textContent=m;e.classList.add("on"
 function lang(){
  const d=document.documentElement;d.lang=L;d.dir=L=="ar"?"rtl":"ltr";
  document.title=L=="ar"?"تقني عُمان | Tech Oman":"Tech Oman | تقني عُمان";
- $("menuTitle").textContent=L=="ar"?"الإعدادات":"Settings";$("menuClose").textContent=L=="ar"?"إغلاق":"Close";
+ $("menuTitle").textContent=L=="ar"?"الإعدادات":"Settings";$("menuClose").textContent=L=="ar"?"إغلاق":"Close";setThemeLabels();
  document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
  $("q").placeholder=t("ph");
  document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=t(e.dataset.ph));
