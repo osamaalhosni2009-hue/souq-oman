@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--brand:#f26a1b;--brand2:#ff9d3d;--brandRgb:242,106,27;--bg:#fff7f0;--card:#fff;--ink:#1f2430;--mute:#6b7280;--line:#f0e2d6;--chip:#fff;--ok:#0f9a4a;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17120f;--card:#221b16;--ink:#f5eee8;--mute:#a89b90;--line:#3a2d24;--chip:#2a211b;--ok:#3ddc84}}
+:root{--brand:#f26a1b;--brand2:#ff9d3d;--brandRgb:242,106,27;--deep:#6c2b0f;--deepRgb:108,43,15;--bg:#fff7f0;--card:#fff;--ink:#3a2416;--mute:#6b5a50;--line:#f0e2d6;--chip:#fff;--ok:#0f9a4a;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17120f;--card:#221b16;--ink:#f5eee8;--mute:#a89b90;--line:#3a2d24;--chip:#2a211b;--deep:#27150d;--deepRgb:39,21,13;--ok:#3ddc84}}
 :root[data-theme="dark"]{--bg:#17120f;--card:#221b16;--ink:#f5eee8;--mute:#a89b90;--line:#3a2d24;--chip:#2a211b;--ok:#3ddc84}
 *{box-sizing:border-box;margin:0}
 html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
@@ -32,10 +32,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:li
 .hero p{opacity:.92;margin:4px 0 14px;font-size:14px}
 .sb{display:flex;align-items:center;gap:6px;background:var(--card);color:var(--ink);border-radius:18px;padding:6px 12px;box-shadow:0 8px 24px rgba(var(--brandRgb),.18)}
 .sb input{flex:1;min-width:0;border:0;outline:0;background:transparent;padding:10px 4px;font-size:16px}
-.cam{display:flex;align-items:center;gap:6px;padding:9px 12px;border-radius:12px;border:1.5px solid var(--brand);color:var(--brand);font-weight:700;font-size:14px;white-space:nowrap}
 .go{padding:10px 18px;border-radius:12px;background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;font-weight:700}
-.hs{display:none}
-@media(min-width:640px){.hs{display:inline}}
 .lbl{margin:18px 0 8px;font-weight:800;font-size:16px}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
 .chip{white-space:nowrap;padding:7px 14px;border-radius:99px;background:var(--chip);border:1px solid var(--line);font-size:14px}
@@ -60,7 +57,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:li
 .mt{color:var(--mute);font-size:12px;display:flex;justify-content:space-between;gap:6px;margin-top:4px}
 .empty{grid-column:1/-1;text-align:center;padding:40px 0;color:var(--mute)}
 footer{text-align:center;color:var(--mute);font-size:12px;padding:10px 0 24px}
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.ov{position:fixed;inset:0;background:rgba(var(--deepRgb),.55);display:none;align-items:flex-end;justify-content:center;z-index:50}
 .ov.on{display:flex}
 .sheet{background:var(--card);width:100%;max-width:640px;max-height:92%;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
 @media(min-width:700px){.ov{align-items:center}.sheet{border-radius:22px}}
@@ -69,8 +66,6 @@ footer{text-align:center;color:var(--mute);font-size:12px;padding:10px 0 24px}
 .dz .big{font-size:38px}
 .ld{display:flex;gap:12px;align-items:center;margin-top:14px}
 .pv{width:84px;height:84px;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
-.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden;margin-bottom:6px}
-.bar i{display:block;height:100%;width:6%;background:linear-gradient(90deg,var(--brand),var(--brand2));transition:width .5s}
 .ok{color:var(--ok);font-weight:700;font-size:13px}
 .st{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:14px;margin-top:8px}
 .st.best{border-color:var(--ok);background:rgba(15,154,74,.09)}
@@ -78,18 +73,10 @@ footer{text-align:center;color:var(--mute);font-size:12px;padding:10px 0 24px}
 .pt{text-align:end}
 .btn{width:100%;margin-top:14px;padding:12px;border-radius:14px;background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;font-weight:700}
 .demo{margin-top:10px;font-size:12px}
-.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));inset-inline:0;margin:auto;width:max-content;max-width:90%;background:#222;color:#fff;padding:10px 16px;border-radius:12px;opacity:0;transition:opacity .3s;z-index:60;pointer-events:none}
+.toast{position:fixed;bottom:calc(20px + env(safe-area-inset-bottom,0px));inset-inline:0;margin:auto;width:max-content;max-width:90%;background:var(--deep);color:#fff;padding:10px 16px;border-radius:12px;opacity:0;transition:opacity .3s;z-index:60;pointer-events:none}
 .toast.on{opacity:1}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i{transition:none}}
 [hidden]{display:none!important}
-.shot{display:flex;align-items:center;gap:12px;width:100%;background:#fff;color:var(--brand);border-radius:20px;padding:14px 16px;margin-bottom:10px;text-align:start;box-shadow:0 8px 24px rgba(var(--brandRgb),.18)}
-.shot>span{font-size:34px}.shot b{display:block;font-size:18px}.shot small{display:block;color:#6b7280;font-size:13px}
-.fab{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);width:64px;height:64px;border-radius:50%;background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;font-size:30px;box-shadow:0 8px 22px rgba(var(--brandRgb),.5);z-index:15}
-#cv{position:relative;border-radius:18px;overflow:hidden;background:#000}
-#vd{width:100%;max-height:60vh;display:block;object-fit:cover}
-.snap{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:66px;height:66px;border-radius:50%;background:#fff;border:5px solid var(--brand)}
-.row{display:flex;gap:8px;margin:12px 0 6px}
-.row .btn{margin-top:0;flex:1;width:auto;display:block;text-align:center;cursor:pointer}
 .btn.alt{background:var(--card);color:var(--brand);border:1.5px solid var(--brand)}
 a.chip{text-decoration:none;color:inherit}
 .im{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -114,16 +101,13 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .pl{margin-top:8px;font-size:13px}.pl summary{cursor:pointer;color:var(--brand);font-weight:700}
 .pi{display:flex;gap:8px;justify-content:space-between;padding:4px 0;border-top:1px solid var(--line)}.pi span{flex:1;min-width:0}.pi a{color:var(--brand);text-decoration:none}
 .av{position:relative;overflow:hidden}.av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff}
-.dock{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;border-radius:99px;background:var(--card);border:1.5px solid var(--brand);box-shadow:0 8px 24px rgba(var(--brandRgb),.35);z-index:15;max-width:calc(100% - 24px)}
-.dk-cam{width:56px;height:56px;border-radius:50%;background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;font-size:28px;flex:none;box-shadow:0 4px 14px rgba(var(--brandRgb),.5)}
-.dk-btn{padding:0 16px;height:44px;color:var(--brand);font-weight:800;font-size:15px;white-space:nowrap}
-.gear-btn{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.42);box-shadow:0 4px 14px rgba(0,0,0,.12);backdrop-filter:blur(8px);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
-.gear-btn:hover{background:rgba(255,255,255,.3);box-shadow:0 6px 18px rgba(0,0,0,.16)}
+.gear-btn{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.42);box-shadow:0 4px 14px rgba(var(--deepRgb),.12);backdrop-filter:blur(8px);transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+.gear-btn:hover{background:rgba(255,255,255,.3);box-shadow:0 6px 18px rgba(var(--deepRgb),.16)}
 .gear-btn:active{transform:scale(.94)}
-.gear-btn svg{width:23px;height:23px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.14))}
-.settings-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.48);z-index:45}
+.gear-btn svg{width:23px;height:23px;filter:drop-shadow(0 1px 1px rgba(var(--deepRgb),.14))}
+.settings-backdrop{display:none;position:fixed;inset:0;background:rgba(var(--deepRgb),.48);z-index:45}
 .settings-backdrop.on{display:block}
-.settings-panel{position:absolute;top:0;right:0;width:min(88vw,340px);height:100%;overflow:auto;background:var(--card);color:var(--ink);padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:-12px 0 36px rgba(0,0,0,.2);transform:translateX(105%);transition:transform .22s ease}
+.settings-panel{position:absolute;top:0;right:0;width:min(88vw,340px);height:100%;overflow:auto;background:var(--card);color:var(--ink);padding:calc(14px + env(safe-area-inset-top,0px)) 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:-12px 0 36px rgba(var(--deepRgb),.2);transform:translateX(105%);transition:transform .22s ease}
 .settings-backdrop.on .settings-panel{transform:translateX(0)}
 .menu-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--line);font-size:19px}
 .menu-close{width:34px;height:34px;border-radius:10px;background:var(--bg);font-size:18px}
@@ -136,7 +120,7 @@ a.btn{display:block;text-align:center;text-decoration:none}
 .theme-swatch{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:11px 5px;border:1px solid var(--line);border-radius:13px;background:var(--bg);font-size:12px;font-weight:700;transition:border-color .18s,background .18s,transform .18s}
 .theme-swatch:hover{transform:translateY(-2px)}
 .theme-swatch.selected{border:2px solid var(--brand);background:rgba(var(--brandRgb),.08);padding:10px 4px}
-.theme-dot{display:block;width:25px;height:25px;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08),0 2px 5px rgba(0,0,0,.12)}
+.theme-dot{display:block;width:25px;height:25px;border-radius:50%;background:var(--swatch);box-shadow:inset 0 0 0 1px rgba(var(--deepRgb),.08),0 2px 5px rgba(var(--deepRgb),.12)}
 .theme-reset{width:100%;margin-top:11px;padding:10px 12px;border-radius:11px;border:1px dashed var(--line);color:var(--mute);font-weight:700;background:var(--card)}
 .theme-reset.selected{border-color:var(--brand);color:var(--brand);background:rgba(var(--brandRgb),.08)}
 </style>
@@ -166,10 +150,8 @@ a.btn{display:block;text-align:center;text-decoration:none}
 
 <section class="hero"><div class="wrap">
  <h1 data-i="h1"></h1><p data-i="sub"></p>
- <button class="shot" id="shot"><span aria-hidden="true">📷</span><div><b data-i="shot"></b><small data-i="shot2"></small></div></button>
  <div class="sb"><span aria-hidden="true">🔍</span>
   <input id="q" type="search" enterkeyhint="search" autocomplete="off">
-  <button class="cam" id="cam"><span>📷</span><b class="hs" data-i="cam"></b></button>
   <button class="go" id="go" data-i="go"></button>
  </div>
 </div></section>
@@ -179,21 +161,12 @@ a.btn{display:block;text-align:center;text-decoration:none}
  <div class="chips" id="cities"></div>
  <p class="lbl" id="catlbl" data-i="cats"></p>
  <div class="cats" id="cats"></div>
- <section id="shopsec"><p class="lbl">📸 <span data-i="shops"></span></p><div class="chips" id="stags"></div><div class="shops" id="shops"></div><p class="mute demo" data-i="shops_n"></p></section>
+ <section id="shopsec"><p class="lbl">🏪 <span data-i="shops"></span></p><div class="chips" id="stags"></div><div class="shops" id="shops"></div><p class="mute demo" data-i="shops_n"></p></section>
  <div class="top lbl" id="latest"><span data-i="latest"></span><span class="mute" id="count"></span></div>
  <div class="grid" id="grid"></div>
 </main>
 <footer data-i="foot"></footer>
 
-<div class="ov" id="ov"><div class="sheet" role="dialog" aria-modal="true">
- <div class="sh"><b data-i="m_title"></b><button id="x" aria-label="Close">✕</button></div>
- <div id="cv" hidden><video id="vd" autoplay playsinline muted></video><button class="snap" id="snap" aria-label="Capture"></button></div>
- <div class="dz" id="dz"><div class="big">📷</div>
-  <div class="row"><label class="btn"><input type="file" id="f2" accept="image/*" capture="environment" hidden><span data-i="m_cam2"></span></label><label class="btn alt"><input type="file" id="f" accept="image/*" hidden><span data-i="m_gal"></span></label></div>
-  <small class="mute" data-i="m_hint"></small><br><button class="chip" id="live" data-i="m_live2"></button></div>
- <div id="res"></div>
-</div></div>
-<div class="dock"><button class="dk-cam" id="fab" aria-label="Camera">📷</button></div>
 <div class="ov" id="ov2"><div class="sheet" role="dialog" aria-modal="true">
  <div class="sh"><b data-i="pt"></b><button id="x2" aria-label="Close">✕</button></div>
  <div class="chips" id="kind"></div>
@@ -226,8 +199,8 @@ a.btn{display:block;text-align:center;text-decoration:none}
 
 <script>
 const T={
-ar:{brand:"تقني عُمان",post:"أضف خدمة",h1:"اكتشف الخدمات التقنية في سلطنة عُمان",sub:"اعثر على خبراء التقنية والبرمجة والدعم الفني، واطلب الخدمة المناسبة بسهولة",ph:"ابحث عن برمجة، تصميم مواقع، دعم فني…",go:"بحث",cam:"بحث بالصورة",city:"المدينة",cats:"التصنيفات",latest:"أحدث الخدمات التقنية",ads:"إعلان",empty:"لا توجد خدمات منشورة حالياً. كن أول مقدم خدمة يضيف خدماته عبر زر «أضف خدمة».",all:"كل المدن",feat:"مميز",lang:"English",soon:"قريباً: نشر الإعلانات",m_title:"أرفق صورة توضح الخدمة أو العمل",m_drop:"اضغط لرفع صورة أو نموذج من أعمالك",m_hint:"PNG أو JPG – نعرض لك متاجر عمانية حقيقية",s1:"تحليل الصورة…",s2:"التعرف على المنتج…",s3:"البحث في متاجر عُمان…",found:"تم التعرف على",conf:"دقة المطابقة",notit:"ليس هذا المنتج؟ اختر المنتج الصحيح:",cmp:"مقارنة الأسعار",best:"الأرخص",stock:"متوفر",low:"كمية محدودة",save:"وفّر حتى",demo:"* محاكاة تجريبية فقط، والأسعار توضيحية وليست حقيقية.",more:"عرض إعلانات مشابهة",bad:"الرجاء اختيار ملف صورة",foot:"نموذج تجريبي © 2026",signin:"دخول",account:"حسابي",signmsg:"سجّل الدخول بحساب جوجل لإدارة إعلاناتك وحذفها من أي جهاز.",myads:"إعلاناتي",noads:"لا توجد إعلانات مرتبطة بحسابك.",signout:"تسجيل الخروج",signedin:"تم تسجيل الدخول",needlogin:"سجّل الدخول بحساب جوجل أولاً",s_pending:"قيد المراجعة",s_approved:"منشور",s_rejected:"مرفوض",s_hidden:"مخفي",rate:"قيّم",rts:"إرسال التقييم",rtx:"تعليق (اختياري)",pickstar:"اختر عدد النجوم",rated:"شكراً، تم حفظ تقييمك",mydel:"🗑️ حذف إعلاني",delq:"حذف إعلانك نهائياً؟",deld:"تم حذف الإعلان",pickt:"اختر نوع المنتج",rs:"متاجر حقيقية قد تبيعه",rp:"منتجات مطابقة في المتاجر",nomatch:"لا توجد متاجر مسجلة لهذا المنتج بعد. جرّب الروابط أدناه أو سجّل متجرك.",prods:"المنتجات",ask:"اسأل عن السعر",more_s:"عرض المزيد",shot:"أرفق صورة لعملك التقني",shot2:"أضف صورة توضح مشروعك أو الخدمة التي تقدمها",m_live:"📷 فتح الكاميرا",m_gal:"🖼️ من المعرض",cam_err:"تعذّر فتح الكاميرا. اسمح بالوصول أو اختر صورة من الجهاز.",rl_t:"ابحث عن عروض حقيقية",rl_g:"تسوق جوجل",rl_m:"خرائط جوجل",rl_i:"إنستغرام",rl_n:"تفتح هذه الروابط نتائج حقيقية في جوجل وإنستغرام بنافذة جديدة؛ لا تستطيع الصفحة جلب إعلاناتهما وعرضها داخلها.",pt:"أضف خدمة تقنية جديدة",kind1:"فرد",kind2:"متجر",pimg:"📷 أضف صورة للمنتج",pimg_ok:"✓ تم اختيار الصورة",ptitle:"اسم الخدمة التقنية",pprice:"السعر يبدأ من (ريال عُماني)",pig:"حساب إنستغرام أو اسم النشاط (مثال: @techoman)",pweb:"رابط الموقع (اختياري)",pwa:"واتساب (مثال: 9XXXXXXX)",pub:"انشر الإعلان",pn1:"سيظهر إعلانك بعد موافقة المراجع.",pn2:"سيُحفظ إعلانك على هذا الجهاز فقط، لأن قاعدة البيانات المشتركة تتطلب تسجيل الدخول.",perr1:"أدخل عنواناً (3 أحرف على الأقل) وسعراً صحيحاً",perr2:"أضف وسيلة تواصل واحدة على الأقل: إنستغرام أو موقع أو واتساب",pdone1:"تم إرسال خدمتك للمراجعة",pdone2:"تم حفظ إعلانك على جهازك",web:"الموقع",dm:"نموذج",shops:"مقدمو الخدمات التقنية",shops_n:"تواصل مع مقدم الخدمة مباشرة، وتحقق من أعماله وتفاصيل الخدمة قبل الاتفاق.",igs:"🔎 ابحث في إنستغرام عن صفحات هذا التصنيف",ap:"موقع المطوّر – لوحة التحكم",st_pending:"قيد المراجعة",st_approved:"مقبولة",st_rejected:"مرفوضة",aempty:"لا توجد طلبات في هذه القائمة.",aupd:"تم تحديث حالة الطلب",afail:"تعذّر تنفيذ العملية",b_ok:"✅ قبول ونشر",b_no:"❌ رفض",b_del:"🗑️ إلغاء النشر",aexp:"نسخ قائمة المقبولة (JSON)",acopy:"تم النسخ",rbtn:"🏪 اقترح متجر",rt_t:"اقتراح متجر جديد",rn:"اسم مقدم الخدمة أو الشركة",rt:"الخدمات التقنية بفاصلة (مثال: تصميم مواقع، صيانة حواسيب)",rsub:"أرسل للمراجعة",rnote:"سيصل اقتراحك إلى الطلبات في لوحة الإدارة للمراجعة، ولن يظهر قبل الموافقة.",rneed:"سجّل الدخول أولاً لإرسال اقتراح المتجر",rerr:"أدخل اسم مقدم الخدمة ووسيلة تواصل واحدة على الأقل",rok:"تم إرسال اقتراح المتجر إلى لوحة الإدارة للمراجعة",rfail:"تعذّر إرسال الطلب",back:"🌐 موقع المستخدم",st_ads:"الإعلانات",sx_shops:"صفحات منشورة",sx_ads:"إعلانات المستخدمين",b_dad:"🗑️ حذف الإعلان",dadd:"➕ إضافة صفحة مباشرة (دون مراجعة)",achk:"جارٍ التحقق من صلاحياتك…",anoadm:"هذه الصفحة للمراجعين فقط. سجّل الدخول بحساب لديه صلاحية «محرر» على الصفحة.",m_cam2:"📷 التقاط بالكاميرا",m_live2:"معاينة مباشرة داخل الصفحة (يطلب إذن الكاميرا)",noshop:"لا توجد صفحات مضافة لهذا التصنيف بعد، استخدم زر البحث أدناه."},
-en:{brand:"Tech Oman",post:"Add a service",h1:"Find trusted tech services in Oman",sub:"Discover developers, IT specialists and technical support providers across Oman",ph:"Search web development, IT support, design…",go:"Search",cam:"Search by photo",city:"City",cats:"Categories",latest:"Latest tech services",ads:"listings",empty:"No services listed yet. Be the first provider to add a service.",all:"All cities",feat:"Featured",lang:"العربية",soon:"Coming soon: posting ads",m_title:"Upload an image of your work",m_drop:"Upload an image or a sample of your work",m_hint:"PNG or JPG – we show real Omani stores",s1:"Analyzing the image…",s2:"Identifying the product…",s3:"Searching Omani stores…",found:"Identified as",conf:"Match",notit:"Not the right product? Pick the correct one:",cmp:"Price comparison",best:"Cheapest",stock:"In stock",low:"Limited stock",save:"Save up to",demo:"* Demo simulation only; prices are illustrative, not live.",more:"View similar listings",bad:"Please choose an image file",foot:"Demo prototype © 2026",signin:"Sign in",account:"My account",signmsg:"Sign in with Google to manage and delete your ads from any device.",myads:"My ads",noads:"No ads linked to your account.",signout:"Sign out",signedin:"Signed in",needlogin:"Please sign in with Google first",s_pending:"Pending",s_approved:"Published",s_rejected:"Rejected",s_hidden:"Hidden",rate:"Rate",rts:"Submit rating",rtx:"Comment (optional)",pickstar:"Pick a star rating",rated:"Thanks, your rating is saved",mydel:"🗑️ Delete my ad",delq:"Delete your ad permanently?",deld:"Ad deleted",pickt:"Pick the product type",rs:"Real stores that may sell it",rp:"Matching products in stores",nomatch:"No registered stores for this product yet. Try the links below or register your store.",prods:"Products",ask:"Ask for price",more_s:"Show more",shot:"Show a sample of your tech work",shot2:"Add an image that showcases your project or service",m_live:"📷 Open camera",m_gal:"🖼️ From gallery",cam_err:"Couldn’t open the camera. Allow access or pick a photo.",rl_t:"Find real deals",rl_g:"Google Shopping",rl_m:"Google Maps",rl_i:"Instagram",rl_n:"These links open real Google and Instagram results in a new tab; this page can’t fetch or embed their ads.",pt:"Add a new tech service",kind1:"Individual",kind2:"Store",pimg:"📷 Add a product photo",pimg_ok:"✓ Photo selected",ptitle:"Tech service name",pprice:"Starting price (OMR)",pig:"Instagram account (e.g. @mystore)",pweb:"Website link (optional)",pwa:"WhatsApp (e.g. 9XXXXXXX)",pub:"Publish ad",pn1:"Your ad will appear after the reviewer approves it.",pn2:"Your ad is saved on this device only, since the shared database needs sign-in.",perr1:"Enter a title (3+ characters) and a valid price",perr2:"Add at least one contact: Instagram, website or WhatsApp",pdone1:"Your service was sent for review",pdone2:"Your service is saved on this device",web:"Website",dm:"Sample",shops:"Technology service providers",shops_n:"Contact providers directly and review their work and service details before making an agreement.",igs:"🔎 Find Instagram pages for this category",ap:"Developer site – control panel",st_pending:"Pending",st_approved:"Approved",st_rejected:"Rejected",aempty:"No requests in this list.",aupd:"Request status updated",afail:"Couldn’t complete the action",b_ok:"✅ Approve and publish",b_no:"❌ Reject",b_del:"🗑️ Unpublish",aexp:"Copy approved list (JSON)",acopy:"Copied",rbtn:"🏪 Suggest a store",rt_t:"Suggest a store",rn:"Provider or company name",rt:"Tech services, comma-separated (e.g. web design, computer repair)",rsub:"Send for review",rnote:"Your suggestion is sent to the admin dashboard for review and will not appear publicly until approved.",rneed:"Sign in first to suggest a store",rerr:"Enter a provider name and at least one contact method",rok:"Your store suggestion was sent to the admin dashboard for review",rfail:"Couldn’t send the request",back:"🌐 User site",st_ads:"Ads",sx_shops:"Published pages",sx_ads:"User ads",b_dad:"🗑️ Delete ad",dadd:"➕ Add a page directly (no review)",achk:"Checking your permissions…",anoadm:"This page is for reviewers only. Sign in with an account that has Editor access to the page.",m_cam2:"📷 Take a photo",m_live2:"Live preview in page (asks for camera permission)",noshop:"No pages added for this category yet; use the search button below."}};
+ar:{brand:"تقني عُمان",post:"أضف خدمة",h1:"اكتشف الخدمات التقنية في سلطنة عُمان",sub:"اعثر على خبراء التقنية والبرمجة والدعم الفني، واطلب الخدمة المناسبة بسهولة",ph:"ابحث عن برمجة، تصميم مواقع، دعم فني…",go:"بحث",city:"المدينة",cats:"التصنيفات",latest:"أحدث الخدمات التقنية",ads:"إعلان",empty:"لا توجد خدمات منشورة حالياً. كن أول مقدم خدمة يضيف خدماته عبر زر «أضف خدمة».",all:"كل المدن",feat:"مميز",lang:"English",soon:"قريباً: نشر الإعلانات",demo:"* محاكاة تجريبية فقط، والأسعار توضيحية وليست حقيقية.",foot:"نموذج تجريبي © 2026",signin:"دخول",account:"حسابي",signmsg:"سجّل الدخول بحساب جوجل لإدارة إعلاناتك وحذفها من أي جهاز.",myads:"إعلاناتي",noads:"لا توجد إعلانات مرتبطة بحسابك.",signout:"تسجيل الخروج",signedin:"تم تسجيل الدخول",needlogin:"سجّل الدخول بحساب جوجل أولاً",s_pending:"قيد المراجعة",s_approved:"منشور",s_rejected:"مرفوض",s_hidden:"مخفي",rate:"قيّم",rts:"إرسال التقييم",rtx:"تعليق (اختياري)",pickstar:"اختر عدد النجوم",rated:"شكراً، تم حفظ تقييمك",mydel:"🗑️ حذف إعلاني",delq:"حذف إعلانك نهائياً؟",deld:"تم حذف الإعلان",prods:"المنتجات",ask:"اسأل عن السعر",more_s:"عرض المزيد",pt:"أضف خدمة تقنية جديدة",kind1:"فرد",kind2:"متجر",pimg:"🖼️ أضف صورة للإعلان",pimg_ok:"✓ تم اختيار الصورة",ptitle:"اسم الخدمة التقنية",pprice:"السعر يبدأ من (ريال عُماني)",pig:"حساب إنستغرام أو اسم النشاط (مثال: @techoman)",pweb:"رابط الموقع (اختياري)",pwa:"واتساب (مثال: 9XXXXXXX)",pub:"انشر الإعلان",pn1:"سيظهر إعلانك بعد موافقة المراجع.",pn2:"سيُحفظ إعلانك على هذا الجهاز فقط، لأن قاعدة البيانات المشتركة تتطلب تسجيل الدخول.",perr1:"أدخل عنواناً (3 أحرف على الأقل) وسعراً صحيحاً",perr2:"أضف وسيلة تواصل واحدة على الأقل: إنستغرام أو موقع أو واتساب",pdone1:"تم إرسال خدمتك للمراجعة",pdone2:"تم حفظ إعلانك على جهازك",web:"الموقع",dm:"نموذج",shops:"مقدمو الخدمات التقنية",shops_n:"تواصل مع مقدم الخدمة مباشرة، وتحقق من أعماله وتفاصيل الخدمة قبل الاتفاق.",igs:"🔎 ابحث في إنستغرام عن صفحات هذا التصنيف",ap:"موقع المطوّر – لوحة التحكم",st_pending:"قيد المراجعة",st_approved:"مقبولة",st_rejected:"مرفوضة",aempty:"لا توجد طلبات في هذه القائمة.",aupd:"تم تحديث حالة الطلب",afail:"تعذّر تنفيذ العملية",b_ok:"✅ قبول ونشر",b_no:"❌ رفض",b_del:"🗑️ إلغاء النشر",aexp:"نسخ قائمة المقبولة (JSON)",acopy:"تم النسخ",rbtn:"🏪 اقترح متجر",rt_t:"اقتراح متجر جديد",rn:"اسم مقدم الخدمة أو الشركة",rt:"الخدمات التقنية بفاصلة (مثال: تصميم مواقع، صيانة حواسيب)",rsub:"أرسل للمراجعة",rnote:"سيصل اقتراحك إلى الطلبات في لوحة الإدارة للمراجعة، ولن يظهر قبل الموافقة.",rneed:"سجّل الدخول أولاً لإرسال اقتراح المتجر",rerr:"أدخل اسم مقدم الخدمة ووسيلة تواصل واحدة على الأقل",rok:"تم إرسال اقتراح المتجر إلى لوحة الإدارة للمراجعة",rfail:"تعذّر إرسال الطلب",back:"🌐 موقع المستخدم",st_ads:"الإعلانات",sx_shops:"صفحات منشورة",sx_ads:"إعلانات المستخدمين",b_dad:"🗑️ حذف الإعلان",dadd:"➕ إضافة صفحة مباشرة (دون مراجعة)",achk:"جارٍ التحقق من صلاحياتك…",anoadm:"هذه الصفحة للمراجعين فقط. سجّل الدخول بحساب لديه صلاحية «محرر» على الصفحة.",noshop:"لا توجد صفحات مضافة لهذا التصنيف بعد، استخدم زر البحث أدناه."},
+en:{brand:"Tech Oman",post:"Add a service",h1:"Find trusted tech services in Oman",sub:"Discover developers, IT specialists and technical support providers across Oman",ph:"Search web development, IT support, design…",go:"Search",city:"City",cats:"Categories",latest:"Latest tech services",ads:"listings",empty:"No services listed yet. Be the first provider to add a service.",all:"All cities",feat:"Featured",lang:"العربية",soon:"Coming soon: posting ads",demo:"* Demo simulation only; prices are illustrative, not live.",foot:"Demo prototype © 2026",signin:"Sign in",account:"My account",signmsg:"Sign in with Google to manage and delete your ads from any device.",myads:"My ads",noads:"No ads linked to your account.",signout:"Sign out",signedin:"Signed in",needlogin:"Please sign in with Google first",s_pending:"Pending",s_approved:"Published",s_rejected:"Rejected",s_hidden:"Hidden",rate:"Rate",rts:"Submit rating",rtx:"Comment (optional)",pickstar:"Pick a star rating",rated:"Thanks, your rating is saved",mydel:"🗑️ Delete my ad",delq:"Delete your ad permanently?",deld:"Ad deleted",prods:"Products",ask:"Ask for price",more_s:"Show more",pt:"Add a new tech service",kind1:"Individual",kind2:"Store",pimg:"🖼️ Add an ad image",pimg_ok:"✓ Photo selected",ptitle:"Tech service name",pprice:"Starting price (OMR)",pig:"Instagram account (e.g. @mystore)",pweb:"Website link (optional)",pwa:"WhatsApp (e.g. 9XXXXXXX)",pub:"Publish ad",pn1:"Your ad will appear after the reviewer approves it.",pn2:"Your ad is saved on this device only, since the shared database needs sign-in.",perr1:"Enter a title (3+ characters) and a valid price",perr2:"Add at least one contact: Instagram, website or WhatsApp",pdone1:"Your service was sent for review",pdone2:"Your service is saved on this device",web:"Website",dm:"Sample",shops:"Technology service providers",shops_n:"Contact providers directly and review their work and service details before making an agreement.",igs:"🔎 Find Instagram pages for this category",ap:"Developer site – control panel",st_pending:"Pending",st_approved:"Approved",st_rejected:"Rejected",aempty:"No requests in this list.",aupd:"Request status updated",afail:"Couldn’t complete the action",b_ok:"✅ Approve and publish",b_no:"❌ Reject",b_del:"🗑️ Unpublish",aexp:"Copy approved list (JSON)",acopy:"Copied",rbtn:"🏪 Suggest a store",rt_t:"Suggest a store",rn:"Provider or company name",rt:"Tech services, comma-separated (e.g. web design, computer repair)",rsub:"Send for review",rnote:"Your suggestion is sent to the admin dashboard for review and will not appear publicly until approved.",rneed:"Sign in first to suggest a store",rerr:"Enter a provider name and at least one contact method",rok:"Your store suggestion was sent to the admin dashboard for review",rfail:"Couldn’t send the request",back:"🌐 User site",st_ads:"Ads",sx_shops:"Published pages",sx_ads:"User ads",b_dad:"🗑️ Delete ad",dadd:"➕ Add a page directly (no review)",achk:"Checking your permissions…",anoadm:"This page is for reviewers only. Sign in with an account that has Editor access to the page.",noshop:"No pages added for this category yet; use the search button below."}};
 const CITIES=[["muscat","مسقط","Muscat"],["salalah","صلالة","Salalah"],["sohar","صحار","Sohar"],["nizwa","نزوى","Nizwa"],["sur","صور","Sur"],["rustaq","الرستاق","Rustaq"],["buraimi","البريمي","Al Buraimi"]];
 const CATS=[["web","🌐","تصميم وتطوير المواقع","Web Development"],["apps","📱","تطوير التطبيقات","App Development"],["software","💻","البرمجة والأنظمة","Software & Systems"],["support","🛠️","الدعم الفني والصيانة","IT Support & Repair"],["network","📡","الشبكات والبنية التقنية","Networking"],["security","🔐","الأمن السيبراني","Cybersecurity"],["ai","🤖","الذكاء الاصطناعي","Artificial Intelligence"],["design","🎨","التصميم الرقمي","Digital Design"],["cloud","☁️","الاستضافة والسحابة","Cloud & Hosting"]];
 const ADS=[];
@@ -238,10 +211,10 @@ const PROD=[["📱","آيفون 15 (128 جيجا)","iPhone 15 (128GB)",329,[0,1,
 const $=id=>document.getElementById(id);
 let L="ar";try{L=localStorage.getItem("lang")||"ar"}catch(e){}
 if(L!=="en")L="ar";
-const S={city:"all",cat:"",tag:"",fav:new Set(),k:null,img:"",conf:0,h:0};
+const S={city:"all",cat:"",tag:"",fav:new Set(),k:null};
 const t=k=>T[L][k];
-const STORE_THEMES={blue:{brand:"#2563eb",accent:"#60a5fa",rgb:"37,99,235"},green:{brand:"#059669",accent:"#34d399",rgb:"5,150,105"},purple:{brand:"#7c3aed",accent:"#a78bfa",rgb:"124,58,237"},rose:{brand:"#e11d48",accent:"#fb7185",rgb:"225,29,72"},teal:{brand:"#0f9f9a",accent:"#2dd4bf",rgb:"15,159,154"},gold:{brand:"#b7791f",accent:"#fbbf24",rgb:"183,121,31"}};
-function applyStoreTheme(id,save=true){const p=STORE_THEMES[id],root=document.documentElement;if(p){root.style.setProperty("--brand",p.brand);root.style.setProperty("--brand2",p.accent);root.style.setProperty("--brandRgb",p.rgb)}else{root.style.setProperty("--brand","#f26a1b");root.style.setProperty("--brand2","#ff9d3d");root.style.setProperty("--brandRgb","242,106,27");id=""}document.querySelectorAll("[data-theme-choice]").forEach(b=>{const selected=b.dataset.themeChoice===id;b.classList.toggle("selected",selected);b.setAttribute("aria-pressed",String(selected))});const reset=$("themeReset");if(reset){reset.classList.toggle("selected",!id);reset.setAttribute("aria-pressed",String(!id))}if(save){try{if(id)localStorage.setItem("store-theme",id);else localStorage.removeItem("store-theme")}catch(e){}}}
+const STORE_THEMES={blue:{brand:"#2563eb",accent:"#60a5fa",rgb:"37,99,235",ink:"#183153",inkDark:"#dbeafe",deep:"#163b75",deepRgb:"22,59,117",bg:"#eff6ff",bgDark:"#0e1a2e",cardDark:"#162944",line:"#d7e4f7",lineDark:"#273d5e",chipDark:"#1b3150"},green:{brand:"#059669",accent:"#34d399",rgb:"5,150,105",ink:"#173c2f",inkDark:"#d1fae5",deep:"#14532d",deepRgb:"20,83,45",bg:"#effaf4",bgDark:"#0e231d",cardDark:"#163429",line:"#d3efdf",lineDark:"#285343",chipDark:"#1c3d31"},purple:{brand:"#7c3aed",accent:"#a78bfa",rgb:"124,58,237",ink:"#352056",inkDark:"#ede9fe",deep:"#4c1d95",deepRgb:"76,29,149",bg:"#f6f1ff",bgDark:"#1b1230",cardDark:"#2a1d42",line:"#e5d9fb",lineDark:"#46305f",chipDark:"#32234e"},rose:{brand:"#e11d48",accent:"#fb7185",rgb:"225,29,72",ink:"#4c1d2b",inkDark:"#ffe4e6",deep:"#881337",deepRgb:"136,19,55",bg:"#fff1f3",bgDark:"#2b111b",cardDark:"#3b1b29",line:"#f7d6df",lineDark:"#5c2b3f",chipDark:"#482234"},teal:{brand:"#0f9f9a",accent:"#2dd4bf",rgb:"15,159,154",ink:"#164344",inkDark:"#ccfbf1",deep:"#134e4a",deepRgb:"19,78,74",bg:"#edfbfa",bgDark:"#102725",cardDark:"#193d3a",line:"#d1efec",lineDark:"#2c5b56",chipDark:"#204a46"},gold:{brand:"#b7791f",accent:"#fbbf24",rgb:"183,121,31",ink:"#4a3414",inkDark:"#fef3c7",deep:"#78350f",deepRgb:"120,53,15",bg:"#fff8e8",bgDark:"#291c0c",cardDark:"#3d2a14",line:"#f4e5c1",lineDark:"#5b4223",chipDark:"#49351a"}};
+function applyStoreTheme(id,save=true){const root=document.documentElement,p=STORE_THEMES[id],dark=!!(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(p){root.style.setProperty("--brand",p.brand);root.style.setProperty("--brand2",p.accent);root.style.setProperty("--brandRgb",p.rgb);root.style.setProperty("--ink",dark?p.inkDark:p.ink);root.style.setProperty("--deep",p.deep);root.style.setProperty("--deepRgb",p.deepRgb);root.style.setProperty("--bg",dark?p.bgDark:p.bg);root.style.setProperty("--card",dark?p.cardDark:"#ffffff");root.style.setProperty("--line",dark?p.lineDark:p.line);root.style.setProperty("--chip",dark?p.chipDark:"#ffffff")}else{["--brand","--brand2","--brandRgb","--ink","--deep","--deepRgb","--bg","--card","--line","--chip"].forEach(k=>root.style.removeProperty(k));id=""}document.querySelectorAll("[data-theme-choice]").forEach(b=>{const selected=b.dataset.themeChoice===id;b.classList.toggle("selected",selected);b.setAttribute("aria-pressed",String(selected))});const reset=$("themeReset");if(reset){reset.classList.toggle("selected",!id);reset.setAttribute("aria-pressed",String(!id))}if(save){try{if(id)localStorage.setItem("store-theme",id);else localStorage.removeItem("store-theme")}catch(e){}}}
 function setThemeLabels(){const ar=L==="ar";$("themeTitle").textContent=ar?"ثيمات المتجر":"Store themes";$("themeHint").textContent=ar?"اختر لونك المفضل":"Choose your favourite colour";$("themeReset").textContent=ar?"↺ استعادة اللون الأساسي":"↺ Restore default colour";document.querySelectorAll("[data-theme-name]").forEach(e=>e.textContent=e.dataset[ar?"ar":"en"])}
 function closeSettingsMenu(){const m=$("settingsBackdrop");m.classList.remove("on");m.setAttribute("aria-hidden","true");$("gearBtn").setAttribute("aria-expanded","false")}
 function openSettingsMenu(){const m=$("settingsBackdrop");m.classList.add("on");m.setAttribute("aria-hidden","false");$("gearBtn").setAttribute("aria-expanded","true")}
@@ -270,7 +243,6 @@ function lang(){
  $("rc").innerHTML=$("pc").innerHTML;
  drawKind();$("pnote").textContent=t(DB?"pn1":"pn2");
  drawCities();drawCats();drawAds();
- if(S.info)showReal(S.info);drawAcc();
 }
 function drawCities(){
  $("cities").innerHTML=[["all",t("all")],...CITIES.map(c=>[c[0],nm(c,1)])].map(([id,n])=>`<button class="chip${S.city==id?" on":""}" data-c="${id}">${n}</button>`).join("");
@@ -296,80 +268,7 @@ $("go").onclick=()=>{drawAds();$("latest").scrollIntoView()};
 $("lb").onclick=()=>{closeSettingsMenu();L=L=="ar"?"en":"ar";try{localStorage.setItem("lang",L)}catch(e){}lang()};
 $("post").onclick=()=>{closeSettingsMenu();$("pnote").textContent=t(DB?"pn1":"pn2");$("ov2").classList.add("on")};
 
-// ---- Image search (simulated) ----
-const close=()=>{stopCam();$("ov").classList.remove("on")};
-$("x").onclick=close;
-$("ov").onclick=e=>{if(e.target==$("ov"))close()};
-document.addEventListener("keydown",e=>{if(e.key=="Escape"){closeSettingsMenu();close();["ov2","ov3","ov5","ov6"].forEach(i=>$(i).classList.remove("on"))}});
-$("f").onchange=e=>pick(e.target.files[0]);
-$("f2").onchange=e=>pick(e.target.files[0]);
-$("dz").ondragover=e=>e.preventDefault();
-$("dz").ondrop=e=>{e.preventDefault();pick(e.dataTransfer.files[0])};
-
-function pick(f){
- if(!f)return;
- if(!/^image\//.test(f.type)){toast(t("bad"));return}
- const r=new FileReader();
- r.onload=()=>analyze(r.result,f.name+f.size);
- r.readAsDataURL(f);$("f").value="";
-}
-function loading(){
- $("res").innerHTML=`<div class="ld"><img class="pv" src="${S.img}" alt=""><div style="flex:1"><div class="bar"><i id="bar"></i></div><p id="st" class="mute">${t("s1")}</p></div></div>`;
- [1,2,3].forEach((n,i)=>setTimeout(()=>{const s=$("st"),b=$("bar");if(s&&b){s.textContent=t("s"+n);b.style.width=n*33+"%"}},i*900));
-}
-const words=info=>[...new Set([info.ar,info.en,...(info.kw||[])].filter(Boolean).flatMap(k=>String(k).toLowerCase().split(/[\s,،|/]+/)).filter(w=>w.length>2))];
-function matchReal(info){
- const w=words(info),sc=txt=>w.filter(x=>txt.includes(x)).length;
- const shops=SHOPS_DB.map(s=>({s,n:(s.cat&&s.cat==info.cat?2:0)+sc((s.n+" "+s.tags.join(" ")+" "+s.products.map(p=>p.t).join(" ")).toLowerCase())})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n).slice(0,8).map(x=>x.s);
- const prods=SHOPS_DB.flatMap(s=>s.products.map(p=>({p,s,n:sc(p.t.toLowerCase())}))).filter(x=>x.n>0).sort((a,b)=>b.n-a.n).slice(0,8);
- return{shops,prods};
-}
-function showReal(info){
- S.info=info;const o=' target="_blank" rel="noopener noreferrer"';
- const m=info?matchReal(info):{shops:[],prods:[]},nm1=info?(L=="ar"?info.ar||info.en:info.en||info.ar):"";
- const lk=s=>[igOk(s.ig)&&`<a href="https://www.instagram.com/${igOk(s.ig)}/"${o}>📸</a>`,webOk(s.web)&&`<a href="${esc(webOk(s.web))}"${o}>🌐</a>`,waOk(s.wa)&&`<a href="https://wa.me/${waOk(s.wa)}"${o}>💬</a>`].filter(Boolean).join(" ");
- $("res").innerHTML=`<div class="ld"><img class="pv" src="${S.img}" alt=""><div><small class="mute">${info?t("found"):""}</small><h3>${info?esc(nm1):t("pickt")}</h3></div></div>
-<p class="mute lbl">${t("notit")}</p>
-<div class="chips">${CATS.map(c=>`<button class="chip${info&&info.cat==c[0]?" on":""}" data-rc="${c[0]}">${c[1]} ${nm(c,2)}</button>`).join("")}</div>
-${info?`<h4 class="lbl">${t("rs")}</h4>${m.shops.length?m.shops.map(x=>`<div class="st"><span class="lg">${esc(x.e)}</span><div style="flex:1;min-width:0"><b>${esc(x.n)}</b><br><small class="mute">${esc(x.tags.slice(0,3).map(y=>nm(y,0)).join("، "))}</small></div><div class="lk">${lk(x)}</div></div>`).join(""):`<p class="mute">${t("nomatch")}</p>`}
-${m.prods.length?`<h4 class="lbl">${t("rp")}</h4>${m.prods.map(x=>`<div class="st"><div style="flex:1;min-width:0"><b>${esc(x.p.t)}</b><br><small class="mute">🏪 ${esc(x.s.n)}</small></div><div class="pt"><b>${x.p.p>0?fmt(x.p.p):""}</b></div><div class="lk">${x.p.u?`<a href="${esc(x.p.u)}"${o}>↗</a>`:lk(x.s)}</div></div>`).join("")}`:""}`:""}`;
-}
-function links(info){
- const nme=L=="ar"?info.ar||info.en:info.en||info.ar,q=encodeURIComponent(nme+(L=="ar"?" سلطنة عمان":" Oman")),tag=(info.en||"").toLowerCase().replace(/[^a-z0-9]/g,""),a=(u,l)=>`<a class="chip" href="${u}" target="_blank" rel="noopener noreferrer">${l}</a>`;
- return `<h4 class="lbl">${t("rl_t")}</h4><div class="chips">${a("https://www.google.com/search?tbm=shop&q="+q,"🛒 "+t("rl_g"))}${a("https://www.google.com/maps/search/"+q,"🗺️ "+t("rl_m"))}${tag?a("https://www.instagram.com/explore/tags/"+tag+"/","📸 "+t("rl_i")):""}</div><p class="mute demo">${t("rl_n")}</p>`;
-}
-$("res").onclick=e=>{
- const b=e.target.closest("[data-rc]");
- if(b){const c=CATS.find(x=>x[0]==b.dataset.rc),i=S.info||{};showReal({ar:i.ar||c[2],en:i.en||c[3],cat:c[0],kw:i.kw||[]});return}
- if(e.target.closest("#sim")&&S.info){S.cat=S.info.cat||"";$("q").value="";close();drawCats();drawAds();$("latest").scrollIntoView()}
-};
-
-// ---- Camera ----
-let stm;
-const TAGS=["iphone15","smarttv","laptop","ps5","runningshoes","airfryer","wirelessheadphones","smartwatch"];
-const openCam=()=>{$("ov").classList.add("on");$("res").innerHTML="";$("f2").click()};
-async function startCam(){
- if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return false;
- try{stm=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});$("vd").srcObject=stm;$("cv").hidden=false;$("dz").hidden=true;return true}
- catch(e){toast(t("cam_err"));return false}
-}
-function stopCam(){if(stm)stm.getTracks().forEach(x=>x.stop());stm=null;$("cv").hidden=true}
-["shot","fab","cam"].forEach(i=>$(i).onclick=openCam);
-$("live").onclick=()=>startCam().then(ok=>{if(!ok)$("f2").click()});
-$("snap").onclick=()=>{
- const v=$("vd");if(!v.videoWidth)return;
- const k=Math.min(1,800/Math.max(v.videoWidth,v.videoHeight)),c=document.createElement("canvas");
- c.width=v.videoWidth*k;c.height=v.videoHeight*k;c.getContext("2d").drawImage(v,0,0,c.width,c.height);
- const u=c.toDataURL("image/jpeg",.8);analyze(u,u.length+u.slice(-200));
-};
-function shrinkImg(u,m,cb){const i=new Image();i.onload=()=>{const k=Math.min(1,m/Math.max(i.width,i.height)),c=document.createElement("canvas");c.width=Math.max(1,Math.round(i.width*k));c.height=Math.max(1,Math.round(i.height*k));c.getContext("2d").drawImage(i,0,0,c.width,c.height);cb(c.toDataURL("image/jpeg",.8))};i.onerror=()=>cb(u);i.src=u}
-function analyze(img){
- stopCam();$("dz").hidden=false;S.img=img;S.info=null;loading();
- shrinkImg(img,800,async u=>{
-  try{const r=await api("/api/identify",{method:"POST",body:JSON.stringify({image:u})});showReal({ar:r.ar,en:r.en,cat:r.cat,kw:r.kw||[]})}
-  catch(e){showReal(null)}
- });
-}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSettingsMenu();["ov2","ov3","ov5","ov6"].forEach(i=>$(i).classList.remove("on"))}});
 
 // ---- Ads data, sharing and posting ----
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -459,11 +358,10 @@ setInterval(loadData,30000);
 // ---- Admin-controlled settings: show/hide any button or section, override texts ----
 const WS={};
 function watch(id,fn){const e=document.getElementById(id);if(!e||!("IntersectionObserver" in window))return;if(WS[id])WS[id].disconnect();WS[id]=new IntersectionObserver(en=>{if(en[0].isIntersecting){WS[id].disconnect();fn()}},{rootMargin:"400px"});WS[id].observe(e)}
-const CTL=[["post","#post"],["lang","#lb"],["hero",".hero"],["shot","#shot"],["search",".sb"],["camsb","#cam"],["dock",".dock"],["dkcam","#fab"],["sugg","#rbtn"],["cities","#citylbl,#cities"],["cats","#catlbl,#cats"],["shops","#shopsec"],["latest","#latest,#grid"],["footer","footer"]];
+const CTL=[["post","#post"],["lang","#lb"],["hero",".hero"],["search",".sb"],["sugg","#rbtn"],["cities","#citylbl,#cities"],["cats","#catlbl,#cats"],["shops","#shopsec"],["latest","#latest,#grid"],["footer","footer"]];
 function applySettings(st){
  const h=Array.isArray(st.hidden)?st.hidden:[];HID=h;REQLOGIN=!!st.requireLogin;SORT=st.sort||"rating";CATORD=st.catOrder||[];GCID=st.google||"";
  CTL.forEach(([id,sel])=>document.querySelectorAll(sel).forEach(e=>{e.hidden=h.includes(id)}));
- if(h.includes("dkcam")&&h.includes("sugg"))document.querySelectorAll(".dock").forEach(e=>{e.hidden=true});
  for(const l of["ar","en"])Object.entries((st.text||{})[l]||{}).forEach(([k,v])=>{if(typeof v=="string"&&v.length<200&&k in T[l])T[l][k]=v});
  $("lgn").hidden=h.includes("login");if(GCID)loadG();if(GT&&GCID)loadMine().then(()=>{drawAcc();drawAds()});
  lang();
