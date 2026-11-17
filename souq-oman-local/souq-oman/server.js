@@ -138,7 +138,7 @@ http.createServer(async(req,res)=>{
   }
   if(m=="POST"&&p=="/api/requests"){
    if(limited("req:"+ip(req),10,36e5))throw E(429,"too many requests");
-   const u=userOf(req);if(cleanSettings(db.settings).requireLogin&&!u)throw E(401,"login required");const it=build(await body(req));if(u)it.owner=u.sub;let token="";if(it.type=="ad"){token=crypto.randomBytes(16).toString("hex");it.tokHash=sha(token).toString("hex")}db.items.push(it);save();audit(req,"submit",{id:it.id,type:it.type});return send(201,{id:it.id,token});
+   const u=userOf(req),it=build(await body(req));if(it.type=="ad"&&(!u||!u.v||!u.email))throw E(401,"verified Google login required");if(cleanSettings(db.settings).requireLogin&&!u)throw E(401,"login required");if(u)it.owner=u.sub;let token="";if(it.type=="ad"){token=crypto.randomBytes(16).toString("hex");it.tokHash=sha(token).toString("hex")}db.items.push(it);save();audit(req,"submit",{id:it.id,type:it.type});return send(201,{id:it.id,token});
   }
   if(m=="POST"&&p=="/api/admin/login"){
    if(limited("login:"+ip(req),8,9e5)){audit(req,"login_blocked");throw E(429,"too many attempts")}
