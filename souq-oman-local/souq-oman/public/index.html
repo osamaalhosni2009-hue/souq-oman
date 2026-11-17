@@ -439,7 +439,7 @@ function applySettings(st){
  CTL.forEach(([id,sel])=>document.querySelectorAll(sel).forEach(e=>{e.hidden=h.includes(id)}));
  if(h.includes("dkcam")&&h.includes("sugg"))document.querySelectorAll(".dock").forEach(e=>{e.hidden=true});
  for(const l of["ar","en"])Object.entries((st.text||{})[l]||{}).forEach(([k,v])=>{if(typeof v=="string"&&v.length<200&&k in T[l])T[l][k]=v});
- $("lgn").hidden=!GCID||h.includes("login");if(GCID)loadG();if(GT&&GCID)loadMine().then(()=>{drawAcc();drawAds()});
+ $("lgn").hidden=h.includes("login");if(GCID)loadG();if(GT&&GCID)loadMine().then(()=>{drawAcc();drawAds()});
  lang();
 }
 async function loadSettings(){try{applySettings(await api("/api/settings"))}catch(e){}}
@@ -465,7 +465,7 @@ function needLogin(){if(REQLOGIN&&!GT){openAcc();toast(t("needlogin"));return tr
 function openAcc(){drawAcc();$("ov6").classList.add("on")}
 function drawAcc(){
  const label=$("lgnLabel");if(label)label.textContent=GU?((GU.name||"").split(" ")[0]||t("account")):t("signin");
- $("acc").innerHTML=GT?`<div class="ld"><img class="pv" style="width:56px;height:56px;border-radius:50%" src="${esc(GU&&GU.pic||"")}" alt="" onerror="this.remove()"><div><b>${esc(GU&&GU.name||"")}</b></div></div><h4 class="lbl">${t("myads")}</h4>${MYADS.length?MYADS.map(a=>`<div class="st"><div style="flex:1;min-width:0"><b>${esc(a.t)}</b><br><small class="mute">${esc(T[L]["s_"+a.status]||a.status)} · ${fmt(+a.p||0)}</small></div><button class="chip" data-mydel="${esc(a.id)}">🗑️</button></div>`).join(""):`<p class="mute">${t("noads")}</p>`}<button class="btn alt" id="gout" style="margin-top:12px">${t("signout")}</button>`:`<p class="mute" style="margin:10px 0">${t("signmsg")}</p><div id="gbtn" style="display:flex;justify-content:center"></div>`;
+ $("acc").innerHTML=GT?`<div class="ld"><img class="pv" style="width:56px;height:56px;border-radius:50%" src="${esc(GU&&GU.pic||"")}" alt="" onerror="this.remove()"><div><b>${esc(GU&&GU.name||"")}</b></div></div><h4 class="lbl">${t("myads")}</h4>${MYADS.length?MYADS.map(a=>`<div class="st"><div style="flex:1;min-width:0"><b>${esc(a.t)}</b><br><small class="mute">${esc(T[L]["s_"+a.status]||a.status)} · ${fmt(+a.p||0)}</small></div><button class="chip" data-mydel="${esc(a.id)}">🗑️</button></div>`).join(""):`<p class="mute">${t("noads")}</p>`}<button class="btn alt" id="gout" style="margin-top:12px">${t("signout")}</button>`:`<p class="mute" style="margin:10px 0">${t("signmsg")}</p>${GCID?'<div id="gbtn" style="display:flex;justify-content:center"></div>':'<p class="mute">تسجيل الدخول بجوجل غير مفعّل حالياً. يلزم إعداد GOOGLE_CLIENT_ID في Render.</p>'}`;
  if(!GT&&GCID&&window.google&&google.accounts&&$("gbtn"))google.accounts.id.renderButton($("gbtn"),{theme:"outline",size:"large",width:260,locale:L=="ar"?"ar":"en"});
 }
 $("lgn").onclick=()=>{closeSettingsMenu();openAcc()};
