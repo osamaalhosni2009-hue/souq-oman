@@ -4,7 +4,6 @@ const http=require("http"),fs=require("fs"),path=require("path"),crypto=require(
 // Settings file: edit config.env (or .env) next to this file. Real environment variables win over the file.
 for(const f of ["config.env",".env"]){try{for(const l of fs.readFileSync(path.join(__dirname,f),"utf8").split(/\r?\n/)){const m=/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*?)\s*$/.exec(l);if(m&&!l.trim().startsWith("#")&&process.env[m[1]]===undefined)process.env[m[1]]=m[2].replace(/^["']|["']$/g,"")}}catch(e){}}
 const PORT=+process.env.PORT||3000,PASS=process.env.ADMIN_PASSWORD||"";
-const KEY=process.env.ANTHROPIC_API_KEY||"",MODEL=process.env.ANTHROPIC_MODEL||"claude-haiku-5-5";
 const ORIGINS=(process.env.ALLOWED_ORIGINS||"").split(",").map(s=>s.trim()).filter(Boolean);
 if(PASS&&PASS.length<8){console.error("ADMIN_PASSWORD must be 8+ chars (or leave it unset).");process.exit(1)}
 const D=path.join(__dirname,"data"),UP=path.join(D,"uploads"),DBF=path.join(D,"db.json"),LOG=path.join(D,"audit.log");
@@ -30,9 +29,8 @@ try{const sd=JSON.parse(fs.readFileSync(path.join(__dirname,"seed","shops.json")
   if(ex){const have=new Set((ex.products||[]).map(x=>x.t));ex.products=[...(ex.products||[]),...pr.filter(x=>!have.has(x.t))].slice(0,300);if(ex.source=="seed"){ex.cat=cat;ex.e=s.e||CATS[cat]||"🛍️";ex.city=city;ex.tags=tags;ex.logo=V.url(s.logo)}}
   else db.items.push({id,type:"shop",status:"approved",source:"seed",ts:Date.now(),cat,e:s.e||CATS[cat]||"🛍️",n:str(s.n,60),ig:V.ig(s.ig),web:V.web(s.web),wa:V.wa(s.wa),city,tags,logo:V.url(s.logo),products:pr})}
  db.seedV=sd.version;save()}}catch(e){console.error("seed:",e.message)}
-const PROMPT='Identify the technology service or digital work shown in this photo for an Omani technology-services directory. Reply with ONLY a JSON object: {"ar":"short Arabic service name","en":"short English service name","cat":"one of web|apps|software|support|network|security|ai|design|cloud","kw":["3 to 6 short search keywords in English and Arabic"]}. Choose support for computer, phone, or IT repair; do not classify non-technical trades.';
-const CTL_IDS=["post","lang","hero","shot","search","camsb","dock","dkcam","sugg","cities","cats","shops","latest","footer","rating","userdel","login"];
-const TXT_KEYS=["brand","post","rbtn","h1","sub","shot","shot2","go","ph","latest","shops","foot"];
+const CTL_IDS=["post","lang","hero","search","sugg","cities","cats","shops","latest","footer","rating","userdel","login"];
+const TXT_KEYS=["brand","post","rbtn","h1","sub","go","ph","latest","shops","foot"];
 const cleanSettings=b=>{const st={hidden:[],text:{ar:{},en:{}},requireLogin:false,sort:"rating",catOrder:[]};b=b||{};
  if(Array.isArray(b.hidden))st.hidden=b.hidden.filter(x=>CTL_IDS.includes(x)||(/^cat_/.test(x)&&CATS[x.slice(4)]));
  st.requireLogin=!!b.requireLogin;st.sort=["rating","new","name"].includes(b.sort)?b.sort:"rating";
@@ -107,7 +105,7 @@ http.createServer(async(req,res)=>{
   if(m=="GET"&&(p=="/admin"||p=="/admin/"))return file(res,"admin/index.html",{"X-Frame-Options":"DENY","X-Robots-Tag":"noindex"});
   const up=/^\/uploads\/([a-f0-9]{24}\.(jpg|png|webp))$/.exec(p);
   if(m=="GET"&&up)return file(res,"data/uploads/"+up[1],{"Cache-Control":"public,max-age=86400"});
-  if(m=="GET"&&p=="/api/health")return send(200,{ok:true,identify:!!KEY});
+  if(m=="GET"&&p=="/api/health")return send(200,{ok:true});
   if(m=="GET"&&p=="/api/settings")return send(200,{...cleanSettings(db.settings),google:GID});
   if(m=="GET"&&(p=="/api/ads"||p=="/api/shops")){const t=p=="/api/ads"?"ad":"shop";return send(200,{items:db.items.filter(i=>i.type==t&&i.status=="approved").sort((a,b)=>b.ts-a.ts).map(pub)})}
   if(m=="POST"&&p=="/api/auth/google"){
@@ -136,16 +134,6 @@ http.createServer(async(req,res)=>{
    const u=userOf(req),okTok=it&&it.tokHash&&b.token&&crypto.timingSafeEqual(sha(String(b.token)),Buffer.from(it.tokHash,"hex"));
    if(!it||!(okTok||(u&&it.owner&&it.owner==u.sub)))throw E(403,"not allowed");
    dropItem(it);save();audit(req,"user_delete",{id:it.id});return send(200,{ok:true});
-  }
-  if(m=="POST"&&p=="/api/identify"){
-   if(!KEY)throw E(503,"identify not configured");
-   if(limited("id:"+ip(req),20,36e5))throw E(429,"too many requests");
-   const b=await body(req,2e6),mm=/^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/=]+)$/.exec(b.image||"");if(!mm)throw E(400,"bad image");
-   let r;try{r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"x-api-key":KEY,"anthropic-version":"2023-06-01","content-type":"application/json"},body:JSON.stringify({model:MODEL,max_tokens:300,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:"image/"+mm[1],data:mm[2]}},{type:"text",text:PROMPT}]}]})})}catch(e){throw E(502,"identify unavailable")}
-   if(!r.ok){console.error("identify status",r.status);throw E(502,"identify failed")}
-   const j=await r.json(),txt=(j.content||[]).map(c=>c.text||"").join(""),m2=/\{[\s\S]*\}/.exec(txt);let o={};try{o=JSON.parse(m2?m2[0]:"{}")}catch(e){}
-   const out={ar:str(o.ar,60),en:str(o.en,60),cat:CATS[o.cat]?o.cat:"",kw:(Array.isArray(o.kw)?o.kw:[]).slice(0,8).map(x=>str(x,30)).filter(Boolean)};
-   if(!out.ar&&!out.en)throw E(502,"unrecognized");audit(req,"identify",{cat:out.cat});return send(200,out);
   }
   if(m=="POST"&&p=="/api/requests"){
    if(limited("req:"+ip(req),10,36e5))throw E(429,"too many requests");
