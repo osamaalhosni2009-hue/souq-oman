@@ -137,6 +137,7 @@ a.btn{display:block;text-align:center;text-decoration:none}
   <button class="menu-item" id="lb" type="button"><span aria-hidden="true">🌐</span><span data-i="lang"></span></button>
   <button class="menu-item" id="lgn" type="button" hidden><span aria-hidden="true">🔐</span><span id="lgnLabel" data-i="signin"></span></button>
   <button class="menu-item" id="rbtn" type="button"><span aria-hidden="true">🏪</span><span data-i="rbtn"></span></button>
+  <a class="menu-item" href="/academy" style="text-decoration:none"><span aria-hidden="true">🤖</span><span id="academyMenuLabel">معلّم البرمجة بالذكاء الاصطناعي</span></a>
   <section class="theme-picker" aria-label="Store themes"><div class="theme-title"><b id="themeTitle">ثيمات المتجر</b><small id="themeHint">اختر لونك المفضل</small></div><div class="theme-grid">
    <button class="theme-swatch" type="button" data-theme-choice="blue" aria-pressed="false" style="--swatch:#2563eb"><i class="theme-dot"></i><span data-theme-name data-ar="أزرق محيطي" data-en="Ocean blue">أزرق محيطي</span></button>
    <button class="theme-swatch" type="button" data-theme-choice="green" aria-pressed="false" style="--swatch:#059669"><i class="theme-dot"></i><span data-theme-name data-ar="أخضر زمردي" data-en="Emerald">أخضر زمردي</span></button>
@@ -232,7 +233,7 @@ let tm;function toast(m){const e=$("toast");e.textContent=m;e.classList.add("on"
 function lang(){
  const d=document.documentElement;d.lang=L;d.dir=L=="ar"?"rtl":"ltr";
  document.title=L=="ar"?"تقني عُمان | Tech Oman":"Tech Oman | تقني عُمان";
- $("menuTitle").textContent=L=="ar"?"الإعدادات":"Settings";$("menuClose").textContent=L=="ar"?"إغلاق":"Close";setThemeLabels();
+ $("menuTitle").textContent=L=="ar"?"الإعدادات":"Settings";$("menuClose").textContent=L=="ar"?"إغلاق":"Close";setThemeLabels();$("academyMenuLabel").textContent=L=="ar"?"معلّم البرمجة بالذكاء الاصطناعي":"AI Programming Tutor";
  document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
  $("q").placeholder=t("ph");
  document.querySelectorAll("[data-ph]").forEach(e=>e.placeholder=t(e.dataset.ph));
