@@ -26,6 +26,7 @@
 - `THAWANI_SECRET_KEY` و`THAWANI_PUBLISHABLE_KEY`: مفاتيح بوابة ثواني للتاجر.
 - `THAWANI_MODE`: `test` للاختبار أو `live` للمدفوعات الحقيقية.
 - `AI_TUTOR_PRICE_BAISA`: سعر اشتراك 30 يوماً بالبيسة؛ مثال `3000` يعني 3.000 ر.ع.
+- `AI_TUTOR_STORAGE_READY`: اجعله `true` فقط بعد تركيب Persistent Disk أو قاعدة بيانات دائمة لحفظ الاشتراكات والمدفوعات.
 - `PUBLIC_BASE_URL`: عنوان الموقع العام (اختياري؛ الافتراضي `https://souq-oman.onrender.com`).
 
 ### معلّم البرمجة بالذكاء الاصطناعي
