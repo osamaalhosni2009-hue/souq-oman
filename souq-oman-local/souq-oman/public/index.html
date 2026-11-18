@@ -22,7 +22,30 @@ button{cursor:pointer;border:0;background:none}
 .wrap{max-width:1120px;margin:auto;padding:0 14px}
 .academy-home{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 22px;padding:18px 20px;border:1px solid rgba(var(--brandRgb),.24);border-radius:18px;background:linear-gradient(115deg,rgba(var(--brandRgb),.14),var(--card));box-shadow:0 8px 24px rgba(var(--brandRgb),.08);text-decoration:none;color:var(--ink)}
 .academy-home .ah-copy{display:flex;align-items:center;gap:13px;min-width:0}.academy-home .ah-icon{width:50px;height:50px;flex:none;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-size:25px}.academy-home b{display:block;font-size:17px}.academy-home small{display:block;color:var(--mute);font-size:13px}.academy-home .ah-action{flex:none;padding:9px 14px;border-radius:12px;background:var(--brand);color:#fff;font-weight:800;font-size:13px}
-@media(max-width:560px){.academy-home{align-items:flex-start;flex-direction:column}.academy-home .ah-action{margin-inline-start:63px}}
+.academy-widget{margin:0 0 24px;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 24px rgba(var(--brandRgb),.06);scroll-margin-top:78px}
+.academy-w-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.academy-w-title{display:flex;align-items:center;gap:10px}.academy-w-icon{width:42px;height:42px;display:grid;place-items:center;background:rgba(var(--brandRgb),.12);border-radius:13px;font-size:23px}
+.academy-widget h2{font-size:20px;margin:0}.academy-widget .aw-intro{color:var(--mute);font-size:13px;margin:5px 0 12px}
+.aw-state{font-size:12px;font-weight:800;color:var(--brand);background:rgba(var(--brandRgb),.1);padding:6px 10px;border-radius:99px}
+.aw-gate{padding:14px;border:1px solid var(--line);background:var(--bg);border-radius:15px}
+.aw-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.aw-btn{padding:10px 16px;background:var(--brand);color:#fff;border-radius:12px;font-weight:800}
+.aw-btn:disabled{opacity:.48;cursor:not-allowed}
+.aw-price{font-weight:800;color:var(--brand);font-size:18px}
+.aw-note{color:var(--mute);font-size:12px;margin-top:9px}
+.academy-prompts{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 10px}
+.academy-prompts button{padding:7px 11px;border:1px solid var(--line);border-radius:99px;background:var(--bg);font-size:12px;font-weight:700}
+.academy-messages{height:min(48vh,460px);min-height:210px;overflow:auto;display:flex;flex-direction:column;gap:9px;padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:15px}
+.aw-msg{max-width:94%;padding:10px 13px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px}
+.aw-msg.user{align-self:flex-start;background:var(--brand);color:#fff}
+.aw-msg.assistant{align-self:flex-end;background:var(--card);border:1px solid var(--line);width:fit-content;max-width:100%}
+.aw-msg pre{direction:ltr;text-align:left;white-space:pre;overflow:auto;background:var(--deep);color:#fff;border-radius:9px;padding:11px;font:12px/1.6 ui-monospace,Consolas,monospace}
+.aw-composer{display:flex;gap:8px;margin-top:10px}
+.aw-composer textarea{flex:1;min-width:0;min-height:56px;max-height:150px;resize:vertical;padding:11px;border:1px solid var(--line);border-radius:13px;background:var(--bg);color:var(--ink);font:inherit}
+.aw-chat-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px}
+.aw-chat-foot small{color:var(--mute);font-size:11px}
+.aw-clear{color:var(--brand);font-size:12px;font-weight:700}
+@media(max-width:560px){.academy-home{align-items:flex-start;flex-direction:column}.academy-home .ah-action{margin-inline-start:63px}.academy-widget{padding:13px}.aw-composer{flex-direction:column}.aw-composer .aw-btn{min-height:44px}.aw-chat-foot{align-items:flex-start;flex-direction:column}}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff}
 .hd{display:flex;align-items:center;justify-content:space-between;height:58px}
 .logo{display:flex;align-items:center;gap:8px;font-size:21px;font-weight:800}
@@ -140,7 +163,7 @@ a.btn{display:block;text-align:center;text-decoration:none}
   <button class="menu-item" id="lb" type="button"><span aria-hidden="true">🌐</span><span data-i="lang"></span></button>
   <button class="menu-item" id="lgn" type="button" hidden><span aria-hidden="true">🔐</span><span id="lgnLabel" data-i="signin"></span></button>
   <button class="menu-item" id="rbtn" type="button"><span aria-hidden="true">🏪</span><span data-i="rbtn"></span></button>
-  <a class="menu-item" id="academyMenuLink" href="/academy" style="text-decoration:none"><span aria-hidden="true">🤖</span><span id="academyMenuLabel">معلّم البرمجة بالذكاء الاصطناعي</span></a>
+  <a class="menu-item" id="academyMenuLink" href="#academyInline" style="text-decoration:none"><span aria-hidden="true">🤖</span><span id="academyMenuLabel">معلّم البرمجة بالذكاء الاصطناعي</span></a>
   <section class="theme-picker" aria-label="Store themes"><div class="theme-title"><b id="themeTitle">ثيمات المتجر</b><small id="themeHint">اختر لونك المفضل</small></div><div class="theme-grid">
    <button class="theme-swatch" type="button" data-theme-choice="blue" aria-pressed="false" style="--swatch:#2563eb"><i class="theme-dot"></i><span data-theme-name data-ar="أزرق محيطي" data-en="Ocean blue">أزرق محيطي</span></button>
    <button class="theme-swatch" type="button" data-theme-choice="green" aria-pressed="false" style="--swatch:#059669"><i class="theme-dot"></i><span data-theme-name data-ar="أخضر زمردي" data-en="Emerald">أخضر زمردي</span></button>
@@ -161,7 +184,27 @@ a.btn{display:block;text-align:center;text-decoration:none}
 </div></section>
 
 <main class="wrap">
- <a class="academy-home" id="academyHome" href="/academy"><span class="ah-copy"><span class="ah-icon">🤖</span><span><b data-i="academyTitle">معلّم البرمجة بالذكاء الاصطناعي</b><small data-i="academyDesc">تعلّم البرمجة وأنشئ موقعك خطوة بخطوة بمساعدة معلّمك الذكي</small></span></span><span class="ah-action" data-i="academyAction">ابدأ التعلّم ←</span></a>
+ <a class="academy-home" id="academyHome" href="#academyInline"><span class="ah-copy"><span class="ah-icon">🤖</span><span><b data-i="academyTitle">معلّم البرمجة بالذكاء الاصطناعي</b><small data-i="academyDesc">تعلّم البرمجة وأنشئ موقعك خطوة بخطوة بمساعدة معلّمك الذكي</small></span></span><span class="ah-action" data-i="academyAction">ابدأ الآن ←</span></a>
+ <section class="academy-widget" id="academyInline" aria-labelledby="academyHeading">
+  <div class="academy-w-head"><div class="academy-w-title"><span class="academy-w-icon">💻</span><h2 id="academyHeading" data-i="academyTitle">معلّم البرمجة بالذكاء الاصطناعي</h2></div><span class="aw-state" id="academyState" data-i="academySignInState">بانتظار تسجيل الدخول</span></div>
+  <p class="aw-intro" data-i="academyInlineIntro">اسأل المعلّم هنا مباشرة، وتعلّم البرمجة وأنشئ موقعك خطوة بخطوة.</p>
+  <div class="aw-gate" id="academyGate">
+   <p id="academyGateText" data-i="academyLoginText">سجّل الدخول بحساب Google لعرض اشتراكك واستخدام المعلّم.</p>
+   <div class="aw-actions"><button class="aw-btn" id="academyLoginBtn" type="button" data-i="academyLoginBtn">تسجيل الدخول بحساب Google</button><span class="aw-price" id="academyPrice" hidden></span><button class="aw-btn" id="academyBuyBtn" type="button" hidden data-i="academyBuyBtn">اشترك 30 يوماً</button></div>
+   <p class="aw-note" id="academyNotice" data-i="academyLoginNote">بعد تسجيل الدخول ستظهر حالة الاشتراك هنا.</p>
+  </div>
+  <div id="academyChat" hidden>
+   <div class="academy-prompts">
+    <button type="button" data-academy-prompt="html" data-i="academyPromptHtml">علّمني HTML</button>
+    <button type="button" data-academy-prompt="site" data-i="academyPromptSite">أنشئ صفحة موقع</button>
+    <button type="button" data-academy-prompt="error" data-i="academyPromptError">ساعدني في إصلاح خطأ</button>
+    <button type="button" data-academy-prompt="plan" data-i="academyPromptPlan">خطة تعلّم البرمجة</button>
+   </div>
+   <div class="academy-messages" id="academyMessages" aria-live="polite"></div>
+   <form class="aw-composer" id="academyChatForm"><textarea id="academyQuestion" maxlength="3000" required data-ph="academyQuestion" placeholder="اكتب سؤالك البرمجي هنا…"></textarea><button class="aw-btn" id="academySendBtn" type="submit" data-i="academySend">إرسال</button></form>
+   <div class="aw-chat-foot"><small id="academyExpiry"></small><button class="aw-clear" id="academyClearBtn" type="button" data-i="academyClear">مسح المحادثة</button></div>
+  </div>
+ </section>
  <p class="lbl" id="citylbl">📍 <span data-i="city"></span></p>
  <div class="chips" id="cities"></div>
  <p class="lbl" id="catlbl" data-i="cats"></p>
@@ -204,8 +247,8 @@ a.btn{display:block;text-align:center;text-decoration:none}
 
 <script>
 const T={
-ar:{academyTitle:"معلّم البرمجة بالذكاء الاصطناعي",academyDesc:"تعلّم البرمجة وأنشئ موقعك خطوة بخطوة بمساعدة معلّمك الذكي",academyAction:"ابدأ التعلّم ←",brand:"تقني عُمان",post:"أضف خدمة",h1:"اكتشف الخدمات التقنية في سلطنة عُمان",sub:"اعثر على خبراء التقنية والبرمجة والدعم الفني، واطلب الخدمة المناسبة بسهولة",ph:"ابحث عن برمجة، تصميم مواقع، دعم فني…",go:"بحث",city:"المدينة",cats:"التصنيفات",latest:"أحدث الخدمات التقنية",ads:"إعلان",empty:"لا توجد خدمات منشورة حالياً. كن أول مقدم خدمة يضيف خدماته عبر زر «أضف خدمة».",all:"كل المدن",feat:"مميز",lang:"English",soon:"قريباً: نشر الإعلانات",demo:"* محاكاة تجريبية فقط، والأسعار توضيحية وليست حقيقية.",foot:"نموذج تجريبي © 2026",signin:"دخول",account:"حسابي",signmsg:"سجّل الدخول بحساب جوجل لإدارة إعلاناتك وحذفها من أي جهاز.",myads:"إعلاناتي",noads:"لا توجد إعلانات مرتبطة بحسابك.",signout:"تسجيل الخروج",signedin:"تم تسجيل الدخول",needlogin:"سجّل الدخول بحساب جوجل أولاً",s_pending:"قيد المراجعة",s_approved:"منشور",s_rejected:"مرفوض",s_hidden:"مخفي",rate:"قيّم",rts:"إرسال التقييم",rtx:"تعليق (اختياري)",pickstar:"اختر عدد النجوم",rated:"شكراً، تم حفظ تقييمك",mydel:"🗑️ حذف إعلاني",delq:"حذف إعلانك نهائياً؟",deld:"تم حذف الإعلان",prods:"المنتجات",ask:"اسأل عن السعر",more_s:"عرض المزيد",pt:"أضف خدمة تقنية جديدة",kind1:"فرد",kind2:"متجر",pimg:"🖼️ أضف صورة للإعلان",pimg_ok:"✓ تم اختيار الصورة",ptitle:"اسم الخدمة التقنية",pprice:"السعر يبدأ من (ريال عُماني)",pig:"حساب إنستغرام أو اسم النشاط (مثال: @techoman)",pweb:"رابط الموقع (اختياري)",pwa:"واتساب (مثال: 9XXXXXXX)",pub:"انشر الإعلان",pn1:"سيظهر إعلانك بعد موافقة المراجع.",pn2:"سيُحفظ إعلانك على هذا الجهاز فقط، لأن قاعدة البيانات المشتركة تتطلب تسجيل الدخول.",perr1:"أدخل عنواناً (3 أحرف على الأقل) وسعراً صحيحاً",perr2:"أضف وسيلة تواصل واحدة على الأقل: إنستغرام أو موقع أو واتساب",pdone1:"تم إرسال خدمتك للمراجعة",pdone2:"تم حفظ إعلانك على جهازك",web:"الموقع",dm:"نموذج",shops:"مقدمو الخدمات التقنية",shops_n:"تواصل مع مقدم الخدمة مباشرة، وتحقق من أعماله وتفاصيل الخدمة قبل الاتفاق.",igs:"🔎 ابحث في إنستغرام عن صفحات هذا التصنيف",ap:"موقع المطوّر – لوحة التحكم",st_pending:"قيد المراجعة",st_approved:"مقبولة",st_rejected:"مرفوضة",aempty:"لا توجد طلبات في هذه القائمة.",aupd:"تم تحديث حالة الطلب",afail:"تعذّر تنفيذ العملية",b_ok:"✅ قبول ونشر",b_no:"❌ رفض",b_del:"🗑️ إلغاء النشر",aexp:"نسخ قائمة المقبولة (JSON)",acopy:"تم النسخ",rbtn:"🏪 اقترح متجر",rt_t:"اقتراح متجر جديد",rn:"اسم مقدم الخدمة أو الشركة",rt:"الخدمات التقنية بفاصلة (مثال: تصميم مواقع، صيانة حواسيب)",rsub:"أرسل للمراجعة",rnote:"سيصل اقتراحك إلى الطلبات في لوحة الإدارة للمراجعة، ولن يظهر قبل الموافقة.",rneed:"سجّل الدخول أولاً لإرسال اقتراح المتجر",rerr:"أدخل اسم مقدم الخدمة ووسيلة تواصل واحدة على الأقل",rok:"تم إرسال اقتراح المتجر إلى لوحة الإدارة للمراجعة",rfail:"تعذّر إرسال الطلب",back:"🌐 موقع المستخدم",st_ads:"الإعلانات",sx_shops:"صفحات منشورة",sx_ads:"إعلانات المستخدمين",b_dad:"🗑️ حذف الإعلان",dadd:"➕ إضافة صفحة مباشرة (دون مراجعة)",achk:"جارٍ التحقق من صلاحياتك…",anoadm:"هذه الصفحة للمراجعين فقط. سجّل الدخول بحساب لديه صلاحية «محرر» على الصفحة.",noshop:"لا توجد صفحات مضافة لهذا التصنيف بعد، استخدم زر البحث أدناه."},
-en:{academyTitle:"AI Programming Tutor",academyDesc:"Learn to code and build your website step by step with your AI tutor",academyAction:"Start learning →",brand:"Tech Oman",post:"Add a service",h1:"Find trusted tech services in Oman",sub:"Discover developers, IT specialists and technical support providers across Oman",ph:"Search web development, IT support, design…",go:"Search",city:"City",cats:"Categories",latest:"Latest tech services",ads:"listings",empty:"No services listed yet. Be the first provider to add a service.",all:"All cities",feat:"Featured",lang:"العربية",soon:"Coming soon: posting ads",demo:"* Demo simulation only; prices are illustrative, not live.",foot:"Demo prototype © 2026",signin:"Sign in",account:"My account",signmsg:"Sign in with Google to manage and delete your ads from any device.",myads:"My ads",noads:"No ads linked to your account.",signout:"Sign out",signedin:"Signed in",needlogin:"Please sign in with Google first",s_pending:"Pending",s_approved:"Published",s_rejected:"Rejected",s_hidden:"Hidden",rate:"Rate",rts:"Submit rating",rtx:"Comment (optional)",pickstar:"Pick a star rating",rated:"Thanks, your rating is saved",mydel:"🗑️ Delete my ad",delq:"Delete your ad permanently?",deld:"Ad deleted",prods:"Products",ask:"Ask for price",more_s:"Show more",pt:"Add a new tech service",kind1:"Individual",kind2:"Store",pimg:"🖼️ Add an ad image",pimg_ok:"✓ Photo selected",ptitle:"Tech service name",pprice:"Starting price (OMR)",pig:"Instagram account (e.g. @mystore)",pweb:"Website link (optional)",pwa:"WhatsApp (e.g. 9XXXXXXX)",pub:"Publish ad",pn1:"Your ad will appear after the reviewer approves it.",pn2:"Your ad is saved on this device only, since the shared database needs sign-in.",perr1:"Enter a title (3+ characters) and a valid price",perr2:"Add at least one contact: Instagram, website or WhatsApp",pdone1:"Your service was sent for review",pdone2:"Your service is saved on this device",web:"Website",dm:"Sample",shops:"Technology service providers",shops_n:"Contact providers directly and review their work and service details before making an agreement.",igs:"🔎 Find Instagram pages for this category",ap:"Developer site – control panel",st_pending:"Pending",st_approved:"Approved",st_rejected:"Rejected",aempty:"No requests in this list.",aupd:"Request status updated",afail:"Couldn’t complete the action",b_ok:"✅ Approve and publish",b_no:"❌ Reject",b_del:"🗑️ Unpublish",aexp:"Copy approved list (JSON)",acopy:"Copied",rbtn:"🏪 Suggest a store",rt_t:"Suggest a store",rn:"Provider or company name",rt:"Tech services, comma-separated (e.g. web design, computer repair)",rsub:"Send for review",rnote:"Your suggestion is sent to the admin dashboard for review and will not appear publicly until approved.",rneed:"Sign in first to suggest a store",rerr:"Enter a provider name and at least one contact method",rok:"Your store suggestion was sent to the admin dashboard for review",rfail:"Couldn’t send the request",back:"🌐 User site",st_ads:"Ads",sx_shops:"Published pages",sx_ads:"User ads",b_dad:"🗑️ Delete ad",dadd:"➕ Add a page directly (no review)",achk:"Checking your permissions…",anoadm:"This page is for reviewers only. Sign in with an account that has Editor access to the page.",noshop:"No pages added for this category yet; use the search button below."}};
+ar:{academyTitle:"معلّم البرمجة بالذكاء الاصطناعي",academyDesc:"تعلّم البرمجة وأنشئ موقعك خطوة بخطوة بمساعدة معلّمك الذكي",academyAction:"ابدأ الآن ←",academyInlineIntro:"اسأل المعلّم هنا مباشرة، وتعلّم البرمجة وأنشئ موقعك خطوة بخطوة.",academySignInState:"بانتظار تسجيل الدخول",academyLoginText:"سجّل الدخول بحساب Google لعرض اشتراكك واستخدام المعلّم.",academyLoginBtn:"تسجيل الدخول بحساب Google",academyLoginNote:"بعد تسجيل الدخول ستظهر حالة الاشتراك هنا.",academyBuyBtn:"اشترك 30 يوماً",academyPromptHtml:"علّمني HTML",academyPromptSite:"أنشئ صفحة موقع",academyPromptError:"ساعدني في إصلاح خطأ",academyPromptPlan:"خطة تعلّم البرمجة",academyQuestion:"اكتب سؤالك البرمجي هنا…",academySend:"إرسال",academyClear:"مسح المحادثة",brand:"تقني عُمان",post:"أضف خدمة",h1:"اكتشف الخدمات التقنية في سلطنة عُمان",sub:"اعثر على خبراء التقنية والبرمجة والدعم الفني، واطلب الخدمة المناسبة بسهولة",ph:"ابحث عن برمجة، تصميم مواقع، دعم فني…",go:"بحث",city:"المدينة",cats:"التصنيفات",latest:"أحدث الخدمات التقنية",ads:"إعلان",empty:"لا توجد خدمات منشورة حالياً. كن أول مقدم خدمة يضيف خدماته عبر زر «أضف خدمة».",all:"كل المدن",feat:"مميز",lang:"English",soon:"قريباً: نشر الإعلانات",demo:"* محاكاة تجريبية فقط، والأسعار توضيحية وليست حقيقية.",foot:"نموذج تجريبي © 2026",signin:"دخول",account:"حسابي",signmsg:"سجّل الدخول بحساب جوجل لإدارة إعلاناتك وحذفها من أي جهاز.",myads:"إعلاناتي",noads:"لا توجد إعلانات مرتبطة بحسابك.",signout:"تسجيل الخروج",signedin:"تم تسجيل الدخول",needlogin:"سجّل الدخول بحساب جوجل أولاً",s_pending:"قيد المراجعة",s_approved:"منشور",s_rejected:"مرفوض",s_hidden:"مخفي",rate:"قيّم",rts:"إرسال التقييم",rtx:"تعليق (اختياري)",pickstar:"اختر عدد النجوم",rated:"شكراً، تم حفظ تقييمك",mydel:"🗑️ حذف إعلاني",delq:"حذف إعلانك نهائياً؟",deld:"تم حذف الإعلان",prods:"المنتجات",ask:"اسأل عن السعر",more_s:"عرض المزيد",pt:"أضف خدمة تقنية جديدة",kind1:"فرد",kind2:"متجر",pimg:"🖼️ أضف صورة للإعلان",pimg_ok:"✓ تم اختيار الصورة",ptitle:"اسم الخدمة التقنية",pprice:"السعر يبدأ من (ريال عُماني)",pig:"حساب إنستغرام أو اسم النشاط (مثال: @techoman)",pweb:"رابط الموقع (اختياري)",pwa:"واتساب (مثال: 9XXXXXXX)",pub:"انشر الإعلان",pn1:"سيظهر إعلانك بعد موافقة المراجع.",pn2:"سيُحفظ إعلانك على هذا الجهاز فقط، لأن قاعدة البيانات المشتركة تتطلب تسجيل الدخول.",perr1:"أدخل عنواناً (3 أحرف على الأقل) وسعراً صحيحاً",perr2:"أضف وسيلة تواصل واحدة على الأقل: إنستغرام أو موقع أو واتساب",pdone1:"تم إرسال خدمتك للمراجعة",pdone2:"تم حفظ إعلانك على جهازك",web:"الموقع",dm:"نموذج",shops:"مقدمو الخدمات التقنية",shops_n:"تواصل مع مقدم الخدمة مباشرة، وتحقق من أعماله وتفاصيل الخدمة قبل الاتفاق.",igs:"🔎 ابحث في إنستغرام عن صفحات هذا التصنيف",ap:"موقع المطوّر – لوحة التحكم",st_pending:"قيد المراجعة",st_approved:"مقبولة",st_rejected:"مرفوضة",aempty:"لا توجد طلبات في هذه القائمة.",aupd:"تم تحديث حالة الطلب",afail:"تعذّر تنفيذ العملية",b_ok:"✅ قبول ونشر",b_no:"❌ رفض",b_del:"🗑️ إلغاء النشر",aexp:"نسخ قائمة المقبولة (JSON)",acopy:"تم النسخ",rbtn:"🏪 اقترح متجر",rt_t:"اقتراح متجر جديد",rn:"اسم مقدم الخدمة أو الشركة",rt:"الخدمات التقنية بفاصلة (مثال: تصميم مواقع، صيانة حواسيب)",rsub:"أرسل للمراجعة",rnote:"سيصل اقتراحك إلى الطلبات في لوحة الإدارة للمراجعة، ولن يظهر قبل الموافقة.",rneed:"سجّل الدخول أولاً لإرسال اقتراح المتجر",rerr:"أدخل اسم مقدم الخدمة ووسيلة تواصل واحدة على الأقل",rok:"تم إرسال اقتراح المتجر إلى لوحة الإدارة للمراجعة",rfail:"تعذّر إرسال الطلب",back:"🌐 موقع المستخدم",st_ads:"الإعلانات",sx_shops:"صفحات منشورة",sx_ads:"إعلانات المستخدمين",b_dad:"🗑️ حذف الإعلان",dadd:"➕ إضافة صفحة مباشرة (دون مراجعة)",achk:"جارٍ التحقق من صلاحياتك…",anoadm:"هذه الصفحة للمراجعين فقط. سجّل الدخول بحساب لديه صلاحية «محرر» على الصفحة.",noshop:"لا توجد صفحات مضافة لهذا التصنيف بعد، استخدم زر البحث أدناه."},
+en:{academyTitle:"AI Programming Tutor",academyDesc:"Learn to code and build your website step by step with your AI tutor",academyAction:"Start now →",academyInlineIntro:"Ask the tutor here, learn programming and build your website step by step.",academySignInState:"Sign in to continue",academyLoginText:"Sign in with Google to view your subscription and use the tutor.",academyLoginBtn:"Sign in with Google",academyLoginNote:"Your subscription status will appear here after sign-in.",academyBuyBtn:"Subscribe for 30 days",academyPromptHtml:"Teach me HTML",academyPromptSite:"Build a web page",academyPromptError:"Help me fix an error",academyPromptPlan:"Programming study plan",academyQuestion:"Type your programming question…",academySend:"Send",academyClear:"Clear chat",brand:"Tech Oman",post:"Add a service",h1:"Find trusted tech services in Oman",sub:"Discover developers, IT specialists and technical support providers across Oman",ph:"Search web development, IT support, design…",go:"Search",city:"City",cats:"Categories",latest:"Latest tech services",ads:"listings",empty:"No services listed yet. Be the first provider to add a service.",all:"All cities",feat:"Featured",lang:"العربية",soon:"Coming soon: posting ads",demo:"* Demo simulation only; prices are illustrative, not live.",foot:"Demo prototype © 2026",signin:"Sign in",account:"My account",signmsg:"Sign in with Google to manage and delete your ads from any device.",myads:"My ads",noads:"No ads linked to your account.",signout:"Sign out",signedin:"Signed in",needlogin:"Please sign in with Google first",s_pending:"Pending",s_approved:"Published",s_rejected:"Rejected",s_hidden:"Hidden",rate:"Rate",rts:"Submit rating",rtx:"Comment (optional)",pickstar:"Pick a star rating",rated:"Thanks, your rating is saved",mydel:"🗑️ Delete my ad",delq:"Delete your ad permanently?",deld:"Ad deleted",prods:"Products",ask:"Ask for price",more_s:"Show more",pt:"Add a new tech service",kind1:"Individual",kind2:"Store",pimg:"🖼️ Add an ad image",pimg_ok:"✓ Photo selected",ptitle:"Tech service name",pprice:"Starting price (OMR)",pig:"Instagram account (e.g. @mystore)",pweb:"Website link (optional)",pwa:"WhatsApp (e.g. 9XXXXXXX)",pub:"Publish ad",pn1:"Your ad will appear after the reviewer approves it.",pn2:"Your ad is saved on this device only, since the shared database needs sign-in.",perr1:"Enter a title (3+ characters) and a valid price",perr2:"Add at least one contact: Instagram, website or WhatsApp",pdone1:"Your service was sent for review",pdone2:"Your service is saved on this device",web:"Website",dm:"Sample",shops:"Technology service providers",shops_n:"Contact providers directly and review their work and service details before making an agreement.",igs:"🔎 Find Instagram pages for this category",ap:"Developer site – control panel",st_pending:"Pending",st_approved:"Approved",st_rejected:"Rejected",aempty:"No requests in this list.",aupd:"Request status updated",afail:"Couldn’t complete the action",b_ok:"✅ Approve and publish",b_no:"❌ Reject",b_del:"🗑️ Unpublish",aexp:"Copy approved list (JSON)",acopy:"Copied",rbtn:"🏪 Suggest a store",rt_t:"Suggest a store",rn:"Provider or company name",rt:"Tech services, comma-separated (e.g. web design, computer repair)",rsub:"Send for review",rnote:"Your suggestion is sent to the admin dashboard for review and will not appear publicly until approved.",rneed:"Sign in first to suggest a store",rerr:"Enter a provider name and at least one contact method",rok:"Your store suggestion was sent to the admin dashboard for review",rfail:"Couldn’t send the request",back:"🌐 User site",st_ads:"Ads",sx_shops:"Published pages",sx_ads:"User ads",b_dad:"🗑️ Delete ad",dadd:"➕ Add a page directly (no review)",achk:"Checking your permissions…",anoadm:"This page is for reviewers only. Sign in with an account that has Editor access to the page.",noshop:"No pages added for this category yet; use the search button below."}};
 const CITIES=[["muscat","مسقط","Muscat"],["salalah","صلالة","Salalah"],["sohar","صحار","Sohar"],["nizwa","نزوى","Nizwa"],["sur","صور","Sur"],["rustaq","الرستاق","Rustaq"],["buraimi","البريمي","Al Buraimi"]];
 const CATS=[["web","🌐","تصميم وتطوير المواقع","Web Development"],["apps","📱","تطوير التطبيقات","App Development"],["software","💻","البرمجة والأنظمة","Software & Systems"],["support","🛠️","الدعم الفني والصيانة","IT Support & Repair"],["network","📡","الشبكات والبنية التقنية","Networking"],["security","🔐","الأمن السيبراني","Cybersecurity"],["ai","🤖","الذكاء الاصطناعي","Artificial Intelligence"],["design","🎨","التصميم الرقمي","Digital Design"],["cloud","☁️","الاستضافة والسحابة","Cloud & Hosting"]];
 const ADS=[];
@@ -363,12 +406,12 @@ setInterval(loadData,30000);
 // ---- Admin-controlled settings: show/hide any button or section, override texts ----
 const WS={};
 function watch(id,fn){const e=document.getElementById(id);if(!e||!("IntersectionObserver" in window))return;if(WS[id])WS[id].disconnect();WS[id]=new IntersectionObserver(en=>{if(en[0].isIntersecting){WS[id].disconnect();fn()}},{rootMargin:"400px"});WS[id].observe(e)}
-const CTL=[["post","#post"],["lang","#lb"],["hero",".hero"],["search",".sb"],["academy","#academyMenuLink,#academyHome"],["sugg","#rbtn"],["cities","#citylbl,#cities"],["cats","#catlbl,#cats"],["shops","#shopsec"],["latest","#latest,#grid"],["footer","footer"]];
+const CTL=[["post","#post"],["lang","#lb"],["hero",".hero"],["search",".sb"],["academy","#academyMenuLink,#academyHome,#academyInline"],["sugg","#rbtn"],["cities","#citylbl,#cities"],["cats","#catlbl,#cats"],["shops","#shopsec"],["latest","#latest,#grid"],["footer","footer"]];
 function applySettings(st){
  const h=Array.isArray(st.hidden)?st.hidden:[];HID=h;REQLOGIN=!!st.requireLogin;SORT=st.sort||"rating";CATORD=st.catOrder||[];GCID=st.google||"";
  CTL.forEach(([id,sel])=>document.querySelectorAll(sel).forEach(e=>{e.hidden=h.includes(id)}));
  for(const l of["ar","en"])Object.entries((st.text||{})[l]||{}).forEach(([k,v])=>{if(typeof v=="string"&&v.length<200&&k in T[l])T[l][k]=v});
- $("lgn").hidden=h.includes("login");if(GCID)loadG();if(GT&&GCID)loadMine().then(()=>{drawAcc();drawAds()});
+ $("lgn").hidden=h.includes("login");if(GCID)loadG();if(GT&&GCID)loadMine().then(()=>{drawAcc();drawAds();academyRefresh()});
  lang();
 }
 async function loadSettings(){try{applySettings(await api("/api/settings"))}catch(e){}}
@@ -382,14 +425,98 @@ $("x5").onclick=()=>$("ov5").classList.remove("on");
 $("ov5").onclick=e=>{if(e.target==$("ov5"))$("ov5").classList.remove("on")};
 $("rts").onclick=async()=>{if(needLogin())return;if(!RSEL){toast(t("pickstar"));return}try{await api("/api/ratings",{method:"POST",body:JSON.stringify({shop:RSHOP,stars:RSEL,text:$("rtx").value,did:DID})});toast(t("rated"));$("ov5").classList.remove("on");loadData()}catch(e){toast(t("rfail"))}};
 async function delMine(id){const m=myAds().find(x=>x.id==id);if(!confirm(t("delq")))return;try{await api(`/api/ads/${id}/delete`,{method:"POST",body:JSON.stringify({token:m?m.token:""})});try{localStorage.setItem("myads",JSON.stringify(myAds().filter(x=>x.id!=id)))}catch(e){}toast(t("deld"));await loadMine();drawAcc();loadData()}catch(e){toast(t("rfail"))}}
+
+/* ---- Inline AI programming tutor ---- */
+let AC_STATUS=null,AC_MESSAGES=[],AC_BUSY=false;
+const AC_PROMPTS={
+ html:{ar:"علّمني HTML من الصفر مع مثال عملي وتمرين.",en:"Teach me HTML from zero with a practical example and exercise."},
+ site:{ar:"ساعدني في بناء صفحة رئيسية لموقع باستخدام HTML وCSS، وابدأ بملف واحد.",en:"Help me build a website home page with HTML and CSS, starting with one file."},
+ error:{ar:"ساعدني في فهم وإصلاح هذا الخطأ البرمجي خطوة بخطوة: ",en:"Help me understand and fix this programming error step by step: "},
+ plan:{ar:"ضع لي خطة عملية لتعلّم البرمجة لمدة 30 يوماً للمبتدئ.",en:"Create a practical 30-day programming learning plan for a beginner."}
+};
+function academySetNote(message,bad=false){$("academyNotice").textContent=message;$("academyNotice").style.color=bad?"#c44":"var(--mute)";}
+function academyRenderText(value){
+ const re=/\x60{3}([a-zA-Z0-9_-]*)\n?([\s\S]*?)\x60{3}/g;let out="",last=0,m;
+ while((m=re.exec(String(value)))){out+=esc(String(value).slice(last,m.index)).replace(/\n/g,"<br>");out+="<pre><code>"+esc(m[2])+"</code></pre>";last=re.lastIndex;}
+ out+=esc(String(value).slice(last)).replace(/\n/g,"<br>");return out;
+}
+function academyDraw(){
+ const box=$("academyMessages");if(!box)return;box.innerHTML="";
+ AC_MESSAGES.forEach(m=>{const el=document.createElement("div");el.className="aw-msg "+m.role;if(m.role==="assistant")el.innerHTML=academyRenderText(m.content);else el.textContent=m.content;box.appendChild(el);});
+ box.scrollTop=box.scrollHeight;
+}
+function academySave(){try{if(GU&&GU.sub)localStorage.setItem("academy-chat-"+GU.sub,JSON.stringify(AC_MESSAGES.slice(-30)));}catch(e){}}
+function academyBusy(value){AC_BUSY=value;$("academySendBtn").disabled=value;$("academyQuestion").disabled=value;$("academySendBtn").textContent=value?(L==="ar"?"جارٍ الإرسال…":"Sending…"):t("academySend");}
+function academyPrompts(){document.querySelectorAll("[data-academy-prompt]").forEach(b=>b.onclick=()=>{$("academyQuestion").value=(AC_PROMPTS[b.dataset.academyPrompt]||{})[L]||"";$("academyQuestion").focus();});}
+async function academyRefresh(){
+ if(!$("academyInline"))return;
+ if(!GT){
+  AC_STATUS=null;$("academyState").textContent=L==="ar"?"سجّل الدخول أولاً":"Sign in required";
+  $("academyGate").hidden=false;$("academyChat").hidden=true;$("academyLoginBtn").hidden=false;$("academyBuyBtn").hidden=true;$("academyPrice").hidden=true;
+  $("academyGateText").textContent=t("academyLoginText");academySetNote(t("academyLoginNote"));return;
+ }
+ $("academyLoginBtn").hidden=true;$("academyGateText").textContent=L==="ar"?"جارٍ التحقق من اشتراكك…":"Checking your subscription…";
+ try{
+  AC_STATUS=await api("/api/academy/status");
+  if(AC_STATUS.active){
+   $("academyState").textContent=L==="ar"?"الاشتراك نشط":"Subscription active";
+   $("academyGate").hidden=true;$("academyChat").hidden=false;
+   $("academyExpiry").textContent=(L==="ar"?"صالح حتى ":"Valid until ")+new Date(AC_STATUS.expiresAt).toLocaleDateString(L==="ar"?"ar-OM":"en-GB");
+   academyDraw();return;
+  }
+  $("academyState").textContent=L==="ar"?"الاشتراك مطلوب":"Subscription required";
+  $("academyGate").hidden=false;$("academyChat").hidden=true;
+  $("academyGateText").textContent=L==="ar"?"سجّل اشتراكك لتستخدم المعلّم الذكي داخل الموقع.":"Subscribe to use the AI tutor right here on the site.";
+  const price=Number(AC_STATUS.priceBaisa||0);
+  $("academyPrice").hidden=!price;$("academyPrice").textContent=price?(price/1000).toFixed(3)+" ر.ع. / 30 يوم":(L==="ar"?"السعر قيد الإعداد":"Price not set");
+  $("academyBuyBtn").hidden=false;$("academyBuyBtn").disabled=!AC_STATUS.checkoutReady;
+  $("academyNotice").textContent=AC_STATUS.checkoutReady?(L==="ar"?"اشتراك لمدة 30 يوماً بدفعة واحدة، دون تجديد تلقائي.":"One-time payment for 30 days. No automatic renewal."):(L==="ar"?"الاشتراك لم يُفعّل بعد؛ يحتاج إعداد خدمة الذكاء الاصطناعي والدفع والتخزين الدائم أولاً.":"Subscriptions are not enabled yet. AI, payment and persistent storage must be configured first.");
+ }catch(e){
+  $("academyState").textContent=L==="ar"?"تعذّر التحقق":"Could not verify";
+  $("academyGate").hidden=false;$("academyChat").hidden=true;$("academyLoginBtn").hidden=false;
+  $("academyGateText").textContent=L==="ar"?"تعذّر التحقق من الحساب. أعد تسجيل الدخول.":"Could not verify your account. Please sign in again.";
+  academySetNote(L==="ar"?"تحقق من اتصالك ثم أعد المحاولة.":"Check your connection and try again.",true);
+ }
+}
+async function academyCheckout(){
+ if(!GT){openAcc();return;}
+ $("academyBuyBtn").disabled=true;academySetNote(L==="ar"?"جارٍ تجهيز الدفع الآمن…":"Preparing secure checkout…");
+ try{const result=await api("/api/academy/checkout",{method:"POST",body:JSON.stringify({})});localStorage.setItem("academy-pending-session",result.sessionId);location.href=result.checkoutUrl;}
+ catch(e){academySetNote(L==="ar"?"تعذّر بدء الدفع. لم يتم خصم أي مبلغ.":"Could not start payment. No payment was taken.",true);$("academyBuyBtn").disabled=!AC_STATUS||!AC_STATUS.checkoutReady;}
+}
+async function academySend(question){
+ const q=String(question||$("academyQuestion").value).trim();if(!q||AC_BUSY)return;
+ AC_MESSAGES.push({role:"user",content:q});academyDraw();academySave();$("academyQuestion").value="";academyBusy(true);
+ const pending=document.createElement("div");pending.className="aw-msg assistant";pending.textContent=L==="ar"?"المعلّم يجهّز الإجابة…":"The tutor is preparing an answer…";$("academyMessages").appendChild(pending);$("academyMessages").scrollTop=$("academyMessages").scrollHeight;
+ try{const result=await api("/api/academy/chat",{method:"POST",body:JSON.stringify({messages:AC_MESSAGES.slice(-10)})});pending.remove();AC_MESSAGES.push({role:"assistant",content:result.reply});academyDraw();academySave();}
+ catch(e){pending.remove();const message=L==="ar"?"لم يصل الرد. تحقق من الاشتراك والاتصال ثم حاول مرة أخرى.":"No reply was received. Check your subscription and connection, then try again.";AC_MESSAGES.push({role:"assistant",content:message});academyDraw();}
+ finally{academyBusy(false);}
+}
+async function academyPaymentReturn(){
+ const params=new URLSearchParams(location.search),state=params.get("academy_payment");if(!state)return;
+ if(state==="cancel"){try{localStorage.removeItem("academy-pending-session")}catch(e){}history.replaceState({},"","/#academyInline");academySetNote(L==="ar"?"ألغيت عملية الدفع، ولم يتم تفعيل الاشتراك.":"Payment was cancelled; no subscription was activated.");return;}
+ if(state!=="success")return;
+ let sessionId="";try{sessionId=localStorage.getItem("academy-pending-session")||""}catch(e){}
+ history.replaceState({},"","/#academyInline");
+ if(!sessionId||!GT){academySetNote(L==="ar"?"تعذّر استعادة عملية الدفع. سجّل الدخول بنفس الحساب ثم حدّث الصفحة.":"Could not restore the payment. Sign in with the same account and refresh.",true);return;}
+ academySetNote(L==="ar"?"جارٍ تأكيد الدفع وتفعيل الاشتراك…":"Confirming payment and activating your subscription…");
+ try{await api("/api/academy/confirm",{method:"POST",body:JSON.stringify({sessionId})});localStorage.removeItem("academy-pending-session");await academyRefresh();academySetNote(L==="ar"?"تم تفعيل الاشتراك. يمكنك البدء بالمحادثة الآن.":"Subscription activated. You can start chatting now.");}
+ catch(e){academySetNote(L==="ar"?"لم يتأكد الدفع بعد. حدّث الصفحة بعد لحظات.":"Payment is not confirmed yet. Refresh in a moment.",true);}
+}
+$("academyLoginBtn").onclick=()=>openAcc();
+$("academyBuyBtn").onclick=academyCheckout;
+$("academyChatForm").onsubmit=e=>{e.preventDefault();academySend();};
+$("academyClearBtn").onclick=()=>{AC_MESSAGES=[];academyDraw();academySave();};
+academyPrompts();
+
 // ---- Categories order, shop sorting, Google account ----
 const catList=()=>CATS.filter(c=>!HID.includes("cat_"+c[0])).sort((a,b)=>{const i=CATORD.indexOf(a[0]),j=CATORD.indexOf(b[0]);return(i<0?99:i)-(j<0?99:j)});
 const score=s=>{const r=RS[s.id];return((r?r.sum:0)+12)/((r?r.n:0)+3)};
 const shopSort=(a,b)=>SORT=="name"?a.n.localeCompare(b.n,L):SORT=="new"?0:(score(b)-score(a))||((RS[b.id]?RS[b.id].n:0)-(RS[a.id]?RS[a.id].n:0));
-function initG(){if(!GCID||!window.google||!google.accounts)return;google.accounts.id.initialize({client_id:GCID,callback:async r=>{try{const j=await api("/api/auth/google",{method:"POST",body:JSON.stringify({credential:r.credential})});GT=j.token;GU=j.user;try{localStorage.setItem("gtok",GT);localStorage.setItem("guser",JSON.stringify(GU))}catch(e){}await loadMine();drawAcc();drawAds();toast(t("signedin"))}catch(e){toast(t("rfail"))}}});drawAcc()}
+function initG(){if(!GCID||!window.google||!google.accounts)return;google.accounts.id.initialize({client_id:GCID,callback:async r=>{try{const j=await api("/api/auth/google",{method:"POST",body:JSON.stringify({credential:r.credential})});GT=j.token;GU=j.user;try{localStorage.setItem("gtok",GT);localStorage.setItem("guser",JSON.stringify(GU))}catch(e){}await loadMine();drawAcc();drawAds();await academyRefresh();toast(t("signedin"))}catch(e){toast(t("rfail"))}}});drawAcc()}
 function loadG(){if(!GCID)return;if(window.google&&google.accounts)return initG();if($("gsi"))return;const s=document.createElement("script");s.id="gsi";s.src="https://accounts.google.com/gsi/client";s.async=true;s.onload=initG;document.head.appendChild(s)}
 async function loadMine(){MYIDS=new Set();MYADS=[];if(!GT)return;try{const r=await api("/api/me/ads");MYADS=r.items;r.items.forEach(x=>MYIDS.add(x.id))}catch(e){signOut(1)}}
-function signOut(q){GT="";GU=null;MYIDS=new Set();MYADS=[];try{localStorage.removeItem("gtok");localStorage.removeItem("guser")}catch(e){}try{if(window.google&&google.accounts)google.accounts.id.disableAutoSelect()}catch(e){}if(!q){drawAcc();drawAds()}}
+function signOut(q){GT="";GU=null;MYIDS=new Set();MYADS=[];try{localStorage.removeItem("gtok");localStorage.removeItem("guser")}catch(e){}try{if(window.google&&google.accounts)google.accounts.id.disableAutoSelect()}catch(e){}if(!q){drawAcc();drawAds()}academyRefresh()}
 function needLogin(){if(REQLOGIN&&!GT){openAcc();toast(t("needlogin"));return true}return false}
 function openAcc(){drawAcc();$("ov6").classList.add("on")}
 function drawAcc(){
@@ -401,7 +528,7 @@ $("lgn").onclick=()=>{closeSettingsMenu();openAcc()};
 $("x6").onclick=()=>$("ov6").classList.remove("on");
 $("ov6").onclick=e=>{if(e.target==$("ov6"))$("ov6").classList.remove("on")};
 $("acc").onclick=e=>{if(e.target.closest("#gout")){signOut();$("ov6").classList.remove("on");return}const d=e.target.closest("[data-mydel]");if(d)delMine(d.dataset.mydel)};
-lang();loadData();loadSettings();
+lang();loadData();loadSettings();academyRefresh();academyPaymentReturn();
 </script>
 </body>
 </html>
