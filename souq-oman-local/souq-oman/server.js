@@ -31,7 +31,7 @@ try{const sd=JSON.parse(fs.readFileSync(path.join(__dirname,"seed","shops.json")
   if(ex){const have=new Set((ex.products||[]).map(x=>x.t));ex.products=[...(ex.products||[]),...pr.filter(x=>!have.has(x.t))].slice(0,300);if(ex.source=="seed"){ex.cat=cat;ex.e=s.e||CATS[cat]||"🛍️";ex.city=city;ex.tags=tags;ex.logo=V.url(s.logo)}}
   else db.items.push({id,type:"shop",status:"approved",source:"seed",ts:Date.now(),cat,e:s.e||CATS[cat]||"🛍️",n:str(s.n,60),ig:V.ig(s.ig),web:V.web(s.web),wa:V.wa(s.wa),city,tags,logo:V.url(s.logo),products:pr})}
  db.seedV=sd.version;save()}}catch(e){console.error("seed:",e.message)}
-const CTL_IDS=["post","lang","hero","search","sugg","cities","cats","shops","latest","footer","rating","userdel","login"];
+const CTL_IDS=["post","lang","hero","search","academy","sugg","cities","cats","shops","latest","footer","rating","userdel","login"];
 const TXT_KEYS=["brand","post","rbtn","h1","sub","go","ph","latest","shops","foot"];
 const cleanSettings=b=>{const st={hidden:[],text:{ar:{},en:{}},requireLogin:false,sort:"rating",catOrder:[]};b=b||{};
  if(Array.isArray(b.hidden))st.hidden=b.hidden.filter(x=>CTL_IDS.includes(x)||(/^cat_/.test(x)&&CATS[x.slice(4)]));
