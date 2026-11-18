@@ -502,10 +502,9 @@ async function academyPaymentReturn(){
  if(state==="cancel"){try{localStorage.removeItem("academy-pending-session")}catch(e){}history.replaceState({},"","/#academyInline");academySetNote(L==="ar"?"ألغيت عملية الدفع، ولم يتم تفعيل الاشتراك.":"Payment was cancelled; no subscription was activated.");return;}
  if(state!=="success")return;
  let sessionId="";try{sessionId=localStorage.getItem("academy-pending-session")||""}catch(e){}
- history.replaceState({},"","/#academyInline");
- if(!sessionId||!GT){academySetNote(L==="ar"?"تعذّر استعادة عملية الدفع. سجّل الدخول بنفس الحساب ثم حدّث الصفحة.":"Could not restore the payment. Sign in with the same account and refresh.",true);return;}
+ if(!sessionId||!GT){history.replaceState({},"","/#academyInline");academySetNote(L==="ar"?"تعذّر استعادة عملية الدفع. سجّل الدخول بنفس الحساب ثم حدّث الصفحة.":"Could not restore the payment. Sign in with the same account and refresh.",true);return;}
  academySetNote(L==="ar"?"جارٍ تأكيد الدفع وتفعيل الاشتراك…":"Confirming payment and activating your subscription…");
- try{await api("/api/academy/confirm",{method:"POST",body:JSON.stringify({sessionId})});localStorage.removeItem("academy-pending-session");await academyRefresh();academySetNote(L==="ar"?"تم تفعيل الاشتراك. يمكنك البدء بالمحادثة الآن.":"Subscription activated. You can start chatting now.");}
+ try{const confirmation=await api("/api/academy/confirm",{method:"POST",body:JSON.stringify({sessionId})});if(!confirmation.active){academySetNote(L==="ar"?"وصلنا إلى صفحة الدفع، لكن ثواني لم تؤكد العملية بعد. أعد تحميل الصفحة بعد لحظات.":"Payment page returned, but Thawani has not confirmed the payment yet. Reload in a moment.");return;}localStorage.removeItem("academy-pending-session");history.replaceState({},"","/#academyInline");await academyRefresh();academySetNote(L==="ar"?"تم تفعيل الاشتراك. يمكنك البدء بالمحادثة الآن.":"Subscription activated. You can start chatting now.");}
  catch(e){academySetNote(L==="ar"?"لم يتأكد الدفع بعد. حدّث الصفحة بعد لحظات.":"Payment is not confirmed yet. Refresh in a moment.",true);}
 }
 $("academyLoginBtn").onclick=()=>openAcc();
