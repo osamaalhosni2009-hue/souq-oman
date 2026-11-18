@@ -10,6 +10,8 @@ const D=path.join(__dirname,"data"),UP=path.join(D,"uploads"),DBF=path.join(D,"d
 fs.mkdirSync(UP,{recursive:true});
 let db={items:[]};try{db=JSON.parse(fs.readFileSync(DBF,"utf8"))}catch(e){}
 if(!db.ratings)db.ratings=[];
+if(!Array.isArray(db.aiPayments))db.aiPayments=[];
+if(!db.aiSubscriptions)db.aiSubscriptions={};
 const save=()=>{fs.writeFileSync(DBF+".tmp",JSON.stringify(db));fs.renameSync(DBF+".tmp",DBF)};
 if(!db.secret){db.secret=crypto.randomBytes(32).toString("hex");save()}
 const rid=()=>crypto.randomBytes(6).toString("hex");
@@ -48,11 +50,11 @@ async function googleVerify(tok){
  if(!find()||Date.now()-jwks.t>36e5){try{const r=await fetch(JWKS_URL);if(r.ok)jwks={keys:(await r.json()).keys||[],t:Date.now()}}catch(e){}}
  const jwk=find();if(!jwk)throw E(401,"unknown key");
  let ok=false;try{ok=crypto.verify("RSA-SHA256",Buffer.from(h+"."+p),crypto.createPublicKey({key:jwk,format:"jwk"}),b64u(s))}catch(e){}
- if(!ok||!["https://accounts.google.com","accounts.google.com"].includes(pl.iss)||pl.aud!==GID||!(pl.exp*1000>Date.now())||!pl.sub||pl.email_verified===false)throw E(401,"invalid token");
+ if(!ok||!["https://accounts.google.com","accounts.google.com"].includes(pl.iss)||pl.aud!==GID||!(pl.exp*1000>Date.now())||!pl.sub||!pl.email||pl.email_verified!==true)throw E(401,"invalid or unverified Google account");
  return pl;
 }
 const hmac=b=>crypto.createHmac("sha256",db.secret).update(b).digest("base64url");
-const mkUser=pl=>{const b=Buffer.from(JSON.stringify({sub:String(pl.sub),n:str(pl.name||pl.email,60),pic:String(pl.picture||"").slice(0,300),exp:Date.now()+2592e6})).toString("base64url");return "u."+b+"."+hmac(b)};
+const mkUser=pl=>{const b=Buffer.from(JSON.stringify({sub:String(pl.sub),n:str(pl.name||pl.email,60),email:str(pl.email,254),v:pl.email_verified===true,pic:String(pl.picture||"").slice(0,300),exp:Date.now()+2592e6})).toString("base64url");return "u."+b+"."+hmac(b)};
 const userOf=r=>{const t=(r.headers.authorization||"").slice(7);if(!t.startsWith("u."))return null;const [,b,s]=t.split(".");if(!b||!s)return null;const g=hmac(b);if(g.length!==s.length||!crypto.timingSafeEqual(Buffer.from(g),Buffer.from(s)))return null;try{const o=JSON.parse(Buffer.from(b,"base64url").toString());return o.exp>Date.now()?o:null}catch(e){return null}};
 const off=id=>cleanSettings(db.settings).hidden.includes(id);
 const dropItem=it=>{const i=db.items.indexOf(it);if(i>=0)db.items.splice(i,1);if(it.img)fs.unlink(path.join(D,it.img.replace("/uploads/","uploads/")),()=>{})};
@@ -102,6 +104,7 @@ http.createServer(async(req,res)=>{
  const send=(c,x)=>{res.writeHead(c,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});res.end(JSON.stringify(x))};
  try{
   if(m=="GET"&&(p=="/"||p=="/index.html"))return file(res,"public/index.html");
+  if(m=="GET"&&(p=="/academy"||p=="/academy/"))return file(res,"public/academy.html");
   if(m=="GET"&&(p=="/admin"||p=="/admin/"))return file(res,"admin/index.html",{"X-Frame-Options":"DENY","X-Robots-Tag":"noindex"});
   const up=/^\/uploads\/([a-f0-9]{24}\.(jpg|png|webp))$/.exec(p);
   if(m=="GET"&&up)return file(res,"data/uploads/"+up[1],{"Cache-Control":"public,max-age=86400"});
@@ -112,7 +115,7 @@ http.createServer(async(req,res)=>{
    if(!GID)throw E(503,"google login not configured");
    if(limited("gl:"+ip(req),30,36e5))throw E(429,"too many requests");
    const pl=await googleVerify((await body(req,6e3)).credential);audit(req,"login_google",{u:String(pl.sub).slice(-6)});
-   return send(200,{token:mkUser(pl),user:{name:pl.name||"",pic:pl.picture||""}});
+   return send(200,{token:mkUser(pl),user:{name:pl.name||"",email:pl.email||"",pic:pl.picture||"",verified:true}});
   }
   if(m=="GET"&&p=="/api/me"){const u=userOf(req);if(!u)throw E(401,"login required");return send(200,{name:u.n,pic:u.pic})}
   if(m=="GET"&&p=="/api/me/ads"){const u=userOf(req);if(!u)throw E(401,"login required");return send(200,{items:db.items.filter(i=>i.type=="ad"&&i.owner==u.sub).sort((a,b)=>b.ts-a.ts).map(i=>({id:i.id,t:i.t,p:i.p,status:i.status,ts:i.ts,city:i.city}))})}
@@ -134,6 +137,61 @@ http.createServer(async(req,res)=>{
    const u=userOf(req),okTok=it&&it.tokHash&&b.token&&crypto.timingSafeEqual(sha(String(b.token)),Buffer.from(it.tokHash,"hex"));
    if(!it||!(okTok||(u&&it.owner&&it.owner==u.sub)))throw E(403,"not allowed");
    dropItem(it);save();audit(req,"user_delete",{id:it.id});return send(200,{ok:true});
+  }
+  if(m=="GET"&&p=="/api/academy/status"){
+   const u=userOf(req);if(!u||u.v!==true||!u.email)throw E(401,"verified Google login required");
+   const sub=db.aiSubscriptions[u.sub]||null,active=!!(sub&&Number(sub.expiresAt)>Date.now());
+   const price=Math.round(Number(process.env.AI_TUTOR_PRICE_BAISA)||0);
+   const checkoutReady=!!(price>=100&&process.env.THAWANI_SECRET_KEY&&process.env.THAWANI_PUBLISHABLE_KEY);
+   return send(200,{active,expiresAt:active?sub.expiresAt:null,priceBaisa:price>0?price:null,checkoutReady,aiReady:!!process.env.OPENAI_API_KEY});
+  }
+  if(m=="POST"&&p=="/api/academy/checkout"){
+   const u=userOf(req);if(!u||u.v!==true||!u.email)throw E(401,"verified Google login required");
+   const sub=db.aiSubscriptions[u.sub];if(sub&&Number(sub.expiresAt)>Date.now())throw E(409,"subscription already active");
+   const price=Math.round(Number(process.env.AI_TUTOR_PRICE_BAISA)||0),secret=process.env.THAWANI_SECRET_KEY||"",pub=process.env.THAWANI_PUBLISHABLE_KEY||"";
+   if(price<100||!secret||!pub)throw E(503,"Thawani checkout is not configured");
+   if(limited("academy-checkout:"+u.sub,5,36e5))throw E(429,"too many checkout attempts");
+   const live=String(process.env.THAWANI_MODE||"test").toLowerCase()==="live",base=live?"https://checkout.thawani.om":"https://uatcheckout.thawani.om";
+   const origin=String(process.env.PUBLIC_BASE_URL||"https://souq-oman.onrender.com").replace(/\/+$/,"");
+   const payload={client_reference_id:u.sub,mode:"payment",products:[{name:"اشتراك معلّم البرمجة - 30 يوم",quantity:1,unit_amount:price}],success_url:origin+"/academy?payment=success",cancel_url:origin+"/academy?payment=cancel",metadata:{service:"tech-oman-academy",period_days:"30"}};
+   let response,data;try{response=await fetch(base+"/api/v1/checkout/session",{method:"POST",headers:{"Content-Type":"application/json","thawani-api-key":secret},body:JSON.stringify(payload)});data=await response.json()}catch(e){throw E(502,"Thawani checkout unavailable")}
+   const session=data&&data.data&&data.data.session_id;
+   if(!response.ok||data.success!==true||typeof session!=="string"||!session)throw E(502,"Could not create Thawani checkout");
+   db.aiPayments=db.aiPayments.filter(x=>x.createdAt>Date.now()-90*864e5).slice(-900);
+   db.aiPayments.push({sessionId:session,userSub:u.sub,amount:price,status:"pending",createdAt:Date.now()});save();audit(req,"academy_checkout_created",{u:u.sub.slice(-6)});
+   return send(200,{sessionId:session,checkoutUrl:base+"/pay/"+encodeURIComponent(session)+"?key="+encodeURIComponent(pub)});
+  }
+  if(m=="POST"&&p=="/api/academy/confirm"){
+   const u=userOf(req);if(!u||u.v!==true||!u.email)throw E(401,"verified Google login required");
+   const b=await body(req,4e3),sid=str(b.sessionId,160),payment=db.aiPayments.find(x=>x.sessionId===sid&&x.userSub===u.sub);
+   if(!payment)throw E(403,"payment session not found for this account");
+   if(payment.status==="paid"){const sub=db.aiSubscriptions[u.sub];return send(200,{active:true,expiresAt:sub&&sub.expiresAt||null})}
+   const secret=process.env.THAWANI_SECRET_KEY||"";if(!secret)throw E(503,"Thawani is not configured");
+   const live=String(process.env.THAWANI_MODE||"test").toLowerCase()==="live",base=live?"https://checkout.thawani.om":"https://uatcheckout.thawani.om";
+   let response,data;try{response=await fetch(base+"/api/v1/checkout/session/"+encodeURIComponent(sid),{headers:{"thawani-api-key":secret}});data=await response.json()}catch(e){throw E(502,"Could not verify Thawani payment")}
+   const session=data&&data.data;
+   if(!response.ok||data.success!==true||!session)throw E(502,"Thawani payment verification failed");
+   if(String(session.client_reference_id||"")!==u.sub||Number(session.total_amount)!==Number(payment.amount)||String(session.currency||"").toUpperCase()!=="OMR")throw E(403,"payment details do not match");
+   if(String(session.payment_status||"").toLowerCase()!=="paid")return send(202,{active:false,pending:true});
+   const now=Date.now(),previous=db.aiSubscriptions[u.sub],start=Math.max(now,previous&&Number(previous.expiresAt)||0),expiresAt=start+30*864e5;
+   db.aiSubscriptions[u.sub]={expiresAt,updatedAt:now,lastPaymentSession:sid};payment.status="paid";payment.paidAt=now;save();audit(req,"academy_subscription_activated",{u:u.sub.slice(-6),expiresAt});
+   return send(200,{active:true,expiresAt});
+  }
+  if(m=="POST"&&p=="/api/academy/chat"){
+   const u=userOf(req);if(!u||u.v!==true||!u.email)throw E(401,"verified Google login required");
+   const sub=db.aiSubscriptions[u.sub];if(!sub||Number(sub.expiresAt)<=Date.now())throw E(402,"active AI tutor subscription required");
+   const apiKey=process.env.OPENAI_API_KEY||"";if(!apiKey)throw E(503,"AI tutor is not configured");
+   if(limited("academy-chat:"+u.sub,30,36e5))throw E(429,"message limit reached; try later");
+   const b=await body(req,6e4),raw=Array.isArray(b.messages)?b.messages.slice(-10):[];
+   const messages=raw.map(x=>({role:x&&x.role,content:str(x&&x.content,3000)})).filter(x=>(x.role==="user"||x.role==="assistant")&&x.content.trim());
+   if(!messages.length||messages[messages.length-1].role!=="user")throw E(400,"a user question is required");
+   const system="أنت معلّم برمجة ومساعد بناء مواقع ضمن منصة تقني عُمان. دورك تعليم المستخدم خطوة بخطوة وليس فقط إعطاء النتيجة. اسأل عن المستوى عند الحاجة، واشرح المصطلحات بالعربية الواضحة، وقدّم أمثلة عملية قابلة للتشغيل. ساعد في HTML وCSS وJavaScript وNode.js وقواعد البيانات وواجهات API ونشر المواقع. عندما تطلب كتابة موقع، قسّم العمل إلى ملفات واضحة وقدّم الأكواد داخل كتل Markdown fenced code، واشرح أين توضع وكيف تُشغّل. لا تطلب كلمات مرور أو مفاتيح API، ولا تضع أسراراً في الأكواد. إذا كان الطلب واسعاً، ابدأ بخطة قصيرة ثم نفّذ خطوة واحدة قابلة للفهم.";
+   let response,data;try{response=await fetch("https://api.openai.com/v1/responses",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+apiKey},body:JSON.stringify({model:process.env.OPENAI_MODEL||"gpt-6.2-astra",input:[{role:"system",content:system},...messages],max_output_tokens:1200,store:false})});data=await response.json()}catch(e){throw E(502,"AI service unavailable")}
+   if(!response.ok){console.error("academy AI provider status",response.status);throw E(502,"AI response failed")}
+   let answer=str(data&&data.output_text,12000);
+   if(!answer&&Array.isArray(data&&data.output)){for(const item of data.output)for(const part of (item.content||[]))if(part.type==="output_text"&&part.text)answer+=part.text}
+   if(!answer.trim())throw E(502,"empty AI response");
+   audit(req,"academy_chat",{u:u.sub.slice(-6)});return send(200,{reply:answer});
   }
   if(m=="POST"&&p=="/api/requests"){
    if(limited("req:"+ip(req),10,36e5))throw E(429,"too many requests");
