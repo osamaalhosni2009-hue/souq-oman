@@ -142,8 +142,9 @@ http.createServer(async(req,res)=>{
    const u=userOf(req);if(!u||u.v!==true||!u.email)throw E(401,"verified Google login required");
    const sub=db.aiSubscriptions[u.sub]||null,active=!!(sub&&Number(sub.expiresAt)>Date.now());
    const price=Math.round(Number(process.env.AI_TUTOR_PRICE_BAISA)||0);
-   const checkoutReady=!!(price>=100&&process.env.OPENAI_API_KEY&&process.env.THAWANI_SECRET_KEY&&process.env.THAWANI_PUBLISHABLE_KEY);
-   return send(200,{active,expiresAt:active?sub.expiresAt:null,priceBaisa:price>0?price:null,checkoutReady,aiReady:!!process.env.OPENAI_API_KEY});
+   const storageReady=String(process.env.AI_TUTOR_STORAGE_READY||"").toLowerCase()==="true";
+   const checkoutReady=!!(price>=100&&process.env.OPENAI_API_KEY&&process.env.THAWANI_SECRET_KEY&&process.env.THAWANI_PUBLISHABLE_KEY&&storageReady);
+   return send(200,{active,expiresAt:active?sub.expiresAt:null,priceBaisa:price>0?price:null,checkoutReady,storageReady,aiReady:!!process.env.OPENAI_API_KEY});
   }
   if(m=="POST"&&p=="/api/academy/checkout"){
    const u=userOf(req);if(!u||u.v!==true||!u.email)throw E(401,"verified Google login required");
