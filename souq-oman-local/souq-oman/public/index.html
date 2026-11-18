@@ -137,7 +137,7 @@ a.btn{display:block;text-align:center;text-decoration:none}
   <button class="menu-item" id="lb" type="button"><span aria-hidden="true">🌐</span><span data-i="lang"></span></button>
   <button class="menu-item" id="lgn" type="button" hidden><span aria-hidden="true">🔐</span><span id="lgnLabel" data-i="signin"></span></button>
   <button class="menu-item" id="rbtn" type="button"><span aria-hidden="true">🏪</span><span data-i="rbtn"></span></button>
-  <a class="menu-item" href="/academy" style="text-decoration:none"><span aria-hidden="true">🤖</span><span id="academyMenuLabel">معلّم البرمجة بالذكاء الاصطناعي</span></a>
+  <a class="menu-item" id="academyMenuLink" href="/academy" style="text-decoration:none"><span aria-hidden="true">🤖</span><span id="academyMenuLabel">معلّم البرمجة بالذكاء الاصطناعي</span></a>
   <section class="theme-picker" aria-label="Store themes"><div class="theme-title"><b id="themeTitle">ثيمات المتجر</b><small id="themeHint">اختر لونك المفضل</small></div><div class="theme-grid">
    <button class="theme-swatch" type="button" data-theme-choice="blue" aria-pressed="false" style="--swatch:#2563eb"><i class="theme-dot"></i><span data-theme-name data-ar="أزرق محيطي" data-en="Ocean blue">أزرق محيطي</span></button>
    <button class="theme-swatch" type="button" data-theme-choice="green" aria-pressed="false" style="--swatch:#059669"><i class="theme-dot"></i><span data-theme-name data-ar="أخضر زمردي" data-en="Emerald">أخضر زمردي</span></button>
@@ -359,7 +359,7 @@ setInterval(loadData,30000);
 // ---- Admin-controlled settings: show/hide any button or section, override texts ----
 const WS={};
 function watch(id,fn){const e=document.getElementById(id);if(!e||!("IntersectionObserver" in window))return;if(WS[id])WS[id].disconnect();WS[id]=new IntersectionObserver(en=>{if(en[0].isIntersecting){WS[id].disconnect();fn()}},{rootMargin:"400px"});WS[id].observe(e)}
-const CTL=[["post","#post"],["lang","#lb"],["hero",".hero"],["search",".sb"],["sugg","#rbtn"],["cities","#citylbl,#cities"],["cats","#catlbl,#cats"],["shops","#shopsec"],["latest","#latest,#grid"],["footer","footer"]];
+const CTL=[["post","#post"],["lang","#lb"],["hero",".hero"],["search",".sb"],["academy","#academyMenuLink"],["sugg","#rbtn"],["cities","#citylbl,#cities"],["cats","#catlbl,#cats"],["shops","#shopsec"],["latest","#latest,#grid"],["footer","footer"]];
 function applySettings(st){
  const h=Array.isArray(st.hidden)?st.hidden:[];HID=h;REQLOGIN=!!st.requireLogin;SORT=st.sort||"rating";CATORD=st.catOrder||[];GCID=st.google||"";
  CTL.forEach(([id,sel])=>document.querySelectorAll(sel).forEach(e=>{e.hidden=h.includes(id)}));
