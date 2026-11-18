@@ -104,7 +104,7 @@ http.createServer(async(req,res)=>{
  const send=(c,x)=>{res.writeHead(c,{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"});res.end(JSON.stringify(x))};
  try{
   if(m=="GET"&&(p=="/"||p=="/index.html"))return file(res,"public/index.html");
-  if(m=="GET"&&(p=="/academy"||p=="/academy/"))return file(res,"public/academy.html");
+  if(m=="GET"&&(p=="/academy"||p=="/academy/")){res.writeHead(302,{"Location":"/#academyInline","Cache-Control":"no-store"});return res.end();}
   if(m=="GET"&&(p=="/admin"||p=="/admin/"))return file(res,"admin/index.html",{"X-Frame-Options":"DENY","X-Robots-Tag":"noindex"});
   const up=/^\/uploads\/([a-f0-9]{24}\.(jpg|png|webp))$/.exec(p);
   if(m=="GET"&&up)return file(res,"data/uploads/"+up[1],{"Cache-Control":"public,max-age=86400"});
@@ -150,11 +150,13 @@ http.createServer(async(req,res)=>{
    const u=userOf(req);if(!u||u.v!==true||!u.email)throw E(401,"verified Google login required");
    const sub=db.aiSubscriptions[u.sub];if(sub&&Number(sub.expiresAt)>Date.now())throw E(409,"subscription already active");
    const price=Math.round(Number(process.env.AI_TUTOR_PRICE_BAISA)||0),secret=process.env.THAWANI_SECRET_KEY||"",pub=process.env.THAWANI_PUBLISHABLE_KEY||"";
+   const storageReady=String(process.env.AI_TUTOR_STORAGE_READY||"").toLowerCase()==="true";
+   if(!storageReady)throw E(503,"subscription storage is not configured");
    if(price<100||!secret||!pub)throw E(503,"Thawani checkout is not configured");
    if(limited("academy-checkout:"+u.sub,5,36e5))throw E(429,"too many checkout attempts");
    const live=String(process.env.THAWANI_MODE||"test").toLowerCase()==="live",base=live?"https://checkout.thawani.om":"https://uatcheckout.thawani.om";
    const origin=String(process.env.PUBLIC_BASE_URL||"https://souq-oman.onrender.com").replace(/\/+$/,"");
-   const payload={client_reference_id:u.sub,mode:"payment",products:[{name:"اشتراك معلّم البرمجة - 30 يوم",quantity:1,unit_amount:price}],success_url:origin+"/academy?payment=success",cancel_url:origin+"/academy?payment=cancel",metadata:{service:"tech-oman-academy",period_days:"30"}};
+   const payload={client_reference_id:u.sub,mode:"payment",products:[{name:"اشتراك معلّم البرمجة - 30 يوم",quantity:1,unit_amount:price}],success_url:origin+"/?academy_payment=success",cancel_url:origin+"/#academyInline",metadata:{service:"tech-oman-academy",period_days:"30"}};
    let response,data;try{response=await fetch(base+"/api/v1/checkout/session",{method:"POST",headers:{"Content-Type":"application/json","thawani-api-key":secret},body:JSON.stringify(payload)});data=await response.json()}catch(e){throw E(502,"Thawani checkout unavailable")}
    const session=data&&data.data&&data.data.session_id;
    if(!response.ok||data.success!==true||typeof session!=="string"||!session)throw E(502,"Could not create Thawani checkout");
